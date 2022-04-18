@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" href="/img/icon_page.png" />
+		<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" />
+		<link rel="stylesheet" href="/style/style.css" />
+		<title>Admin Dashboard</title>
+	</head>
+	<body>
+		<div class="page-wrapper">
+			<input type="checkbox" name="" id="menu-toggle" />
+			<div class="sidebar">
+				<div class="brand">
+					<h3>
+						<span class="lab la-staylinked"></span>
+						<span style="color: #ff9184">FAS</span>SHOP
+					</h3>
+				</div>
+				<div class="profile-card">
+					<div class="profile-img" style="background-image: url(img/6.jpg)"></div>
+					<div class="profile-info">
+						<h2>Quốc Hòa</h2>
+						<small>Trang dành cho Admin</small>
+					</div>
+					<div class="profile-action">
+						<a href="" class="btn btn-white">
+							<span class="las la-coins"></span>
+							$2,300
+						</a>
+					</div>
+					<div class="profile-icons">
+						<span class="las la-users"></span>
+						<span class="las la-comment-alt"></span>
+						<span class="las la-file-invoice"></span>
+					</div>
+				</div>
+				<div class="sidebar-menu">
+					<div class="menu-item">
+						<a href="">
+							<span class="las la-home"></span>
+							<span>Home</span>
+						</a>
+					</div>
+					<div class="menu-item">
+						<a href="/products" class="active">
+							<span class="las la-project-diagram"></span>
+							<span>Sản phẩm</span>
+						</a>
+					</div>
+					<div class="menu-item">
+						<a href="">
+							<span class="lar la-comments"></span>
+							<span>Phản hồi</span>
+						</a>
+					</div>
+					<div class="menu-item">
+						<a href="">
+							<span class="las la-columns"></span>
+							<span>Đơn hàng</span>
+						</a>
+					</div>
+					<div class="menu-item">
+						<a href="">
+							<span class="las la-user"></span>
+							<span>Khách hàng</span>
+						</a>
+					</div>
+					<div class="menu-item">
+						<a href="">
+							<span class="las la-chart-bar"></span>
+							<span>Thống kê</span>
+						</a>
+					</div>
+					<div class="menu-item">
+						<a href="">
+							<span class="las la-file-invoice"></span>
+							<span>Hóa đơn</span>
+						</a>
+					</div>
+					<div class="menu-item">
+						<a href="">
+							<span class="las la-tools"></span>
+							<span>Cài đặt</span>
+						</a>
+					</div>
+				</div>
+				<div class="sidebar-card">
+					<h3>Xin chào</h3>
+					<p>Hãy hoàn thành công việc của mình thật tốt nha các bạn, có gì khó khăn hãy liên hệ sếp, sếp yêu các bạn</p>
+					<a href="" class="btn btn-block btn-white">Gọi sếp</a>
+				</div>
+			</div>
+			<div class="main-content">
+				<header>
+					<label for="menu-toggle">
+						<span class="las la-bars"></span>
+					</label>
+					<div class="head-icons">
+						<span class="las la-search"></span>
+						<span class="las la-comment-alt"></span>
+						<span class="las la-bell"></span>
+						<div class="head-avatar">
+							<div class="avatar" style="background-image: url(img/1.jpg)"></div>
+							<span>Rosé</span>
+						</div>
+					</div>
+				</header>
+				<main>
+					<div class="page-header">
+						<h1>Quản lí sản phẩm</h1>
+						<small>Chúc các bạn một ngày tốt lành!</small>
+					</div>
+					<div class="product-tag">
+						<div>
+							<a href="/products" class="btn btn-choosed">Sản Phẩm</a>
+						</div>
+						<div>
+							<a href="/products/brands" class="btn btn-white">Thương hiệu</a>
+						</div>
+						<div>
+							<a href="/products/categories" class="btn btn-white">Loại sản phẩm</a>
+						</div>
+					</div>
+					<div class="table-product-container">
+						<div class="card table-products-alls">
+							<div class="card-head">
+								<div class="product-head">
+									<div>
+										<h3>Sản phẩm</h3>
+										<small>Tổng quát sản phẩm 100+</small>
+										<div th:if="${message}" class="alert alert-success text-center">
+											[[${message}]]
+										</div>
+									</div>
+									<div>
+										<a href="/products/new" class="btn bg-primary"
+											><span class="las la-plus"></span>Thêm sản phẩm</a>
+									</div>
+								</div>
+							</div>
+							<div class="card-body">
+								<table>
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>Hình ảnh</th>
+											<th>Tên sản phẩm</th>
+											<th>Giá nhập</th>
+											<th>Giá niêm yết</th>
+											<th>Loại sản phẩm</th>
+											<th>Thương hiệu</th>
+											<th>Đánh giá</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+									<th:block th:each="p : ${listProducts}">
+										<tr class="product-item">
+											<td class="id-product">[[${p.id}]]</td>
+											<td class="image-product">
+												<div class="product-info">
+													<div class="product-img">
+														<img th:src="@{${'/api/products/resources/images/' + p.thumbnailPhoto}}" alt="" />
+													</div>
+												</div>
+											</td>
+											<td class="name-product" style="max-width: 300px;">
+												<div class="team-details">
+													<h5 style="word-wrap: break-word;">[[${p.name}]]</h5>
+												</div>
+											</td>
+											<td class="list-price-product">
+												<h5>[[${p.listPrice}]]</h5>
+											</td>
+											<td class="stand-price-product">
+												<h5>[[${p.standCost}]]</h5>
+											</td>
+											<td th:if="${p.categoryId}" class="category-product">
+												<h5 >[[${p.categoryId.name}]]</h5>
+											</td>
+											<td th:if="${p.productBrand}"  class="brand-product">
+												<h5>[[${p.productBrand.name}]]</h5>
+											</td>
+											<td class="rate-product">
+												<h5>[[${p.rate}]]/5.0</h5>
+											</td>
+											<td class="action-product">
+												<a th:href="@{${'/products/update/' + p.id}}" class="btn btn-main bg-success">Sửa</a>
+												<a th:href="@{${'/products/delete/' + p.id}}" class="btn btn-main bg-danger">Xóa</a>
+											</td>
+										</tr>
+									</th:block>
+									</tbody>
+								</table>
+							</div>
+							<div class="card-footer border-top">
+								<div class="number-product">
+									<h3>Đang hiển thị [[${amount}]] sản phẩm</h3>
+								</div>
+								<div class="paging">
+									<a class="btn btn-primary">1</a>
+									<a class="btn btn-primary">2</a>
+									<a class="btn btn-primary">3</a>
+									<a class="btn btn-primary">4</a>
+									<a class="btn btn-primary">5</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
+			</div>
+		</div>
+	</body>
+</html>

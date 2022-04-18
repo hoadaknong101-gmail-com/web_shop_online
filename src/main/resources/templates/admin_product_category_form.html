@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/img/icon_page.png" />
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <title>Admin Dashboard</title>
+</head>
+<body>
+<div class="page-wrapper">
+    <input type="checkbox" name="" id="menu-toggle" />
+    <div class="sidebar">
+        <div class="brand">
+            <h3>
+                <span class="lab la-staylinked"></span>
+                <span style="color: #ff9184">FAS</span>SHOP
+            </h3>
+        </div>
+        <div class="profile-card">
+            <div class="profile-img" style="background-image: url(/img/6.jpg)"></div>
+            <div class="profile-info">
+                <h2>Quốc Hòa</h2>
+                <small>Trang dành cho Admin</small>
+            </div>
+            <div class="profile-action">
+                <a href="" class="btn btn-white">
+                    <span class="las la-coins"></span>
+                    $2,300
+                </a>
+            </div>
+            <div class="profile-icons">
+                <span class="las la-users"></span>
+                <span class="las la-comment-alt"></span>
+                <span class="las la-file-invoice"></span>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <div class="menu-item">
+                <a href="">
+                    <span class="las la-home"></span>
+                    <span>Home</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="" class="active">
+                    <span class="las la-project-diagram"></span>
+                    <span>Sản phẩm</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="">
+                    <span class="lar la-comments"></span>
+                    <span>Phản hồi</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="">
+                    <span class="las la-columns"></span>
+                    <span>Đơn hàng</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="">
+                    <span class="las la-user"></span>
+                    <span>Khách hàng</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="">
+                    <span class="las la-chart-bar"></span>
+                    <span>Thống kê</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="">
+                    <span class="las la-file-invoice"></span>
+                    <span>Hóa đơn</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="">
+                    <span class="las la-tools"></span>
+                    <span>Cài đặt</span>
+                </a>
+            </div>
+        </div>
+        <div class="sidebar-card">
+            <h3>Xin chào</h3>
+            <p>Hãy hoàn thành công việc của mình thật tốt nha các bạn, có gì khó khăn hãy liên hệ sếp, sếp yêu các bạn</p>
+            <a href="" class="btn btn-block btn-white">Gọi sếp</a>
+        </div>
+    </div>
+    <div class="main-content">
+        <header>
+            <label for="menu-toggle">
+                <span class="las la-bars"></span>
+            </label>
+            <div class="head-icons">
+                <span class="las la-search"></span>
+                <span class="las la-comment-alt"></span>
+                <span class="las la-bell"></span>
+                <div class="head-avatar">
+                    <div class="avatar" style="background-image: url(/img/1.jpg)"></div>
+                    <span>Rosé</span>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="page-header">
+                <h1>Quản lí sản phẩm</h1>
+                <small>Chúc các bạn một ngày tốt lành!</small>
+            </div>
+            <div class="product-tag">
+                <div>
+                    <a href="/products" class="btn btn-white">Sản Phẩm</a>
+                </div>
+                <div>
+                    <a href="/products/brands" class="btn btn-white">Thương hiệu</a>
+                </div>
+                <div>
+                    <a href="/products/categories" class="btn btn-choosed">Loại sản phẩm</a>
+                </div>
+            </div>
+            <div class="table-product-container">
+                <div class="card table-products-alls">
+                    <div class="card-head">
+                        <div class="product-head">
+                            <div>
+                                <h3>[[${title}]]</h3>
+                                <small>[[${_action}]] loại sản phẩm(brand)</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <form action="/products/categories/save" th:object="${category}">
+                                <input type="hidden" th:field="*{id}">
+                                <div class="form-group">
+                                    <label for="name">
+                                        <h4>Tên loại</h4>
+                                    </label>
+                                    <input type="text" id="name" class="form-control input" th:field="*{name}" />
+                                </div>
+                                <div class="card-footer border-top">
+                                    <div class="action-add-product">
+                                        <input type="submit" class="btn btn-save" value="Lưu"/>
+                                        <a href="/products/categories" class="btn btn-danger">Hủy</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+</html>
