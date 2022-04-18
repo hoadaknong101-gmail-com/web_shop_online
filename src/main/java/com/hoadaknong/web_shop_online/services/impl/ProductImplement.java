@@ -1,4 +1,4 @@
-package com.hoadaknong.web_shop_online.services;
+package com.hoadaknong.web_shop_online.services.impl;
 
 import com.hoadaknong.web_shop_online.entities.Product;
 import com.hoadaknong.web_shop_online.entities.ProductBrand;
@@ -6,6 +6,7 @@ import com.hoadaknong.web_shop_online.entities.ProductCategory;
 import com.hoadaknong.web_shop_online.repositories.ProductBrandRepository;
 import com.hoadaknong.web_shop_online.repositories.ProductCategoryRepository;
 import com.hoadaknong.web_shop_online.repositories.ProductRepository;
+import com.hoadaknong.web_shop_online.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductImplement implements ProductService{
+public class ProductImplement implements ProductService {
 
     @Autowired
     private ProductRepository rpProduct;

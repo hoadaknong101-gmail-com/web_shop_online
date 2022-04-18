@@ -7,13 +7,15 @@ import java.util.Date;
 
 @Entity
 @Table(name = "tbl_feedback")
-@IdClass(FeedbackKey.class)
 public class Feedback {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customerId;
-    @Id
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "product_id", nullable = false)
     private Product productId;
@@ -83,5 +85,13 @@ public class Feedback {
 
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

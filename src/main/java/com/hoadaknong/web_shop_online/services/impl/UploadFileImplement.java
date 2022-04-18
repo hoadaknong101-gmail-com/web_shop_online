@@ -1,5 +1,6 @@
-package com.hoadaknong.web_shop_online.services;
+package com.hoadaknong.web_shop_online.services.impl;
 
+import com.hoadaknong.web_shop_online.services.UploadFileService;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 @Service
-public class UploadFileImplement implements UploadFileService{
+public class UploadFileImplement implements UploadFileService {
     private final Path storageFolder = Paths.get("uploads");
 
     public UploadFileImplement() {

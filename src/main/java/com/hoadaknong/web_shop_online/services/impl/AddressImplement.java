@@ -1,10 +1,11 @@
-package com.hoadaknong.web_shop_online.services;
+package com.hoadaknong.web_shop_online.services.impl;
 
 import com.hoadaknong.web_shop_online.entities.Address;
 import com.hoadaknong.web_shop_online.entities.CustomerAddress;
 import com.hoadaknong.web_shop_online.entities.keys.CustomerAddressKey;
 import com.hoadaknong.web_shop_online.repositories.AddressRepository;
 import com.hoadaknong.web_shop_online.repositories.CustomerAddressRepository;
+import com.hoadaknong.web_shop_online.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AddressImplement implements AddressService{
+public class AddressImplement implements AddressService {
 
     @Autowired
     private AddressRepository rpAddress;
