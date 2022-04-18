@@ -1,7 +1,10 @@
 package com.hoadaknong.web_shop_online.services;
 
 import com.hoadaknong.web_shop_online.entities.Address;
+import com.hoadaknong.web_shop_online.entities.CustomerAddress;
+import com.hoadaknong.web_shop_online.entities.keys.CustomerAddressKey;
 import com.hoadaknong.web_shop_online.repositories.AddressRepository;
+import com.hoadaknong.web_shop_online.repositories.CustomerAddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,40 +15,56 @@ import java.util.Optional;
 public class AddressImplement implements AddressService{
 
     @Autowired
-    private AddressRepository rp;
+    private AddressRepository rpAddress;
+
+    @Autowired
+    private CustomerAddressRepository rpAddresOfCustomer;
 
     @Override
     public void saveAddress(Address address) {
-        rp.save(address);
+        rpAddress.save(address);
     }
 
     @Override
     public List<Address> findAllAddress() {
-        return rp.findAll();
+        return rpAddress.findAll();
     }
 
     @Override
     public void deleteAddressById(Integer id) {
-        rp.deleteById(id);
+        rpAddress.deleteById(id);
     }
 
     @Override
     public Optional<Address> findAddressById(Integer id) {
-        return rp.findById(id);
+        return rpAddress.findById(id);
     }
 
     @Override
     public List<Address> findAddressesByAddressLine(String addressLine) {
-        return rp.findAddressesByAddressLine(addressLine);
+        return rpAddress.findAddressesByAddressLine(addressLine);
     }
 
     @Override
     public List<Address> findAddressesByDistrict(String district) {
-        return rp.findAddressesByDistrict(district);
+        return rpAddress.findAddressesByDistrict(district);
     }
 
     @Override
     public List<Address> findAddressesByPostalCode(String code) {
-        return rp.findAddressesByPostalCode(code);
+        return rpAddress.findAddressesByPostalCode(code);
+    }
+
+    @Override
+    public void saveAddressOfCustomer(CustomerAddress address) {
+        rpAddresOfCustomer.save(address);
+    }
+
+    @Override
+    public void deleteAddressOfCustomer(Integer idAddress, Integer idCustomer) {
+        CustomerAddressKey key = new CustomerAddressKey();
+        key.setAddressId(idAddress);
+        key.setCustomerId(idCustomer);
+        rpAddresOfCustomer.deleteById(key);
     }
 }
