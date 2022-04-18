@@ -25,6 +25,10 @@ public class ViewController {
     @Autowired
     ProductBrandRepository brandRepository;
 
+    // Home page
+
+
+    // Product pages
 
     @RequestMapping(value = "/products")
     public String productPage(Model model){
@@ -80,4 +84,5 @@ public class ViewController {
         return "admin_product_category_form";
     }
 
+    // Customer
 }
