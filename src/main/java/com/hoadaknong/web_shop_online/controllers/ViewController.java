@@ -41,6 +41,16 @@ public class ViewController {
         return "sign_in_sign_up_form";
     }
 
+    @RequestMapping(value ="/check_mail")
+    public String checkMailPage(){
+        return "check_mail";
+    }
+
+    @RequestMapping(value ="/input_forgot_password")
+    public String forgotPasswordPage(){
+        return "input_email_forgot_password";
+    }
+
     // Home page
 
 
@@ -110,4 +120,6 @@ public class ViewController {
 
         return "admin_customer";
     }
+
+
 }

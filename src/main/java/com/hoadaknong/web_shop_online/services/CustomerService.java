@@ -15,4 +15,5 @@ public interface CustomerService {
     List<Customer> findCustomerByRole(Role role);
     Customer getCustomerById(Integer id);
     Customer getCustomerByEmailAndPassword(String email, String password);
+    Customer getCustomerByEmail(String email);
 }

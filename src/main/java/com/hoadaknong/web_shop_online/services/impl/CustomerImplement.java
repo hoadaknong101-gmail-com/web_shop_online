@@ -50,4 +50,9 @@ public class CustomerImplement implements CustomerService {
     public Customer getCustomerByEmailAndPassword(String email, String password) {
         return rp.getCustomerByEmailAndAndPassword(email,password);
     }
+
+    @Override
+    public Customer getCustomerByEmail(String email) {
+        return rp.getCustomerByEmail(email);
+    }
 }
