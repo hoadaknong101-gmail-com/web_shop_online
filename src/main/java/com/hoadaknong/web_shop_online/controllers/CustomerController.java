@@ -70,7 +70,6 @@ public class CustomerController {
         Boolean flag = authenticationService.isRightInformation(email, password);
         if(flag){
             attributes.addFlashAttribute("message","Đăng nhập thành công!");
-
             // Lấy ra tài khoản và cập nhật thời gian truy cập
             Customer c = customerService.getCustomerByEmailAndPassword(email,password);
             c.setModifiedDate(new Date());
