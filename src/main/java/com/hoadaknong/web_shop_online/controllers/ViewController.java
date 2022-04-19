@@ -1,11 +1,13 @@
 package com.hoadaknong.web_shop_online.controllers;
 
+import com.hoadaknong.web_shop_online.entities.Customer;
 import com.hoadaknong.web_shop_online.entities.Product;
 import com.hoadaknong.web_shop_online.entities.ProductBrand;
 import com.hoadaknong.web_shop_online.entities.ProductCategory;
 import com.hoadaknong.web_shop_online.repositories.ProductBrandRepository;
 import com.hoadaknong.web_shop_online.repositories.ProductCategoryRepository;
 import com.hoadaknong.web_shop_online.repositories.ProductRepository;
+import com.hoadaknong.web_shop_online.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +27,26 @@ public class ViewController {
     @Autowired
     ProductBrandRepository brandRepository;
 
+    @Autowired
+    CustomerService customerService;
+
+
+    // Sign in & Sign up form
+
+    @RequestMapping(value = "/sign_in_sign_up")
+    public String signInSignUpPag(Model model){
+        Customer c = new Customer();
+        model.addAttribute("customer",c);
+
+        return "sign_in_sign_up_form";
+    }
+
     // Home page
 
 
     // Product pages
 
-    @RequestMapping(value = "/products")
+    @RequestMapping(value = "/web_shop/admin/products")
     public String productPage(Model model){
         List<Product> productList = productRepository.findAll();
         int amount = productList.size();
@@ -40,7 +56,7 @@ public class ViewController {
     }
 
 
-    @RequestMapping(value = "/products/new")
+    @RequestMapping(value = "/web_shop/admin/products/new")
     public String addProductPage(Model model){
         Product product = new Product();
         List<ProductCategory> listCategory = categoryRepository.findAll();
@@ -52,7 +68,7 @@ public class ViewController {
 
         return "admin_product_product_add_product";
     }
-    @RequestMapping(value ="/products/brands")
+    @RequestMapping(value ="/web_shop/admin/products/brands")
     public String brandPage(Model model){
         List<ProductBrand> listBrand = brandRepository.findAll();
         Integer amount = listBrand.size();
@@ -62,7 +78,7 @@ public class ViewController {
 
         return "admin_product_brand";
     }
-    @RequestMapping(value ="/products/brands/new")
+    @RequestMapping(value ="/web_shop/admin/products/brands/new")
     public String newBrand(Model model){
         ProductBrand b = new ProductBrand();
 
@@ -73,7 +89,7 @@ public class ViewController {
         return "admin_product_brand_form";
     }
 
-    @RequestMapping(value = "/products/categories/new")
+    @RequestMapping(value = "/web_shop/admin/products/categories/new")
     public String newCategory(Model model){
         ProductCategory c = new ProductCategory();
 
@@ -85,4 +101,13 @@ public class ViewController {
     }
 
     // Customer
+
+    @RequestMapping(value="/web_shop/admin/customers")
+    public String adminCustomerPage(Model model){
+        List<Customer> listCustomer = customerService.findAllCustomer();
+
+        model.addAttribute("listCustomer", listCustomer);
+
+        return "admin_customer";
+    }
 }

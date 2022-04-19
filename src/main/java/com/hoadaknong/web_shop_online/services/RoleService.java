@@ -9,4 +9,5 @@ public interface RoleService {
     void saveRole(Role role);
     void deleteRoleById(Integer id);
     List<Role> findAllRole();
+    Role getRoleById(Integer id);
 }

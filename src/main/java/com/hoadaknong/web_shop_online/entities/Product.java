@@ -33,6 +33,8 @@ public class Product {
 
     private Date modifiedDate;
 
+    private String description;
+
     public Product(){
 
     }
@@ -133,5 +135,13 @@ public class Product {
 
     public void setRate(Double rate) {
         this.rate = rate;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

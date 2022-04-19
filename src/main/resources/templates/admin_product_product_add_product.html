@@ -39,49 +39,49 @@
 				</div>
 				<div class="sidebar-menu">
 					<div class="menu-item">
-						<a href="">
+						<a href="/web_shop/admin">
 							<span class="las la-home"></span>
 							<span>Home</span>
 						</a>
 					</div>
 					<div class="menu-item">
-						<a href="/product" class="active">
+						<a href="/web_shop/admin/products" class="active">
 							<span class="las la-project-diagram"></span>
 							<span>Sản phẩm</span>
 						</a>
 					</div>
 					<div class="menu-item">
-						<a href="">
+						<a href="/web_shop/admin/feedbacks">
 							<span class="lar la-comments"></span>
 							<span>Phản hồi</span>
 						</a>
 					</div>
 					<div class="menu-item">
-						<a href="">
+						<a href="/web_shop/admin/orders">
 							<span class="las la-columns"></span>
 							<span>Đơn hàng</span>
 						</a>
 					</div>
 					<div class="menu-item">
-						<a href="">
+						<a href="/web_shop/admin/customer">
 							<span class="las la-user"></span>
 							<span>Khách hàng</span>
 						</a>
 					</div>
 					<div class="menu-item">
-						<a href="">
+						<a href="/web_shop/admin/stats">
 							<span class="las la-chart-bar"></span>
 							<span>Thống kê</span>
 						</a>
 					</div>
 					<div class="menu-item">
-						<a href="">
+						<a href="/web_shop/admin/bills">
 							<span class="las la-file-invoice"></span>
 							<span>Hóa đơn</span>
 						</a>
 					</div>
 					<div class="menu-item">
-						<a href="">
+						<a href="/web_shop/admin/config">
 							<span class="las la-tools"></span>
 							<span>Cài đặt</span>
 						</a>
@@ -115,13 +115,13 @@
 					</div>
 					<div class="product-tag">
 						<div>
-							<a href="/products" class="btn btn-choosed">Sản Phẩm</a>
+							<a href="/web_shop/admin/products" class="btn btn-choosed">Sản Phẩm</a>
 						</div>
 						<div>
-							<a href="/products/brands" class="btn btn-white">Thương hiệu</a>
+							<a href="/web_shop/admin/products/brands" class="btn btn-white">Thương hiệu</a>
 						</div>
 						<div>
-							<a href="/products/categories" class="btn btn-white">Loại sản phẩm</a>
+							<a href="/web_shop/admin/products/categories" class="btn btn-white">Loại sản phẩm</a>
 						</div>
 					</div>
 					<div class="table-product-container">
@@ -136,31 +136,31 @@
 							</div>
 							<div class="card-body">
 								<div class="form-group">
-									<form action="/products/insert" th:object="${product}" enctype="multipart/form-data" method="post">
+									<form action="/web_shop/admin/products/insert" th:object="${product}" enctype="multipart/form-data" method="post">
 										<input type="hidden" th:field="*{id}">
 										<div class="form-group">
 											<label for="name">
-												<h4>Tên sản phẩm</h4>
+												<h4>Tên sản phẩm <span style="color:red;">*</span></h4>
 											</label>
-											<input type="text" id="name" name="name" class="form-control input" th:field="*{name}"/>
+											<input type="text" id="name" name="name" class="form-control input" th:field="*{name}" required/>
 										</div>
 										<div class="form-group">
 											<label for="listPrice">
 												<h4>Giá nhập</h4>
 											</label>
-											<input type="number" id="listPrice" name="listPrice" class="form-control input" th:field="*{listPrice}"/>
+											<input type="number" id="listPrice" name="listPrice" class="form-control input" th:field="*{listPrice}" required/>
 										</div>
 										<div class="form-group">
 											<label for="standCost">
 												<h4>Giá bán</h4>
 											</label>
-											<input type="number" id="standCost" name="standCost" class="form-control input" th:field="*{standCost}"/>
+											<input type="number" id="standCost" name="standCost" class="form-control input" th:field="*{standCost}" required/>
 										</div>
 										<div class="form-group">
 											<label for="categoryId">
 												<h4>Loại sản phẩm</h4>
 											</label>
-											<select name="categoryId" id="categoryId" class="input">
+											<select name="categoryId" id="categoryId" class="input" required>
 												<option value="" disabled selected>Chọn loại sản phẩm</option>
 												<th:block th:each="c : ${listCategory}">
 													<option th:value="@{${c.id}}" >[[${c.name}]]</option>
@@ -171,7 +171,7 @@
 											<label for="productBrand">
 												<h4>Thương hiệu</h4>
 											</label>
-											<select name="productBrand" id="productBrand" class="input">
+											<select name="productBrand" id="productBrand" class="input" required>
 												<option value="" disabled selected>Chọn thương hiệu</option>
 												<th:block th:each="b : ${listBrand}">
 													<option th:value="@{${b.id}}" >[[${b.name}]]</option>
@@ -188,7 +188,7 @@
 										<div class="card-footer border-top">
 											<div class="action-add-product">
 												<input type="submit" class="btn btn-save" value="Lưu">
-												<a href="/products" class="btn btn-danger">Hủy</a>
+												<a href="/web_shop/admin/products" class="btn btn-danger">Hủy</a>
 											</div>
 										</div>
 										<div th:if="${message}" class="alert alert-success text-center">

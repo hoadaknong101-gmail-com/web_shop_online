@@ -39,49 +39,49 @@
 				</div>
 				<div class="sidebar-menu">
 					<div class="menu-item">
-						<a href="index.html">
+						<a href="/web_shop/admin">
 							<span class="las la-home"></span>
 							<span>Home</span>
 						</a>
 					</div>
 					<div class="menu-item">
-						<a href="/products" class="active">
+						<a href="/web_shop/admin/products" class="active">
 							<span class="las la-project-diagram"></span>
 							<span>Sản phẩm</span>
 						</a>
 					</div>
 					<div class="menu-item">
-						<a href="admin_feedback.html">
+						<a href="/web_shop/admin/feedbacks">
 							<span class="lar la-comments"></span>
 							<span>Phản hồi</span>
 						</a>
 					</div>
 					<div class="menu-item">
-						<a href="admin_order.html">
+						<a href="/web_shop/admin/orders">
 							<span class="las la-columns"></span>
 							<span>Đơn hàng</span>
 						</a>
 					</div>
 					<div class="menu-item">
-						<a href="">
+						<a href="/web_shop/admin/customers">
 							<span class="las la-user"></span>
 							<span>Khách hàng</span>
 						</a>
 					</div>
 					<div class="menu-item">
-						<a href="">
+						<a href="/web_shop/admin/stats">
 							<span class="las la-chart-bar"></span>
 							<span>Thống kê</span>
 						</a>
 					</div>
 					<div class="menu-item">
-						<a href="">
+						<a href="/web_shop/admin/bills">
 							<span class="las la-file-invoice"></span>
 							<span>Hóa đơn</span>
 						</a>
 					</div>
 					<div class="menu-item">
-						<a href="">
+						<a href="/web_shop/admin/config">
 							<span class="las la-tools"></span>
 							<span>Cài đặt</span>
 						</a>
@@ -115,13 +115,13 @@
 					</div>
 					<div class="product-tag">
 						<div>
-							<a href="/products" class="btn btn-white">Sản Phẩm</a>
+							<a href="/web_shop/admin/products" class="btn btn-white">Sản Phẩm</a>
 						</div>
 						<div>
-							<a href="/products/brands" class="btn btn-choosed">Thương hiệu</a>
+							<a href="/web_shop/admin/products/brands" class="btn btn-choosed">Thương hiệu</a>
 						</div>
 						<div>
-							<a href="/products/categories" class="btn btn-white">Loại sản phẩm</a>
+							<a href="/web_shop/admin/products/categories" class="btn btn-white">Loại sản phẩm</a>
 						</div>
 					</div>
 					<div class="table-product-container">
@@ -136,7 +136,7 @@
 										</div>
 									</div>
 									<div>
-										<a href="/products/brands/new" class="btn bg-primary"><span class="las la-plus"></span>Thêm thương hiệu</a>
+										<a href="/web_shop/admin/products/brands/new" class="btn bg-primary"><span class="las la-plus"></span>Thêm thương hiệu</a>
 									</div>
 								</div>
 							</div>
@@ -161,8 +161,8 @@
 													<h4>[[${b.description}]]</h4>
 												</td>
 												<td class="action-product">
-													<a th:href="@{${'/products/brands/update/' + b.id}}" class="btn btn-main bg-success">Sửa</a>
-													<a th:href="@{${'/products/brands/delete/' + b.id}}" class="btn btn-main bg-danger">Xóa</a>
+													<a th:href="@{${'/web_shop/admin/products/brands/update/' + b.id}}" class="btn btn-main bg-success">Sửa</a>
+													<a th:href="@{${'/web_shop/admin/products/brands/delete/' + b.id}}" class="btn btn-main bg-danger">Xóa</a>
 												</td>
 											</tr>
 										</th:block>

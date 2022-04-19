@@ -39,49 +39,49 @@
         </div>
         <div class="sidebar-menu">
             <div class="menu-item">
-                <a href="">
+                <a href="/web_shop/admin">
                     <span class="las la-home"></span>
                     <span>Home</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="" class="active">
+                <a href="/web_shop/admin/products" class="active">
                     <span class="las la-project-diagram"></span>
                     <span>Sản phẩm</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="">
+                <a href="/web_shop/admin/feedbacks">
                     <span class="lar la-comments"></span>
                     <span>Phản hồi</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="">
+                <a href="/web_shop/admin/order">
                     <span class="las la-columns"></span>
                     <span>Đơn hàng</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="">
+                <a href="/web_shop/admin/customers">
                     <span class="las la-user"></span>
                     <span>Khách hàng</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="">
+                <a href="/web_shop/admin/stats">
                     <span class="las la-chart-bar"></span>
                     <span>Thống kê</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="">
+                <a href="/web_shop/admin/bill">
                     <span class="las la-file-invoice"></span>
                     <span>Hóa đơn</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="">
+                <a href="/web_shop/admin/config">
                     <span class="las la-tools"></span>
                     <span>Cài đặt</span>
                 </a>
@@ -115,13 +115,13 @@
             </div>
             <div class="product-tag">
                 <div>
-                    <a href="/products" class="btn btn-white">Sản Phẩm</a>
+                    <a href="/web_shop/admin/products" class="btn btn-white">Sản Phẩm</a>
                 </div>
                 <div>
-                    <a href="/products/brands" class="btn btn-white">Thương hiệu</a>
+                    <a href="/web_shop/admin/products/brands" class="btn btn-white">Thương hiệu</a>
                 </div>
                 <div>
-                    <a href="/products/categories" class="btn btn-choosed">Loại sản phẩm</a>
+                    <a href="/web_shop/admin/products/categories" class="btn btn-choosed">Loại sản phẩm</a>
                 </div>
             </div>
             <div class="table-product-container">
@@ -136,7 +136,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <form action="/products/categories/save" th:object="${category}">
+                            <form action="/web_shop/admin/products/categories/save" th:object="${category}">
                                 <input type="hidden" th:field="*{id}">
                                 <div class="form-group">
                                     <label for="name">
@@ -147,7 +147,7 @@
                                 <div class="card-footer border-top">
                                     <div class="action-add-product">
                                         <input type="submit" class="btn btn-save" value="Lưu"/>
-                                        <a href="/products/categories" class="btn btn-danger">Hủy</a>
+                                        <a href="/web_shop/admin/products/categories" class="btn btn-danger">Hủy</a>
                                     </div>
                                 </div>
                             </form>

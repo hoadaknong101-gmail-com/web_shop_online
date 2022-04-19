@@ -13,4 +13,6 @@ public interface CustomerService {
     List<Customer> findAllCustomer();
     void deleteCustomerById(Integer id);
     List<Customer> findCustomerByRole(Role role);
+    Customer getCustomerById(Integer id);
+    Customer getCustomerByEmailAndPassword(String email, String password);
 }

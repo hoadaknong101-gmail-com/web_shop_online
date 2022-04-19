@@ -39,49 +39,49 @@
         </div>
         <div class="sidebar-menu">
             <div class="menu-item">
-                <a href="">
+                <a href="/web_shop/admin">
                     <span class="las la-home"></span>
                     <span>Home</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="" class="active">
+                <a href="/web_shop/admin/products">
                     <span class="las la-project-diagram"></span>
                     <span>Sản phẩm</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="">
+                <a href="/web_shop/admin/feedback">
                     <span class="lar la-comments"></span>
                     <span>Phản hồi</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="">
+                <a href="/web_shop/admin/orders">
                     <span class="las la-columns"></span>
                     <span>Đơn hàng</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="">
+                <a href="/web_shop/admin/customers" class="active">
                     <span class="las la-user"></span>
                     <span>Khách hàng</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="">
+                <a href="/web_shop/admin/statistic">
                     <span class="las la-chart-bar"></span>
                     <span>Thống kê</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="">
+                <a href="/web_shop/admin/bills">
                     <span class="las la-file-invoice"></span>
                     <span>Hóa đơn</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="">
+                <a href="/web_shop/admin/config">
                     <span class="las la-tools"></span>
                     <span>Cài đặt</span>
                 </a>
@@ -110,62 +110,69 @@
         </header>
         <main>
             <div class="page-header">
-                <h1>Quản lí sản phẩm</h1>
+                <h1>Quản lí thông tin người dùng</h1>
                 <small>Chúc các bạn một ngày tốt lành!</small>
-            </div>
-            <div class="product-tag">
-                <div>
-                    <a href="/web_shop/admin/products" class="btn btn-white">Sản Phẩm</a>
-                </div>
-                <div>
-                    <a href="/web_shop/admin/products/brands" class="btn  btn-choosed">Thương hiệu</a>
-                </div>
-                <div>
-                    <a href="/web_shop/admin/products/categories" class="btn btn-white">Loại sản phẩm</a>
-                </div>
             </div>
             <div class="table-product-container">
                 <div class="card table-products-alls">
                     <div class="card-head">
                         <div class="product-head">
                             <div>
-                                <h3>[[${title}]]</h3>
-                                <small>[[${_action}]] thương hiệu sản phẩm(brand)</small>
+                                <h3>Khách hàng</h3>
+                                <small>Thông tin chi tiết khách hàng</small>
+                                <div th:if="${message}" class="alert alert-success text-center">
+                                    [[${message}]]
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <form action="/web_shop/admin/products/brands/save" th:object="${brand}">
-                                <input type="hidden" th:field="*{id}">
-                                <div class="form-group">
-                                    <label for="name">
-                                        <h4>Tên thương hiệu</h4>
-                                    </label>
-                                    <input type="text" id="name" class="form-control input" th:field="*{name}" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="description">
-                                        <h4>Mô tả</h4>
-                                    </label>
-                                    <textarea
-                                            name="description"
-                                            id="description"
-                                            style="max-width: 1519px; height: 300px"
-                                            class="form-control input"
-                                            th:field="*{description}"
-                                    ></textarea>
-                                </div>
-                                <div class="card-footer border-top">
-                                    <div class="action-add-product">
-                                        <input type="submit" class="btn btn-save" value="Lưu"/>
-                                        <a href="/web_shop/admin/products/brands" class="btn btn-danger">Hủy</a>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Họ và tên</th>
+                                <th>Công việc</th>
+                                <th>Số điện thoại</th>
+                                <th>E-mail</th>
+                                <th>Vai trò</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <th:block th:each="c : ${listCustomer}">
+                                    <tr class="customer-info-item">
+                                        <td class="customer-id">
+                                            <p>[[${c.id}]]</p>
+                                        </td>
+                                        <td class="customer-name">
+                                            <p>[[${c.firstName}]] [[${c.lastName}]]</p>
+                                        </td>
+                                        <td class="customer-job">
+                                            <p>[[${c.job}]]</p>
+                                        </td>
+                                        <td class="customer-phone">
+                                            <p>[[${c.phone}]]</p>
+                                        </td>
+                                        <td class="customer-email">
+                                            <p>[[${c.email}]]</p>
+                                        </td>
+                                        <td class="customer-role">
+                                            <div th:if="${c.role}">
+                                                <p>[[${c.role.name}]]</p>
+                                            </div>
+                                            <div th:unless="${c.role}">
+                                                <p>Đang cập nhật</p>
+                                            </div>
+                                        </td>
+                                        <td class="action-customer">
+                                            <a th:href="@{${'/web_shop/admin/customers/details/' + c.id}}" class="btn btn-main bg-success">Chi tiết</a>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                            </tbody>
+                        </table>
                     </div>
-
                 </div>
             </div>
         </main>

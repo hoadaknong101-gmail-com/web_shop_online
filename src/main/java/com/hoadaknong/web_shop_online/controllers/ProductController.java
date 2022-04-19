@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping(path="/products")
+@RequestMapping(path="/web_shop/admin/products")
 public class ProductController {
 
     @Autowired
@@ -52,7 +52,12 @@ public class ProductController {
                                    @RequestParam("productBrand") Integer productBrand,
                                    @RequestParam("image") MultipartFile file,
                                    RedirectAttributes redirectAttributes){
-        String filename = storageFile.storeFile(file);
+        String filename = "";
+        try{
+            filename = storageFile.storeFile(file);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         ProductCategory category = categoryRepository.getById(categoryId);
         ProductBrand brand = brandRepository.getById(productBrand);
         p.setCategoryId(category);
@@ -63,7 +68,7 @@ public class ProductController {
         productRepository.save(p);
         System.out.println(new Date() + " INFO --- Insert new product successfully!");
         redirectAttributes.addFlashAttribute("message","Thêm sản phẩm mới thành công");
-        return "redirect:/products";
+        return "redirect:/web_shop/admin/products";
     }
     @RequestMapping ("/update")
     public String updateProduct(Product p,
@@ -88,14 +93,14 @@ public class ProductController {
 
         System.out.println(dtf.format(now).toString() + " INFO --- Update product successfully!");
         redirectAttributes.addFlashAttribute("message","Cập nhật sản phẩm thành công");
-        return "redirect:/products";
+        return "redirect:/web_shop/admin/products";
     }
 
     @RequestMapping(value = "/delete/{productID}")
     public String deleteProduct(@PathVariable Integer productID, RedirectAttributes attributes){
         productRepository.deleteById(productID);
         attributes.addFlashAttribute("message","Delete product successfully!");
-        return "redirect:/products";
+        return "redirect:/web_shop/admin/products";
     }
 
     @RequestMapping(value ="/update/{productID}")
@@ -128,7 +133,7 @@ public class ProductController {
     public String saveProductBrand(ProductBrand b, RedirectAttributes attributes){
         brandRepository.save(b);
         attributes.addFlashAttribute("message","Lưu thành công");
-        return "redirect:/products/brands";
+        return "redirect:/web_shop/admin/products/brands";
     }
 
     @RequestMapping(value="/brands/delete/{id}")
@@ -136,7 +141,7 @@ public class ProductController {
         brandRepository.deleteById(id);
         attributes.addFlashAttribute("message","Xóa thành công");
 
-        return "redirect:/products/brands";
+        return "redirect:/web_shop/admin/products/brands";
     }
 
 
@@ -168,7 +173,7 @@ public class ProductController {
         categoryRepository.save(c);
         attributes.addFlashAttribute("message","Lưu thành công!");
 
-        return "redirect:/products/categories";
+        return "redirect:/web_shop/admin/products/categories";
     }
 
     @RequestMapping(value="/categories/delete/{id}")
@@ -177,6 +182,6 @@ public class ProductController {
 
         attributes.addFlashAttribute("message","Xóa thành công!");
 
-        return "redirect:/products/categories";
+        return "redirect:/web_shop/admin/products/categories";
     }
 }

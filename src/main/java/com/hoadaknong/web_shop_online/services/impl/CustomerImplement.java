@@ -40,4 +40,14 @@ public class CustomerImplement implements CustomerService {
     public List<Customer> findCustomerByRole(Role role) {
         return rp.findCustomersByRole(role);
     }
+
+    @Override
+    public Customer getCustomerById(Integer id) {
+        return rp.getById(id);
+    }
+
+    @Override
+    public Customer getCustomerByEmailAndPassword(String email, String password) {
+        return rp.getCustomerByEmailAndAndPassword(email,password);
+    }
 }
