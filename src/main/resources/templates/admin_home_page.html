@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/img/icon_page.png" />
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <title>Admin Dashboard</title>
+</head>
+<body>
+<div class="page-wrapper">
+    <input type="checkbox" name="" id="menu-toggle" />
+    <div class="sidebar">
+        <div class="brand">
+            <h3>
+                <span class="lab la-staylinked"></span>
+                <span style="color: #ff9184">FAS</span>SHOP
+            </h3>
+        </div>
+        <div class="profile-card">
+            <div class="profile-img" style="background-image: url(/img/6.jpg)"></div>
+            <div class="profile-info">
+                <h2>Quốc Hòa</h2>
+                <small>Trang dành cho Admin</small>
+            </div>
+            <div class="profile-action">
+                <a href="" class="btn btn-white">
+                    <span class="las la-coins"></span>
+                    $2,300
+                </a>
+            </div>
+            <div class="profile-icons">
+                <span class="las la-users"></span>
+                <span class="las la-comment-alt"></span>
+                <span class="las la-file-invoice"></span>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <div class="menu-item">
+                <a href="/web_shop/admin" class="active">
+                    <span class="las la-home"></span>
+                    <span>Home</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="/web_shop/admin/products">
+                    <span class="las la-project-diagram"></span>
+                    <span>Sản phẩm</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="/web_shop/admin/feedbacks">
+                    <span class="lar la-comments"></span>
+                    <span>Phản hồi</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="/web_shop/admin/orders">
+                    <span class="las la-columns"></span>
+                    <span>Đơn hàng</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="/web_shop/admin/customers" >
+                    <span class="las la-user"></span>
+                    <span>Khách hàng</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="/web_shop/admin/statistic">
+                    <span class="las la-chart-bar"></span>
+                    <span>Thống kê</span>
+                </a>
+            </div>
+        </div>
+        <div class="sidebar-card">
+            <h3>Xin chào</h3>
+            <p>Hãy hoàn thành công việc của mình thật tốt nha các bạn, có gì khó khăn hãy liên hệ sếp, sếp yêu các bạn</p>
+            <a href="" class="btn btn-block btn-white">Gọi sếp</a>
+        </div>
+    </div>
+    <div class="main-content">
+        <header>
+            <label for="menu-toggle">
+                <span class="las la-bars"></span>
+            </label>
+            <div class="head-icons">
+                <span class="las la-search"></span>
+                <span class="las la-comment-alt"></span>
+                <span class="las la-bell"></span>
+                <div class="head-avatar">
+                    <div class="avatar" style="background-image: url(/img/1.jpg)"></div>
+                    <span>Rosé</span>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="page-header">
+                <h1>Dashboard</h1>
+                <small>Chúc các bạn một ngày tốt lành!</small>
+            </div>
+            <div class="analytics">
+                <div class="card engage-card">
+                    <div class="card-head">Doanh thu</div>
+                    <div class="card-body">
+                        <div class="chart-wrapper">
+                            <div id="chart"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card email-card">
+                    <div class="card-head">Đơn hàng</div>
+                    <div class="card-body">
+                        <div id="emailChart"></div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="emails-info">
+                            <div class="email-stat"><span class="status bg-danger"> </span><span>Đang xử lý</span></div>
+                            <div class="email-stat"><span class="status bg-warning"> </span><span>Đã tiếp nhận</span></div>
+                            <div class="email-stat"><span class="status bg-success"> </span><span>Đang giao</span></div>
+                            <div class="email-stat"><span class="status bg-danger"> </span><span>Đã giao</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="card table-products">
+                    <div class="card-head">
+                        <div class="product-head">
+                            <div>
+                                <h3>Sản phẩm</h3>
+                                <small>Tổng quát sản phẩm 100+</small>
+                            </div>
+                            <select name="" id="">
+                                <option value="">Sản phẩm</option>
+                                <option value="">Đơn hàng</option>
+                                <option value="">Khách hàng</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Thương hiệu</th>
+                                <th width="22%">Đã bán</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <th:block th:each="p : ${listFourProduct}">
+                                <tr>
+                                    <td>
+                                        <div class="product-info">
+                                            <div class="product-img">
+                                                <img th:src="@{'/api/products/resources/images/' + ${p.thumbnailPhoto}}" alt="" />
+                                            </div>
+                                            <div class="team-details">
+                                                <h4>[[${p.name}]]</h4>
+                                                <small>[[${p.category.name}]]</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="company-info">
+                                            <h4>Interco</h4>
+                                            <small>Cty may mặc</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-products">
+                                            <h4>35%</h4>
+                                            <div class="progress-bar">
+                                                <div class="indicator info" style="width: 35%"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn btn-main">View</a>
+                                    </td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card recent-user">
+                    <div class="card-head">
+                        <div class="product-head">
+                            <div>
+                                <h4>Người dùng gần đây</h4>
+                                <small>Tổng quát</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="user-info">
+                            <div>
+                                <img src="img/1.jpg" alt="" />
+                                <div class="user-details">
+                                    <h4>Rosé</h4>
+                                    <small>Hàn Quốc</small>
+                                    <p>Xem <a href="">Chi tiết</a></p>
+                                </div>
+                            </div>
+                            <div class="ordered">
+                                <h3>25</h3>
+                                <span>Đơn</span>
+                            </div>
+                        </div>
+                        <div class="user-info">
+                            <div>
+                                <img src="img/jisoo_1.jpg" alt="" />
+                                <div class="user-details">
+                                    <h4>Jisoo</h4>
+                                    <small>Hàn Quốc</small>
+                                    <p>Xem <a href="">chi tiết</a></p>
+                                </div>
+                            </div>
+                            <div class="ordered">
+                                <h3>15</h3>
+                                <span>Đơn</span>
+                            </div>
+                        </div>
+                        <div class="user-info">
+                            <div>
+                                <img src="img/lisa_1.jpg" alt="" />
+                                <div class="user-details">
+                                    <h4>Lisa</h4>
+                                    <small>Thái Lan</small>
+                                    <p>Xem <a href="">chi tiết</a></p>
+                                </div>
+                            </div>
+                            <div class="ordered">
+                                <h3>40</h3>
+                                <span>Đơn</span>
+                            </div>
+                        </div>
+                        <div class="user-info">
+                            <div>
+                                <img src="img/jennie_1.jpg" alt="" />
+                                <div class="user-details">
+                                    <h4>Jennie</h4>
+                                    <small>Australia</small>
+                                    <p>Xem <a href="">chi tiết</a></p>
+                                </div>
+                            </div>
+                            <div class="ordered">
+                                <h3>80</h3>
+                                <span>Đơn</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    var sevenDay, valueOfTotal
+    $.ajax({
+        url: '/api/web_shop/admin/revenue',
+        type: 'GET',
+        dataType: "json",
+        success: displayAll
+    });
+
+    function displayAll(data){
+        alert(data.date)
+        console.log(data)
+        sevenDay = data.date
+        valueOfTotal = data.value
+    }
+
+    var options = {
+        chart: {
+            type: "line",
+            height: "280px",
+            fontFamily: "Nunito",
+            toolbar: {
+                show: true,
+            },
+        },
+        stroke: {
+            curve: "straight",
+            width: 6,
+            colors: ["#6E00FF"],
+        },
+        markers: {
+            size: 7,
+            colors: ["#6E00FF"],
+        },
+        grid: {
+            strokeDashArray: 10,
+        },
+        series: [
+            {
+                name: "Doanh thu",
+                data: valueOfTotal,
+            },
+        ],
+        xaxis: {
+            categories: sevenDay,
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
+    // Radial chart
+
+    var optionsRadial = {
+        series: [44, 55, 67, 83],
+        chart: {
+            height: 350,
+            type: "radialBar",
+        },
+        plotOptions: {
+            radialBar: {
+                dataLabels: {
+                    name: {
+                        fontSize: "22px",
+                    },
+                    value: {
+                        fontSize: "16px",
+                    },
+                    total: {
+                        show: true,
+                        label: "Tổng",
+                        formatter: function (w) {
+                            // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
+                            return 249;
+                        },
+                    },
+                },
+            },
+        },
+        labels: ["Đang xử lý", "Đã tiếp nhận", "Đang giao", "Đã giao"],
+    };
+    var chartRadial = new ApexCharts(document.querySelector("#emailChart"), optionsRadial);
+    chartRadial.render();
+</script>
+</body>
+</html>

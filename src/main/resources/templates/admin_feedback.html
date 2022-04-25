@@ -39,25 +39,25 @@
         </div>
         <div class="sidebar-menu">
             <div class="menu-item">
-                <a href="/web_shop/admin">
+                <a href="">
                     <span class="las la-home"></span>
                     <span>Home</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="/web_shop/admin/products" class="active">
+                <a href="/web_shop/admin/products">
                     <span class="las la-project-diagram"></span>
                     <span>Sản phẩm</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="/web_shop/admin/feedbacks">
+                <a href="/web_shop/admin/feedbacks" class="active">
                     <span class="lar la-comments"></span>
                     <span>Phản hồi</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="/web_shop/admin/order">
+                <a href="/web_shop/admin/orders" >
                     <span class="las la-columns"></span>
                     <span>Đơn hàng</span>
                 </a>
@@ -98,50 +98,66 @@
         </header>
         <main>
             <div class="page-header">
-                <h1>Quản lí sản phẩm</h1>
+                <h1>Quản lí đơn hàng</h1>
                 <small>Chúc các bạn một ngày tốt lành!</small>
-            </div>
-            <div class="product-tag">
-                <div>
-                    <a href="/web_shop/admin/products" class="btn btn-white">Sản Phẩm</a>
-                </div>
-                <div>
-                    <a href="/web_shop/admin/products/brands" class="btn btn-white">Thương hiệu</a>
-                </div>
-                <div>
-                    <a href="/web_shop/admin/products/categories" class="btn btn-choosed">Loại sản phẩm</a>
-                </div>
             </div>
             <div class="table-product-container">
                 <div class="card table-products-alls">
                     <div class="card-head">
                         <div class="product-head">
                             <div>
-                                <h3>[[${title}]]</h3>
-                                <small>[[${_action}]] loại sản phẩm(brand)</small>
+                                <h3>Phản hồi</h3>
+                                <small>Quản lí phản hồi của khách hàng</small>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <form action="/web_shop/admin/products/categories/save" th:object="${category}">
-                                <input type="hidden" th:field="*{id}">
-                                <div class="form-group">
-                                    <label for="name">
-                                        <h4>Tên loại</h4>
-                                    </label>
-                                    <input type="text" id="name" class="form-control input" th:field="*{name}" />
-                                </div>
-                                <div class="card-footer border-top">
-                                    <div class="action-add-product">
-                                        <input type="submit" class="btn btn-save" value="Lưu"/>
-                                        <a href="/web_shop/admin/products/categories" class="btn btn-danger">Hủy</a>
+                        <th:block th:each="f : ${listFeedback}">
+                            <div class="feedback-product-item">
+                                <div class="feedback-product-item-left">
+                                    <div class="customer-info">
+                                        <div class="customer-info-image">
+                                            <img src="/img/1.jpg" alt="" />
+                                        </div>
+                                    </div>
+                                    <div class="feedback-content">
+                                        <div class="name-customer">
+                                            <div>
+                                                <h4 ><span style="color: #1b9ef8; font-style: normal;">[[${f.customerId.lastName}]] </span> <span style="font-style: normal">[[${#dates.format(f.modifiedDate, 'dd-MM-yyyy')}]]</span></h4>
+                                                <th:block th:each="i: ${#numbers.sequence(1, f.rate)}">
+                                                    <span class="las la-star"></span>
+                                                </th:block>
+                                            </div>
+                                        </div>
+                                        <div class="feedback-content-body">
+                                            <p>[[${f.content}]]</p>
+                                        </div>
+                                        <div class="response-feedback">
+                                            <p><a href="" alt="">PHẢN HỒI</a></p>
+                                            <div class="icon-action">
+                                                <span class="las la-thumbs-up"></span>
+                                                <span class="las la-thumbs-down"></span>
+                                                <span class="las la-heart"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </form>
+                                <div class="product-item">
+                                    <div class="product-image">
+                                        <img th:src="@{'/api/products/resources/images/' + ${f.productId.thumbnailPhoto}}" alt="Ao thun" />
+                                    </div>
+                                    <div class="product-info">
+                                        <p>[[${f.productId.name}]]</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+                    <div class="card-footer border-top">
+                        <div class="number-product">
+                            <h3>Đã có [[${amount}]] phản hổi từ khách hàng</h3>
                         </div>
                     </div>
-
                 </div>
             </div>
         </main>

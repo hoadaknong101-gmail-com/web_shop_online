@@ -1,5 +1,7 @@
 package com.hoadaknong.web_shop_online.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -9,9 +11,13 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer customerId;
+    @ManyToOne
+    @JoinColumn(name="customer_id")
+    private Customer customerId;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date orderDate;
-    private String status;
+    private Integer status;
     private String comment;
     private Double totalPrice;
 
@@ -19,12 +25,13 @@ public class Order {
     @JoinColumn(name = "delivery_address")
     private Address deliveryAddress;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date modifiedDate;
 
     public Order() {
     }
 
-    public Order(Integer id, Integer customerId, Date orderDate, String status, String comment, Double totalPrice, Address deliveryAddress, Date modifiedDate) {
+    public Order(Integer id, Customer customerId, Date orderDate, Integer status, String comment, Double totalPrice, Address deliveryAddress, Date modifiedDate) {
         this.id = id;
         this.customerId = customerId;
         this.orderDate = orderDate;
@@ -65,11 +72,11 @@ public class Order {
         this.id = id;
     }
 
-    public Integer getCustomerId() {
+    public Customer getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Integer customerId) {
+    public void setCustomerId(Customer customerId) {
         this.customerId = customerId;
     }
 
@@ -81,11 +88,11 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

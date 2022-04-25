@@ -9,7 +9,9 @@ import com.hoadaknong.web_shop_online.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderImplement implements OrderService {
@@ -19,6 +21,31 @@ public class OrderImplement implements OrderService {
 
     @Autowired
     private OrderDetailsRepository rpOrderDetails;
+
+    @Override
+    public List<Order> findAllOrderProccessing() {
+        return rpOrder.findAllByStatus(0);
+    }
+
+    @Override
+    public List<Order> findAllOrderDelivering() {
+        return rpOrder.findAllByStatus(1);
+    }
+
+    @Override
+    public List<Order> findAllOrderDeliveried() {
+        return rpOrder.findAllByStatus(2);
+    }
+
+    @Override
+    public List<Order> findAll() {
+        return rpOrder.findAll();
+    }
+
+    @Override
+    public Order getById(Integer id) {
+        return rpOrder.getById(id);
+    }
 
     @Override
     public void saveOrder(Order order) {
@@ -47,6 +74,18 @@ public class OrderImplement implements OrderService {
 
     @Override
     public List<OrderDetails> findByOrderId(Integer id) {
-        return null;
+        Order o = rpOrder.getById(id);
+        return rpOrderDetails.findAllByOrderId(o);
+    }
+
+
+    @Override
+    public List<Order> findAllOrderByOrderDateBetween(Date start, Date end) {
+        return rpOrder.findAllByOrderDateBetween(start, end);
+    }
+
+    @Override
+    public List<Order> findAllOrderByOrderDate(Date date) {
+        return rpOrder.findAllByOrderDate(date);
     }
 }

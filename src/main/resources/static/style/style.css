@@ -1,10 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap");
 
 :root {
-	--color-main: #6e00ff;
+	--color-main: #1b9ef8;
 	--color-secondary: #ffb100;
 	--bg-body: #f8f8fb;
-	--main-accent: #6307e2;
+	--main-accent: #1b9ef8;
 	--main-text: #8492a6;
 	--success: #28a745;
 	--danger: #dc3545;
@@ -596,6 +596,7 @@ table h3,
 
 .action-product {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-content: center;
 	gap: 0.5rem;
@@ -724,6 +725,10 @@ table tr th {
 	grid-template-columns: 30% auto;
 	gap: 1rem;
 }
+
+
+/*  */
+
 
 /*Responsive screen size*/
 @media only screen and (max-width: 1280px) {

@@ -6,6 +6,8 @@ import com.hoadaknong.web_shop_online.services.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FeedbackImplement implements FeedbackService {
 
@@ -20,5 +22,10 @@ public class FeedbackImplement implements FeedbackService {
     @Override
     public void deleteFeedbackById(Integer id) {
         rp.deleteById(id);
+    }
+
+    @Override
+    public List<Feedback> findAllFeedback() {
+        return rp.findAll();
     }
 }

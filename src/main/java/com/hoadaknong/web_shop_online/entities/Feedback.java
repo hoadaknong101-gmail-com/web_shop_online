@@ -1,6 +1,5 @@
 package com.hoadaknong.web_shop_online.entities;
 
-import com.hoadaknong.web_shop_online.entities.keys.FeedbackKey;
 
 import javax.persistence.*;
 import java.util.Date;
