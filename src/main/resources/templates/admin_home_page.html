@@ -4,12 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/img/icon_page.png" />
-    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" />
-    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="icon" th:href="@{/img/icon_page.png}" />
+    <link rel="stylesheet" th:href="@{https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/style/style.css}" />
+    <script th:src="@{https://cdn.jsdelivr.net/npm/apexcharts}"></script>
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js}"></script>
+    <script th:src="@{/js/script.js}" type="text/javascript"></script>
     <title>Admin Dashboard</title>
 </head>
-<body>
+<body onload="statisFunction()">
 <div class="page-wrapper">
     <input type="checkbox" name="" id="menu-toggle" />
     <div class="sidebar">
@@ -160,14 +163,14 @@
                                             </div>
                                             <div class="team-details">
                                                 <h4>[[${p.name}]]</h4>
-                                                <small>[[${p.category.name}]]</small>
+                                                <small>[[${p.categoryId.name}]]</small>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="company-info">
-                                            <h4>Interco</h4>
-                                            <small>Cty may mặc</small>
+                                            <h4>[[${p.productBrand.name}]]</h4>
+                                            <small>[[${p.productBrand.description}]]</small>
                                         </div>
                                     </td>
                                     <td>
@@ -179,7 +182,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="" class="btn btn-main">View</a>
+                                        <a th:href="@{'/web_shop/admin/products/update/' + ${p.id}}" class="btn btn-main">View</a>
                                     </td>
                                 </tr>
                             </th:block>
@@ -197,152 +200,28 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="user-info">
-                            <div>
-                                <img src="img/1.jpg" alt="" />
-                                <div class="user-details">
-                                    <h4>Rosé</h4>
-                                    <small>Hàn Quốc</small>
-                                    <p>Xem <a href="">Chi tiết</a></p>
+                        <th:block th:each="e : ${listUser}">
+                            <div class="user-info">
+                                <div>
+                                    <img src="/img/user_icon.png" alt="" />
+                                    <div class="user-details">
+                                        <h4>[[${e.lastName}]]</h4>
+                                        <small>[[${e.job}]]</small>
+                                        <p>Xem <a th:href="@{'/web_shop/admin/customers/details/' + ${e.id}}">Chi tiết</a></p>
+                                    </div>
+                                </div>
+                                <div class="ordered">
+                                    <h3>25</h3>
+                                    <span>Đơn</span>
                                 </div>
                             </div>
-                            <div class="ordered">
-                                <h3>25</h3>
-                                <span>Đơn</span>
-                            </div>
-                        </div>
-                        <div class="user-info">
-                            <div>
-                                <img src="img/jisoo_1.jpg" alt="" />
-                                <div class="user-details">
-                                    <h4>Jisoo</h4>
-                                    <small>Hàn Quốc</small>
-                                    <p>Xem <a href="">chi tiết</a></p>
-                                </div>
-                            </div>
-                            <div class="ordered">
-                                <h3>15</h3>
-                                <span>Đơn</span>
-                            </div>
-                        </div>
-                        <div class="user-info">
-                            <div>
-                                <img src="img/lisa_1.jpg" alt="" />
-                                <div class="user-details">
-                                    <h4>Lisa</h4>
-                                    <small>Thái Lan</small>
-                                    <p>Xem <a href="">chi tiết</a></p>
-                                </div>
-                            </div>
-                            <div class="ordered">
-                                <h3>40</h3>
-                                <span>Đơn</span>
-                            </div>
-                        </div>
-                        <div class="user-info">
-                            <div>
-                                <img src="img/jennie_1.jpg" alt="" />
-                                <div class="user-details">
-                                    <h4>Jennie</h4>
-                                    <small>Australia</small>
-                                    <p>Xem <a href="">chi tiết</a></p>
-                                </div>
-                            </div>
-                            <div class="ordered">
-                                <h3>80</h3>
-                                <span>Đơn</span>
-                            </div>
-                        </div>
+                        </th:block>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-    var sevenDay, valueOfTotal
-    $.ajax({
-        url: '/api/web_shop/admin/revenue',
-        type: 'GET',
-        dataType: "json",
-        success: displayAll
-    });
 
-    function displayAll(data){
-        alert(data.date)
-        console.log(data)
-        sevenDay = data.date
-        valueOfTotal = data.value
-    }
-
-    var options = {
-        chart: {
-            type: "line",
-            height: "280px",
-            fontFamily: "Nunito",
-            toolbar: {
-                show: true,
-            },
-        },
-        stroke: {
-            curve: "straight",
-            width: 6,
-            colors: ["#6E00FF"],
-        },
-        markers: {
-            size: 7,
-            colors: ["#6E00FF"],
-        },
-        grid: {
-            strokeDashArray: 10,
-        },
-        series: [
-            {
-                name: "Doanh thu",
-                data: valueOfTotal,
-            },
-        ],
-        xaxis: {
-            categories: sevenDay,
-        },
-    };
-
-    var chart = new ApexCharts(document.querySelector("#chart"), options);
-    chart.render();
-    // Radial chart
-
-    var optionsRadial = {
-        series: [44, 55, 67, 83],
-        chart: {
-            height: 350,
-            type: "radialBar",
-        },
-        plotOptions: {
-            radialBar: {
-                dataLabels: {
-                    name: {
-                        fontSize: "22px",
-                    },
-                    value: {
-                        fontSize: "16px",
-                    },
-                    total: {
-                        show: true,
-                        label: "Tổng",
-                        formatter: function (w) {
-                            // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
-                            return 249;
-                        },
-                    },
-                },
-            },
-        },
-        labels: ["Đang xử lý", "Đã tiếp nhận", "Đang giao", "Đã giao"],
-    };
-    var chartRadial = new ApexCharts(document.querySelector("#emailChart"), optionsRadial);
-    chartRadial.render();
-</script>
 </body>
 </html>
