@@ -11,7 +11,6 @@ import com.hoadaknong.web_shop_online.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -58,7 +57,7 @@ public class ViewController {
         List<Product> productList = productRepository.findAll();
         model.addAttribute("listProduct",productList);
 
-        return "client_product";
+        return "products";
     }
 
     // Product pages
