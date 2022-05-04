@@ -36,7 +36,7 @@ public class HomeAdminController {
         model.addAttribute("listFourProduct",listProduct);
         model.addAttribute("listUser",customerList);
 
-        return "admin_home_page";
+        return "admin_page/admin_home_page";
     }
 
 }

@@ -1,6 +1,7 @@
 package com.hoadaknong.web_shop_online.entities.keys;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class OrderDetailsKey implements Serializable {
     private Integer productId;
@@ -28,4 +29,17 @@ public class OrderDetailsKey implements Serializable {
     }
 
     public OrderDetailsKey(){}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderDetailsKey that = (OrderDetailsKey) o;
+        return Objects.equals(productId, that.productId) && Objects.equals(orderId, that.orderId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productId, orderId);
+    }
 }

@@ -51,13 +51,13 @@
                 </a>
             </div>
             <div class="menu-item">
-                <a href="/web_shop/admin/feedbacks" class="active">
+                <a href="/web_shop/admin/feedbacks">
                     <span class="lar la-comments"></span>
                     <span>Phản hồi</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a href="/web_shop/admin/orders" >
+                <a href="/web_shop/admin/orders" class="active">
                     <span class="las la-columns"></span>
                     <span>Đơn hàng</span>
                 </a>
@@ -69,7 +69,7 @@
                 </a>
             </div>
             <div class="menu-item">
-                <a href="/web_shop/admin/stats">
+                <a href="/web_shop/admin/statistic">
                     <span class="las la-chart-bar"></span>
                     <span>Thống kê</span>
                 </a>
@@ -101,61 +101,93 @@
                 <h1>Quản lí đơn hàng</h1>
                 <small>Chúc các bạn một ngày tốt lành!</small>
             </div>
+            <div class="product-tag">
+                <div>
+                    <a href="/web_shop/admin/orders" class="btn" th:classappend="${status} eq 0 ? 'btn-choosed' : 'btn-white'" >Chờ xử lý</a>
+                </div>
+                <div>
+                    <a href="/web_shop/admin/orders_delivering" class="btn" th:classappend="${status} eq 1 ? 'btn-choosed' : 'btn-white'">Đang giao</a>
+                </div>
+                <div>
+                    <a href="/web_shop/admin/orders_deliveried" class="btn " th:classappend="${status} eq 2 ? 'btn-choosed' : 'btn-white'">Đã giao</a>
+                </div>
+            </div>
             <div class="table-product-container">
                 <div class="card table-products-alls">
                     <div class="card-head">
                         <div class="product-head">
                             <div>
-                                <h3>Phản hồi</h3>
-                                <small>Quản lí phản hồi của khách hàng</small>
+                                <h3>Đơn hàng</h3>
+                                <small>Quản lý đơn hàng</small>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <th:block th:each="f : ${listFeedback}">
-                            <div class="feedback-product-item">
-                                <div class="feedback-product-item-left">
-                                    <div class="customer-info">
-                                        <div class="customer-info-image">
-                                            <img src="/img/1.jpg" alt="" />
-                                        </div>
-                                    </div>
-                                    <div class="feedback-content">
-                                        <div class="name-customer">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Khách hàng</th>
+                                <th>Ngày đặt</th>
+                                <th>Trạng thái</th>
+                                <th>Tổng tiền</th>
+                                <th>Địa chỉ</th>
+                                <th>Lưu ý</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <div th:unless="${amount} eq 0">
+                                <th:block th:each="o : ${listOrder}">
+                                    <tr class="order-item">
+                                        <td class="id-order">[[${o.id}]]</td>
+                                        <td class="name-customer">
                                             <div>
-                                                <h4 ><span style="color: #1b9ef8; font-style: normal;">[[${f.customerId.lastName}]] </span> <span style="font-style: normal">[[${#dates.format(f.modifiedDate, 'dd-MM-yyyy')}]]</span></h4>
-                                                <th:block th:each="i: ${#numbers.sequence(1, f.rate)}">
-                                                    <span class="las la-star"></span>
-                                                </th:block>
+                                                <p>[[${o.customerId.firstName}]] [[${o.customerId.lastName}]]</p>
                                             </div>
-                                        </div>
-                                        <div class="feedback-content-body">
-                                            <p>[[${f.content}]]</p>
-                                        </div>
-                                        <div class="response-feedback">
-                                            <p><a href="" alt="">PHẢN HỒI</a></p>
-                                            <div class="icon-action">
-                                                <span class="las la-thumbs-up"></span>
-                                                <span class="las la-thumbs-down"></span>
-                                                <span class="las la-heart"></span>
+                                        </td>
+                                        <td class="date-order">
+                                            <p>[[${o.orderDate}]]</p>
+                                        </td>
+                                        <td class="status-order">
+                                            <div th:if="${o.status} eq 0">
+                                                <p>Đang chờ xử lý</p>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="product-item">
-                                    <div class="product-image">
-                                        <img th:src="@{'/api/products/resources/images/' + ${f.productId.thumbnailPhoto}}" alt="Ao thun" />
-                                    </div>
-                                    <div class="product-info">
-                                        <p>[[${f.productId.name}]]</p>
-                                    </div>
-                                </div>
+                                            <div th:if="${o.status} eq 1">
+                                                <p>Dang giao hang</p>
+                                            </div>
+                                            <div th:if="${o.status} eq 2">
+                                                <p>Da giao hang</p>
+                                            </div>
+                                        </td>
+                                        <td class="total-price">
+                                            <p>[[${o.totalPrice}]]</p>
+                                        </td>
+                                        <td class="address-delivery">
+                                            <p th:if="${o.deliveryAddress}">[[${o.deliveryAddress.addressLine}]]</p>
+                                        </td>
+                                        <td class="comment-order">
+                                            <p>[[${o.comment}]]</p>
+                                        </td>
+                                        <td class="action-product">
+                                            <a th:href="@{'/web_shop/admin/orders/details/' + ${o.id}}" class="btn btn-main bg-success">Chi tiết</a>
+                                            <a th:href="@{'/web_shop/admin/orders/cancel/' + ${o.id}}" class="btn btn-main bg-danger">Hủy đơn</a>
+                                        </td>
+                                    </tr>
+                                </th:block>
                             </div>
-                        </th:block>
+                            </tbody>
+                        </table>
+                        <div th:if="${amount} eq 0" style="text-align: center; margin: 100px 0 100px 0;">
+                            <h3>Chưa có đơn hàng nào</h3>
+                        </div>
                     </div>
                     <div class="card-footer border-top">
                         <div class="number-product">
-                            <h3>Đã có [[${amount}]] phản hổi từ khách hàng</h3>
+                            <h3>Đang hiển thị [[${amount}]] đơn hàng</h3>
+                        </div>
+                        <div class="paging">
+                            <a class="btn btn-primary">1</a>
                         </div>
                     </div>
                 </div>

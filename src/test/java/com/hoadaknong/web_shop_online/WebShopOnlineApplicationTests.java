@@ -4,6 +4,7 @@ import com.hoadaknong.web_shop_online.entities.Customer;
 import com.hoadaknong.web_shop_online.entities.Order;
 import com.hoadaknong.web_shop_online.entities.Product;
 import com.hoadaknong.web_shop_online.entities.ProductCategory;
+import com.hoadaknong.web_shop_online.repositories.CustomerRepository;
 import com.hoadaknong.web_shop_online.repositories.OrderRepository;
 import com.hoadaknong.web_shop_online.repositories.ProductRepository;
 import com.hoadaknong.web_shop_online.services.*;
@@ -45,10 +46,17 @@ class WebShopOnlineApplicationTests {
 	@Autowired
 	StatsService statsService;
 
+	@Autowired
+	AuthenticationService authenticationService;
+
+	@Autowired
+	CustomerRepository rp;
+
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	@Test
 	void contextLoads() {
+		System.out.println(authenticationService.isRightInformation("hoagigg@gmail.com","123"));
 	}
 
 	@Test

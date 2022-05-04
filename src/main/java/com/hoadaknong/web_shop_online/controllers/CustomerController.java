@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -33,16 +35,50 @@ public class CustomerController {
     @Autowired
     SendMailService mailService;
 
-    @Autowired
-    private ServletContext context;
 
     @RequestMapping(value="/sign_up")
-    public String signUp(Customer c, Model model){
-        Role roleDefault = roleService.getRoleById(3);
-        c.setRole(roleDefault);
-        customerService.saveCustomer(c);
+    public String signUp(Customer c, Model model, RedirectAttributes attributes){
+        Customer existCustomer = customerService.getCustomerByEmail(c.getEmail());
+        if(existCustomer != null){
+            Role roleDefault = roleService.getRoleById(3);
+            c.setRole(roleDefault);
+            customerService.saveCustomer(c);
+            return "redirect:/web_shop/admin/products";
+        }
+        attributes.addFlashAttribute("message","Email đã được sử dụng");
+        return "redirect:/sign_in_sign_up";
+    }
+    @RequestMapping(value="/sign_in")
+    public String signIn(@RequestParam("email") String email,
+                         @RequestParam("password") String password,
+                         RedirectAttributes attributes,
+                         HttpServletRequest request){
+        Boolean flag = authenticationService.isRightInformation(email, password);
+        if(flag){
+            attributes.addFlashAttribute("message","Đăng nhập thành công!");
+            // Lấy ra tài khoản và cập nhật thời gian truy cập
+            Customer c = customerService.getCustomerByEmailAndPassword(email,password);
+            c.setModifiedDate(new Date());
+            customerService.saveCustomer(c);
+            HttpSession session = request.getSession();
+            session.setAttribute("user",c);
+            session.setAttribute("userId",c.getId());
+            session.setAttribute("roleId",c.getRole().getId());
 
-        return "redirect:/web_shop/admin/products";
+            return "redirect:/web_shop/admin/";
+        } else {
+            attributes.addFlashAttribute("message","Sai thông tin tài khoản hoặc mật khẩu");
+            return "redirect:/sign_in_sign_up";
+        }
+    }
+
+    @RequestMapping(value = "/sign_out")
+    public String signOut(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.removeAttribute("user");
+        session.removeAttribute("userId");
+
+        return "redirect:/index";
     }
 
     @RequestMapping(value="/web_shop/admin/customers/details/{id}")
@@ -71,28 +107,10 @@ public class CustomerController {
         return "redirect:/web_shop/admin/customers";
     }
 
-    @RequestMapping(value="/sign_in")
-    public String signIn(@RequestParam("email") String email,
-                         @RequestParam("password") String password,
-                         RedirectAttributes attributes){
-        Boolean flag = authenticationService.isRightInformation(email, password);
-        if(flag){
-            attributes.addFlashAttribute("message","Đăng nhập thành công!");
-            // Lấy ra tài khoản và cập nhật thời gian truy cập
-            Customer c = customerService.getCustomerByEmailAndPassword(email,password);
-            c.setModifiedDate(new Date());
-            customerService.saveCustomer(c);
-
-            return "redirect:/web_shop/admin/products";
-        } else {
-            attributes.addFlashAttribute("message","Sai thông tin tài khoản hoặc mật khẩu");
-            return "redirect:/sign_in_sign_up";
-        }
-    }
-
     @RequestMapping(value="/forgot_password")
     public String getPassword(@RequestParam("email") String email,
-                              RedirectAttributes attributes){
+                              RedirectAttributes attributes,
+                              HttpServletRequest request){
         Customer customer = customerService.getCustomerByEmail(email);
         if(customer != null){
             System.out.println(customer.toString());
@@ -101,7 +119,7 @@ public class CustomerController {
             String subject ="Reset password, " +
                     "Hello " + customer.getFirstName() + " " +
                     customer.getLastName();
-            String linkReset = context.getContextPath().toString() +
+            String linkReset = request.getContextPath().toString() +
                     "/reset_password/" +
                     customer.getEmail();
             String body = "Here is your link to reset your password: \n" + linkReset;
@@ -129,5 +147,20 @@ public class CustomerController {
         c.setPassword(password);
         customerService.saveCustomer(c);
         return "redirect:/sign_in_sign_up";
+    }
+
+    @RequestMapping(value ="/customer/{id}")
+    public String customerPage(@PathVariable("id") Integer id,
+                               Model model,
+                               HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Integer currentUserId = (Integer) session.getAttribute("userId");
+        Customer customer = customerService.getCustomerById(id);
+        if(currentUserId != customer.getId()){
+            return "redirect:/index";
+        }else{
+            model.addAttribute("customer", customer);
+            return "client_page/customer";
+        }
     }
 }

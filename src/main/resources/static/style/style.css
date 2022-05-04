@@ -40,7 +40,7 @@ body {
 }
 
 #menu-toggle:checked ~ .main-content .emails-card {
-	max-width: 344;
+	max-width: 344px;
 }
 
 .page-wrapper {
@@ -59,7 +59,7 @@ body {
 	top: 0;
 	background: var(--color-main);
 	z-index: -1;
-	border-radius: 0px 0px 0px 100px;
+	border-radius: 0 0 0 100px;
 }
 
 .sidebar {
@@ -82,14 +82,13 @@ body {
 
 .profile-card {
 	text-align: center;
-	margin: 1.5rem 0rem;
+	margin: 1.5rem 0;
 }
 
 .profile-img {
 	height: 100px;
 	width: 100px;
 	border-radius: 50%;
-	margin: auto;
 	background-size: cover;
 	background-repeat: no-repeat;
 	margin-top: 1.7rem;
@@ -189,7 +188,7 @@ body {
 .menu-item a {
 	display: block;
 	width: 100%;
-	padding: 1rem 0rem;
+	padding: 1rem 0;
 	border-radius: 10px;
 }
 
@@ -230,7 +229,7 @@ body {
 	padding: 1rem;
 	border-radius: 10px;
 	background: var(--color-secondary);
-	margin: 2rem 0rem;
+	margin: 2rem 0;
 	color: #fff;
 	box-shadow: var(--shadow);
 }
@@ -302,14 +301,14 @@ header label {
 
 .head-avatar span {
 	margin-right: 0.1rem;
-	padding: 0rem 0.5rem;
+	padding: 0 0.5rem;
 	font-size: 0.85rem;
 	font-weight: 600;
 }
 
 .page-header {
 	color: #fff;
-	margin: 1rem 0rem;
+	margin: 1rem 0;
 }
 
 .analytics {
@@ -351,7 +350,7 @@ header label {
 }
 
 .chart-wrapper {
-	padding-top: 1rem 0rem;
+	padding-top: 1rem;
 }
 
 .emails-info {
@@ -752,7 +751,7 @@ table tr th {
 	}
 }
 
-@media only screen and (max-width: 640) {
+@media only screen and (max-width: 640px) {
 	.page-wrapper::before {
 		min-width: 640px;
 	}

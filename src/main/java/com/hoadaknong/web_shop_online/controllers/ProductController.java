@@ -113,7 +113,7 @@ public class ProductController {
         model.addAttribute("listCategory", listCategory);
         model.addAttribute("product",getProduct);
 
-        return "admin_product_product_update_product";
+        return "admin_page/admin_product_product_update_product";
     }
 
 
@@ -126,7 +126,7 @@ public class ProductController {
         model.addAttribute("title","Cập nhật thương hiệu");
         model.addAttribute("_action","Cập nhật");
 
-        return "admin_product_brand_form";
+        return "admin_page/admin_product_brand_form";
     }
 
     @RequestMapping(value ="/brands/save")
@@ -153,7 +153,7 @@ public class ProductController {
         model.addAttribute("listCategory",listCat);
         model.addAttribute("amount",amount);
 
-        return "admin_product_category";
+        return "admin_page/admin_product_category";
     }
 
     @RequestMapping(value="/categories/update/{id}")
@@ -165,7 +165,7 @@ public class ProductController {
         model.addAttribute("title","Cập nhật loại sản phẩm");
         model.addAttribute("_action","Cập nhật");
 
-        return "admin_product_category_form";
+        return "admin_page/admin_product_category_form";
     }
 
     @RequestMapping(value = "/categories/save")

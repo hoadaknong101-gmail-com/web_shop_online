@@ -12,6 +12,6 @@ public class StatisticController {
     @RequestMapping(value={"/",""}, method = RequestMethod.GET)
     public String statisticPage(Model model){
 
-        return "admin_statistic";
+        return "admin_page/admin_statistic";
     }
 }

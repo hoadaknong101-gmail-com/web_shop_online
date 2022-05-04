@@ -32,6 +32,6 @@ public class FeedbackController {
         model.addAttribute("listFeedback",listFeedback);
         model.addAttribute("amount",amount);
 
-        return "admin_feedback";
+        return "admin_page/admin_feedback";
     }
 }

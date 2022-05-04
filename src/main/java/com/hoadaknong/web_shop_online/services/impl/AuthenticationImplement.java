@@ -17,6 +17,6 @@ public class AuthenticationImplement implements AuthenticationService {
     @Override
     public Boolean isRightInformation(String username, String password) {
         Optional<Customer> user = rp.findCustomerByEmailAndPassword(username,password);
-        return user.isPresent()? true : false;
+        return user == null? false : true;
     }
 }

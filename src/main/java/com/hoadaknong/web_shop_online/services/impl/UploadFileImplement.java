@@ -113,7 +113,6 @@ public class UploadFileImplement implements UploadFileService {
             System.out.println("Details");
             e.printStackTrace();
         }
-
     }
 
 

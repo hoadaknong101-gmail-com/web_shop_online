@@ -38,7 +38,7 @@ public class ViewController {
         Customer c = new Customer();
         model.addAttribute("customer",c);
 
-        return "sign_in_sign_up_form";
+        return "client_page/sign_in_sign_up_form";
     }
 
     @RequestMapping(value ="/check_mail")
@@ -57,8 +57,32 @@ public class ViewController {
         List<Product> productList = productRepository.findAll();
         model.addAttribute("listProduct",productList);
 
-        return "products";
+        return "client_page/products";
     }
+    @RequestMapping(value = "/index",method = RequestMethod.GET)
+    public String homePage(Model model){
+
+        return "client_page/index";
+    }
+
+    @RequestMapping(value="/contact")
+    public String contactPage(Model model){
+
+        return "client_page/contact";
+    }
+
+    @RequestMapping(value="/about")
+    public String aboutPage(Model model){
+
+        return "client_page/about";
+    }
+
+    @RequestMapping(value="/cart")
+    public String cartPage(Model model){
+
+        return "client_page/cart";
+    }
+
 
     // Product pages
 
@@ -68,7 +92,7 @@ public class ViewController {
         int amount = productList.size();
         model.addAttribute("listProducts",productList);
         model.addAttribute("amount",amount);
-        return "admin_product_product";
+        return "admin_page/admin_product_product";
     }
 
 
@@ -82,7 +106,7 @@ public class ViewController {
         model.addAttribute("listBrand",listBrand);
         model.addAttribute("listCategory", listCategory);
 
-        return "admin_product_product_add_product";
+        return "admin_page/admin_product_product_add_product";
     }
     @RequestMapping(value ="/web_shop/admin/products/brands")
     public String brandPage(Model model){
@@ -92,7 +116,7 @@ public class ViewController {
         model.addAttribute("listBrand",listBrand);
         model.addAttribute("amount",amount);
 
-        return "admin_product_brand";
+        return "admin_page/admin_product_brand";
     }
     @RequestMapping(value ="/web_shop/admin/products/brands/new")
     public String newBrand(Model model){
@@ -102,7 +126,7 @@ public class ViewController {
         model.addAttribute("_action","Thêm");
         model.addAttribute("brand",b);
 
-        return "admin_product_brand_form";
+        return "admin_page/admin_product_brand_form";
     }
 
     @RequestMapping(value = "/web_shop/admin/products/categories/new")
@@ -113,7 +137,7 @@ public class ViewController {
         model.addAttribute("title","Thêm loại sản phẩm");
         model.addAttribute("_action","Thêm");
 
-        return "admin_product_category_form";
+        return "admin_page/admin_product_category_form";
     }
 
     // Customer
@@ -124,7 +148,7 @@ public class ViewController {
 
         model.addAttribute("listCustomer", listCustomer);
 
-        return "admin_customer";
+        return "admin_page/admin_customer";
     }
 
 

@@ -25,7 +25,7 @@ public class OrderController {
         model.addAttribute("amount",amount);
         model.addAttribute("status",status);
 
-        return "admin_order";
+        return "admin_page/admin_order";
     }
 
     @RequestMapping(value="/web_shop/admin/orders_delivering")
@@ -38,7 +38,7 @@ public class OrderController {
         model.addAttribute("status",status);
 
 
-        return "admin_order";
+        return "admin_page/admin_order";
     }
 
     @RequestMapping(value="/web_shop/admin/orders_deliveried")
@@ -50,7 +50,7 @@ public class OrderController {
         model.addAttribute("amount",amount);
         model.addAttribute("status",status);
 
-        return "admin_order";
+        return "admin_page/admin_order";
     }
 
     @RequestMapping(value="/web_shop/admin/orders/details/{id}")
@@ -60,6 +60,6 @@ public class OrderController {
         model.addAttribute("order",order);
         model.addAttribute("listDetails",listDetails);
 
-        return "admin_order_form";
+        return "admin_page/admin_order_form";
     }
 }
