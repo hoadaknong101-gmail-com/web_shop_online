@@ -36,7 +36,7 @@
     <table class="table table-cart">
       <thead class="thead-dark table-content">
       <tr>
-        <th scope="col-6">Sản phẩm</th>
+        <th scope="col">Sản phẩm</th>
         <th scope="col">Đơn giá</th>
         <th scope="col">Số lượng</th>
         <th scope="col">Thành tiền</th>
@@ -44,52 +44,34 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>Áo thun</td>
-        <td>150.000</td>
-        <td>
-          <div class="quantity buttons_added">
-            <input type="button" value="-" class="minus" /><input
-                  type="number"
-                  step="1"
-                  min="1"
-                  max=""
-                  name="quantity"
-                  value="1"
-                  title="Qty"
-                  class="input-text qty text"
-                  size="4"
-                  pattern=""
-                  inputmode=""
-          /><input type="button" value="+" class="plus" />
-          </div>
-        </td>
-        <td>150.000</td>
-        <td><a type="button" class="btn btn-danger">Xóa</a></td>
-      </tr>
-      <tr>
-        <td>Áo thun</td>
-        <td>150.000</td>
-        <td>
-          <div class="quantity buttons_added">
-            <input type="button" value="-" class="minus" /><input
-                  type="number"
-                  step="1"
-                  min="1"
-                  max=""
-                  name="quantity"
-                  value="1"
-                  title="Qty"
-                  class="input-text qty text"
-                  size="4"
-                  pattern=""
-                  inputmode=""
-          /><input type="button" value="+" class="plus" />
-          </div>
-        </td>
-        <td>150.000</td>
-        <td><a type="button" class="btn btn-danger">Xóa</a></td>
-      </tr>
+      <th:block th:each="d : ${listOrderDetail}">
+        <tr>
+          <td style="display: flex; align-items: center">
+            <img style=" border-radius: 5px;margin-right: 10px;width: 100px; height: 100px" th:src="@{'/api/products/resources/images/' + ${d.productId.thumbnailPhoto}}"></img>
+            <a style="color: #1b1e21 " th:href="@{'/product/single_product/' + ${d.productId.id}}"><h5>[[${d.productId.name}]]</h5></a>
+          </td>
+          <td>[[${#numbers.formatDecimal(d.productId.listPrice, 0, 'COMMA', 0, 'POINT')}]] ₫</td>
+          <td>
+            <div class="quantity buttons_added">
+              <input type="button" value="-" class="minus" /><input
+                    type="number"
+                    step="1"
+                    min="1"
+                    max=""
+                    name="quantity"
+                    th:value="${d.quantity}"
+                    title="Qty"
+                    class="input-text qty text"
+                    size="4"
+                    pattern=""
+                    inputmode=""
+            /><input type="button" value="+" class="plus" />
+            </div>
+          </td>
+          <td>[[${#numbers.formatDecimal(d.total, 0, 'COMMA', 0, 'POINT')}]] ₫</td>
+          <td><a type="button" class="btn btn-danger">Xóa</a></td>
+        </tr>
+      </th:block>
       </tbody>
     </table>
     <div class="btn-container">
@@ -110,7 +92,7 @@
         </tr>
         <tr>
           <td>Tổng cộng</td>
-          <td>300.000 VNĐ</td>
+          <td>[[${#numbers.formatDecimal(order.totalPrice, 0, 'COMMA', 0, 'POINT')}]] VNĐ</td>
         </tr>
         </tbody>
       </table>

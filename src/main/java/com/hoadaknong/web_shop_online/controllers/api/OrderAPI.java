@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -34,7 +35,6 @@ public class OrderAPI {
     public String addProductToCart(@PathVariable Integer productId,
                                    HttpServletRequest request){
         HttpSession session = request.getSession();
-
         Product product = productService.findProductById(productId);
         Integer customerId = (Integer) session.getAttribute("userId");
 
@@ -63,7 +63,14 @@ public class OrderAPI {
                     orderDetails.setUnitPrice(product.getListPrice());
                     orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
                 }
+                List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
+                double sum = 0;
+                for(OrderDetails o: listOrderDetails){
+                    sum += o.getTotal();
+                }
+                order.setTotalPrice(sum);
                 orderService.saveItem(orderDetails);
+                orderService.saveOrder(order);
                 return "Thêm thành công";
             } else { // Nếu chưa có giỏ hàng mới
                 Order order = new Order();
@@ -81,7 +88,14 @@ public class OrderAPI {
                 orderDetails.setQuantity(1);
                 orderDetails.setUnitPrice(product.getListPrice());
                 orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
+                List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
+                double sum = 0;
+                for(OrderDetails o: listOrderDetails){
+                    sum += o.getTotal();
+                }
+                order.setTotalPrice(sum);
                 orderService.saveItem(orderDetails);
+                orderService.saveOrder(order);
                 return "Thêm thành công";
             }
         }
@@ -89,7 +103,73 @@ public class OrderAPI {
 
     @RequestMapping("/cart/add_product/{productId}/{quantity}")
     public String addProductToCartAndQuantity(@PathVariable Integer productId,
+                                              @PathVariable Integer quantity,
                                               HttpServletRequest request){
-        return "";
+        HttpSession session = request.getSession();
+        Product product = productService.findProductById(productId);
+        Integer customerId = (Integer) session.getAttribute("userId");
+        if(customerId == null){
+            return "Bạn hãy đăng nhập trước";
+        }else{
+            Customer customer = customerService.getCustomerById(customerId);
+            Optional<Order> orderFound = orderService.findOrderByCustomerAndStatus(customer,-1);
+            if(orderFound.isPresent()){ // Đã có giỏ hàng
+                Order order = orderFound.get();
+                OrderDetails orderDetails = null;
+                Optional<OrderDetails> orderDetailsFound = orderService.
+                        findOrderDetailsByProductIdAndOrderId(product.getId(),order.getId());
+                if(orderDetailsFound.isPresent()){
+                    orderDetails = orderDetailsFound.get();
+                    orderDetails.setModifiedDate(new Date());
+                    orderDetails.setQuantity(orderDetails.getQuantity() + quantity);
+                    orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
+                }else{
+                    orderDetails = new OrderDetails();
+                    orderDetails.setOrderId(order);
+                    orderDetails.setModifiedDate(new Date());
+                    orderDetails.setProductId(product);
+                    orderDetails.setQuantity(quantity);
+                    orderDetails.setUnitPrice(product.getListPrice());
+                    orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
+                }
+                List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
+                double sum = 0;
+                for(OrderDetails o: listOrderDetails){
+                    sum += o.getTotal();
+                }
+                order.setTotalPrice(sum);
+                orderService.saveItem(orderDetails);
+                orderService.saveOrder(order);
+                return "Thêm thành công";
+            } else { // Nếu chưa có giỏ hàng mới
+                Order order = new Order();
+                order.setStatus(-1);
+                order.setModifiedDate(new Date());
+                order.setCustomerId(customer);
+
+
+                OrderDetails orderDetails = new OrderDetails();
+
+                orderDetails.setOrderId(order);
+                orderDetails.setModifiedDate(new Date());
+                orderDetails.setProductId(product);
+                orderDetails.setQuantity(1);
+                orderDetails.setUnitPrice(product.getListPrice());
+                orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
+
+                List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
+                double sum = 0;
+                for(OrderDetails o: listOrderDetails){
+                    sum += o.getTotal();
+                }
+                order.setTotalPrice(sum);
+                orderService.saveItem(orderDetails);
+                orderService.saveOrder(order);
+
+                orderService.saveItem(orderDetails);
+                orderService.saveOrder(order);
+                return "Thêm thành công";
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.hoadaknong.web_shop_online.controllers;
 
 import com.hoadaknong.web_shop_online.entities.Customer;
 import com.hoadaknong.web_shop_online.entities.Order;
+import com.hoadaknong.web_shop_online.entities.OrderDetails;
 import com.hoadaknong.web_shop_online.services.CustomerService;
 import com.hoadaknong.web_shop_online.services.OrderService;
 import com.hoadaknong.web_shop_online.services.ProductService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -49,11 +51,11 @@ public class OrderController {
             order.setCustomerId(customer);
             order.setTotalPrice(0.0);
             order.setModifiedDate(new Date());
-
             orderService.saveOrder(order);
         }
-        model.addAttribute("order",order);
-
+        List<OrderDetails> listOrderDetail = orderService.findByOrderId(order.getId());
+        model.addAttribute("listOrderDetail", listOrderDetail);
+        model.addAttribute("order", order);
         return "client_page/cart";
     }
 

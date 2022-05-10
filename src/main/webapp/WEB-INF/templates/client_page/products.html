@@ -55,11 +55,8 @@
                                     <li>
                                         <a th:href="@{'/product/single_product/' + ${p.id}}"><i class="fa fa-eye"></i></a>
                                     </li>
-                                    <li>
-                                        <a href="single-product.html"><i class="fa fa-star"></i></a>
-                                    </li>
                                     <li th:onclick="'addProductToCart(\'' + ${p.id} + '\');'">
-                                        <a th:onclick="'addProductToCart(\'' + ${p.id} + '\');'"><i class="fa fa-shopping-cart"></i></a>
+                                        <a><i class="fa fa-shopping-cart"></i></a>
                                     </li>
                                 </ul>
                             </div>

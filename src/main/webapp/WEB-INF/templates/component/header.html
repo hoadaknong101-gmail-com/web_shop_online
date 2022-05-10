@@ -35,20 +35,17 @@
                                     <div th:if="${session.roleId == 3}">
                                         <li><a th:href="@{/about}">Giới thiệu</a></li>
                                         <li><a th:href="@{/products}">Sản phẩm</a></li>
-                                        <li><a th:href="@{/cart}">Giỏ hàng</a></li>
                                         <li><a th:href="@{/contact}">Liên hệ</a></li>
                                     </div>
                                     <div th:if="${session.roleId == 1 or session.roleId == 2}">
                                         <li><a th:href="@{/about}">Giới thiệu</a></li>
                                         <li><a th:href="@{/web_shop/admin/}">Trang quản trị</a></li>
                                         <li><a th:href="@{/products}">Sản phẩm</a></li>
-                                        <li><a th:href="@{'/order/' + ${session.userId}}">Giỏ hàng</a></li>
                                         <li><a th:href="@{/contact}">Liên hệ</a></li>
                                     </div>
                                     <div th:unless="${session.roleId == 3 or session.roleId == 1 or session.roleId == 2}">
                                         <li><a th:href="@{/about}">Giới thiệu</a></li>
                                         <li><a th:href="@{/products}">Sản phẩm</a></li>
-                                        <li><a th:href="@{/sign_in_sign_up}">Giỏ hàng</a></li>
                                         <li><a th:href="@{/contact}">Liên hệ</a></li>
                                     </div>
                                 </ul>
@@ -91,8 +88,6 @@
         </div>
     </header>
 </div>
-
-
 <script>
     $(function () {
         var selectedClass = "";

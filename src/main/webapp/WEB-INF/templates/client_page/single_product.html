@@ -82,7 +82,7 @@
                     <div class="total">
                         <h4 id="total">Tổng: [[${#numbers.formatDecimal(product.listPrice, 0, 'COMMA', 0, 'POINT')}]] ₫</h4>
                         <br>
-                        <div class="main-border-button"><a href="#">Thêm vào giỏ hàng</a></div>
+                        <div th:onclick="'addProductToCartAndQuantity(\'' + ${product.id} + '\');'" class="main-border-button"><a>Thêm vào giỏ hàng</a></div>
                     </div>
                 </div>
             </div>
