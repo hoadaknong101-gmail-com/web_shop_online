@@ -1,19 +1,26 @@
 
-let sevenDay, valueOfTotal
+let sevenDay, valueOfTotal, fourStatus, valueOfEachStatus
 $.ajax({
     url: '/api/web_shop/admin/revenue',
+    type: 'GET',
+    dataType: "json",
+    success: getDataprofitLineChart
+});
+
+$.ajax({
+    url: '/api/web_shop/admin/number_of_status_order',
     type: 'GET',
     dataType: "json",
     success: displayAll
 });
 
-const options = {
+const lineChartProfit = {
     chart: {
         type: "line",
         height: "280px",
         fontFamily: "Nunito",
         toolbar: {
-            show: true,
+            show: false,
         },
     },
     stroke: {
@@ -38,42 +45,56 @@ const options = {
         categories: ['28-04','27-04','26-04','25-04','24-04','23-04','22-04'],
     },
 };
-// Radial chart
 
-var optionsRadial = {
-    series: [44, 55, 67, 83],
+const colors = ['#495dd6','#1b9ef8','#26a848','#e32d53']
+
+let columnChartOrder = {
+    series: [{
+        data: [21, 22, 10, 28]
+    }],
     chart: {
-        height: 350,
-        type: "radialBar",
+        height: 255,
+        type: 'bar',
+        toolbar: {
+            show: false,
+        }
     },
+    colors: colors,
     plotOptions: {
-        radialBar: {
-            dataLabels: {
-                name: {
-                    fontSize: "22px",
-                },
-                value: {
-                    fontSize: "16px",
-                },
-                total: {
-                    show: true,
-                    label: "Tổng",
-                    formatter: function (w) {
-                        // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
-                        return 249;
-                    },
-                },
-            },
-        },
+        bar: {
+            columnWidth: '40%',
+            distributed: true,
+        }
     },
-    labels: ["Đang xử lý", "Đã tiếp nhận", "Đang giao", "Đã giao"],
+    dataLabels: {
+        enabled: false
+    },
+    legend: {
+        show: false
+    },
+    xaxis: {
+        categories: [
+            ['John', 'Doe'],
+            ['Joe', 'Smith'],
+            ['Jake', 'Williams'],
+            'Amber'
+        ],
+        labels: {
+            style: {
+                colors: colors,
+                fontSize: '12px'
+            }
+        }
+    }
 };
-const chartRadial = new ApexCharts(document.querySelector("#emailChart"), optionsRadial);
-chartRadial.render();
+
 
 function displayAll(data){
-    // alert(data.date)
-    // console.log(data)
+    fourStatus = data.statusOrder
+    valueOfEachStatus = data.numberOfOrder
+}
+
+function getDataprofitLineChart(data){
     sevenDay = data.date
     valueOfTotal = data.value
 }
@@ -85,8 +106,26 @@ function statisFunction(){
             data: valueOfTotal,
         },
     ]
-    options.xaxis.categories = sevenDay;
-    options.series = series;
-    const chart = new ApexCharts(document.querySelector("#chart"), options);
+
+    const seriesBar = [
+        {
+            name: "Số đơn",
+            data: valueOfEachStatus
+        },
+    ]
+
+    columnChartOrder.xaxis.categories = fourStatus;
+    columnChartOrder.series = seriesBar;
+
+
+    lineChartProfit.xaxis.categories = sevenDay;
+    lineChartProfit.series = series;
+    const chart = new ApexCharts(document.querySelector("#chart"), lineChartProfit);
     chart.render();
+
+    const chartStat = new ApexCharts(document.querySelector("#chart-line-profit"), lineChartProfit);
+    chartStat.render();
+
+    const columnChartOrderRender = new ApexCharts(document.querySelector("#chart-column-order"), columnChartOrder);
+    columnChartOrderRender.render()
 }

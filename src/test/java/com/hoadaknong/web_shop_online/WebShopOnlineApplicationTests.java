@@ -1,12 +1,7 @@
 package com.hoadaknong.web_shop_online;
 
-import com.hoadaknong.web_shop_online.entities.Customer;
-import com.hoadaknong.web_shop_online.entities.Order;
-import com.hoadaknong.web_shop_online.entities.Product;
-import com.hoadaknong.web_shop_online.entities.ProductCategory;
-import com.hoadaknong.web_shop_online.repositories.CustomerRepository;
-import com.hoadaknong.web_shop_online.repositories.OrderRepository;
-import com.hoadaknong.web_shop_online.repositories.ProductRepository;
+import com.hoadaknong.web_shop_online.entities.*;
+import com.hoadaknong.web_shop_online.repositories.*;
 import com.hoadaknong.web_shop_online.services.*;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 class WebShopOnlineApplicationTests {
@@ -52,6 +48,12 @@ class WebShopOnlineApplicationTests {
 	@Autowired
 	CustomerRepository rp;
 
+	@Autowired
+	ProductCategoryRepository categoryRepository;
+
+	@Autowired
+	OrderDetailsRepository orderDetailsRepository;
+
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	@Test
@@ -60,9 +62,13 @@ class WebShopOnlineApplicationTests {
 	}
 
 	@Test
-	public void addProduct() throws ParseException, JSONException {
-		JSONObject jsonObject = statsService.getTotalPriceSevenDayBefore();
-		System.out.println(jsonObject);
+	public void addProduct(){
+		Product product = repo.getById(708);
+		Order order = orderRepository.getById(15);
+		Optional<OrderDetails> found = orderDetailsRepository.findOrderDetailsByProductIdAndOrderId(product,order);
+		if(found.isPresent()){
+			System.out.println(found.get().toString());
+		}
 	}
 
 	@Test

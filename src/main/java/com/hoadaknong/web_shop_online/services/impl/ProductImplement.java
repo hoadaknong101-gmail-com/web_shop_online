@@ -9,11 +9,13 @@ import com.hoadaknong.web_shop_online.repositories.ProductRepository;
 import com.hoadaknong.web_shop_online.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ProductImplement implements ProductService {
 
     @Autowired
@@ -27,8 +29,8 @@ public class ProductImplement implements ProductService {
 
     // Product
     @Override
-    public Optional<Product> findProductById(Integer id) {
-        return rpProduct.findById(id);
+    public Product findProductById(Integer id) {
+        return rpProduct.getById(id);
     }
 
     @Override
@@ -49,6 +51,12 @@ public class ProductImplement implements ProductService {
     @Override
     public void saveProduct(Product product) {
         rpProduct.save(product);
+    }
+
+    @Override
+    public List<Product> findTop6ProductByCategoryId(Integer id) {
+        ProductCategory category = rpCategory.getById(id);
+        return rpProduct.findTop6ByCategoryId(category);
     }
 
     // Brand

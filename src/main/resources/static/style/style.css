@@ -35,6 +35,11 @@ body {
 	display: none;
 }
 
+#menu-toggle:checked ~ .sidebar-fragment {
+	display: none;
+}
+
+
 #menu-toggle:checked ~ .main-content .engage-card {
 	max-width: 698px;
 }
@@ -59,11 +64,12 @@ body {
 	top: 0;
 	background: var(--color-main);
 	z-index: -1;
-	border-radius: 0 0 0 100px;
+	border-radius: 0 0 50px 50px;
+	box-shadow: 0 6px 5px -4px rgba(0,0,0,0.52);
 }
 
 .sidebar {
-	width: 250px;
+	width: 220px;
 	margin-left: 40px;
 	transition: display 1s;
 }
@@ -88,6 +94,7 @@ body {
 .profile-img {
 	height: 100px;
 	width: 100px;
+	margin: auto;
 	border-radius: 50%;
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -113,6 +120,14 @@ body {
 	margin-bottom: 3.8rem;
 	display: flex;
 	justify-content: center;
+}
+
+.btn-client-page{
+	transition: all .2s;
+}
+
+.btn-client-page:hover{
+	text-shadow: #FFF 0 0 5px, #FFF 0 0 10px, #FFF 0 0 15px, #FF2D95 0 0 20px, #FF2D95 0 0 30px, #FF2D95 0 0 40px, #FF2D95 0 0 50px, #FF2D95 0 0 75px;
 }
 
 .btn {
@@ -288,7 +303,7 @@ header label {
 	display: flex;
 	align-items: center;
 	border-radius: 20px;
-	background: #6307e2;
+	background: var(--color-secondary);
 }
 
 .head-avatar .avatar {
@@ -443,11 +458,11 @@ table h3,
 }
 
 .grid-2 {
-	margin-top: 3.5rem;
+	margin-top: 1.5rem;
 	display: grid;
 	grid-template-columns: 65% auto;
 	grid-gap: 2rem;
-	margin-bottom: 3.5rem;
+	margin-bottom: 1.5rem;
 }
 
 .product-head {
@@ -727,7 +742,63 @@ table tr th {
 
 
 /*  */
+.address-container{
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	border-top: #bfbfbf solid 1px;
+	border-bottom: #bfbfbf none;
+	margin-top: 5px;
+}
 
+.address-item:first-child{
+	margin: 1rem 0 1rem 0;
+	padding: 0 2rem 0 0;
+}
+
+.address-item{
+	padding: 0 2rem 0 2rem;
+	width: 200px;
+	margin: 1rem 0 1rem 0;
+	border-right: #878787 solid 1px;
+}
+
+.address-item:last-child{
+	border-right: none;
+}
+
+.address-title{
+	margin: 1rem 0 0 0;
+}
+#address-form-container{
+	display: none;
+}
+#btnHideForm{
+	display: none;
+}
+
+.action-container{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 0 2rem 0 2rem;
+	margin-top: 5px;
+}
+
+.btn-action{
+	height: 44px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#address-form-container{
+	padding: 0 2rem 0 2rem;
+}
 
 /*Responsive screen size*/
 @media only screen and (max-width: 1280px) {

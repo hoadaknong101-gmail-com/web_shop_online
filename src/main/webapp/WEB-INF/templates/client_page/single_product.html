@@ -1,10 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet"/>
+    <title>[[${product.name}]]</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/font-awesome.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/templatemo-hexashop.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/owl-carousel.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/lightbox.css}" />
 </head>
+
 <body>
 
+<!-- ***** Header Area End ***** -->
+<div th:insert="~{component/header :: header}">Header</div>
+<!-- ***** Main Banner Area Start ***** -->
+<div class="page-heading" id="top">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="inner-content">
+                    <h2>[[${product.name}]]</h2>
+                    <span style="text-decoration: none;"><a style="color: white" th:href="@{/home}">Trang chủ</a> > <a style="color: white" th:href="@{/products}">Sản phẩm</a> > <a style="color: white" th:href="@{/}">[[${product.categoryId.name}]]</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ***** Main Banner Area End ***** -->
+
+<!-- ***** Product Area Starts ***** -->
+<section class="section" id="product">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="left-images">
+                    <img th:src="@{'/api/products/resources/images/' + ${product.thumbnailPhoto}}" alt="" />
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="right-content">
+                    <h4>[[${product.name}]]</h4>
+                    <small id="listPrice" style="display: none">[[${product.listPrice}]]</small>
+                    <span class="price">[[${#numbers.formatDecimal(product.listPrice, 0, 'COMMA', 0, 'POINT')}]] VNĐ</span>
+                    <ul class="stars">
+                        <th:block th:each="i: ${#numbers.sequence(1, product.rate)}">
+                            <li><i class="fa fa-star"></i></li>
+                        </th:block>
+                    </ul>
+                    <span>Mô tả</span>
+                    <div class="quote">
+                        <i class="fa fa-quote-left"></i>
+                        <p>[[${product.description}]]</p>
+                    </div>
+                    <div class="quantity-content">
+                        <div class="left-content">
+                            <h6>Số lượng</h6>
+                        </div>
+                        <div class="right-content">
+                            <div class="quantity buttons_added">
+                                <input type="button" value="-" class="minus"/><input
+                                    id="quantity"
+                                    type="number"
+                                    step="1"
+                                    min="1"
+                                    max=""
+                                    name="quantity"
+                                    value="1"
+                                    title="Qty"
+                                    class="input-text qty text"
+                                    size="4"
+                                    pattern=""
+                                    inputmode=""
+                            /><input type="button" value="+" class="plus" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="total">
+                        <h4 id="total">Tổng: [[${#numbers.formatDecimal(product.listPrice, 0, 'COMMA', 0, 'POINT')}]] ₫</h4>
+                        <br>
+                        <div class="main-border-button"><a href="#">Thêm vào giỏ hàng</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div th:replace="~{component/footer :: footer}">Footer</div>
+<script th:src="@{/assets/js/jquery-2.1.0.min.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/popper.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/owl-carousel.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/accordions.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/datepicker.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/scrollreveal.min.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/waypoints.min.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/jquery.counterup.min.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/imgfix.min.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/slick.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/lightbox.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/isotope.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/quantity.js}" type="text/javascript"></script>
+<script src="/assets/js/custom.js" type="text/javascript"></script>
+
+<script>
+    $(function () {
+        var selectedClass = "";
+        $("p").click(function () {
+            selectedClass = $(this).attr("data-rel");
+            $("#portfolio").fadeTo(50, 0.1);
+            $("#portfolio div")
+                .not("." + selectedClass)
+                .fadeOut();
+            setTimeout(function () {
+                $("." + selectedClass).fadeIn();
+                $("#portfolio").fadeTo(50, 1);
+            }, 500);
+        });
+    });
+</script>
 </body>
 </html>

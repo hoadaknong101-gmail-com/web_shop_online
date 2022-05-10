@@ -2,7 +2,7 @@
 <html lang="en"
       layout:decorate="_layout_client"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -142,122 +142,35 @@
                 <div class="col-lg-12">
                     <div class="men-item-carousel">
                         <div class="owl-men-item owl-carousel">
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-star"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-shopping-cart"></i></a>
-                                            </li>
+                            <th:block th:each="p : ${listProductMan}">
+                                <div class="item">
+                                    <div class="thumb">
+                                        <div class="hover-content">
+                                            <ul>
+                                                <li>
+                                                    <a th:href="@{'/product/single_product/' + ${p.id}}"><i class="fa fa-eye"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="single-product.html"><i class="fa fa-star"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="single-product.html"><i class="fa fa-shopping-cart"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <img th:src="@{'/api/products/resources/images/' +  ${p.thumbnailPhoto}}" alt="Product photo"/>
+                                    </div>
+                                    <div class="down-content">
+                                        <h4>[[${p.name}]]</h4>
+                                        <span>[[${#numbers.formatDecimal(p.listPrice, 0, 'COMMA', 0, 'POINT')}]] ₫</span>
+                                        <ul class="stars">
+                                            <th:block th:each="i: ${#numbers.sequence(1, p.rate)}">
+                                                <li><i class="fa fa-star"></i></li>
+                                            </th:block>
                                         </ul>
                                     </div>
-                                    <img src="/assets/images/men-01.jpg" alt=""/>
                                 </div>
-                                <div class="down-content">
-                                    <h4>Classic Spring</h4>
-                                    <span>$120.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-star"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-shopping-cart"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <img src="/assets/images/men-02.jpg" alt=""/>
-                                </div>
-                                <div class="down-content">
-                                    <h4>Air Force 1 X</h4>
-                                    <span>$90.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-star"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-shopping-cart"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <img th:src="@{/assets/images/men-03.jpg}" alt=""/>
-                                </div>
-                                <div class="down-content">
-                                    <h4>Love Nana ‘20</h4>
-                                    <span>$150.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-star"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-shopping-cart"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <img th:src="@{/assets/images/men-01.jpg}" alt=""/>
-                                </div>
-                                <div class="down-content">
-                                    <h4>Classic Spring</h4>
-                                    <span>$120.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            </th:block>
                         </div>
                     </div>
                 </div>
@@ -283,122 +196,35 @@
                 <div class="col-lg-12">
                     <div class="women-item-carousel">
                         <div class="owl-women-item owl-carousel">
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-star"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-shopping-cart"></i></a>
-                                            </li>
+                            <th:block th:each="p : ${listProductWomen}">
+                                <div class="item">
+                                    <div class="thumb">
+                                        <div class="hover-content">
+                                            <ul>
+                                                <li>
+                                                    <a th:href="@{'/product/single_product/' + ${p.id}}"><i class="fa fa-eye"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="single-product.html"><i class="fa fa-star"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="single-product.html"><i class="fa fa-shopping-cart"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <img th:src="@{'/api/products/resources/images/' +  ${p.thumbnailPhoto}}" alt="Product photo"/>
+                                    </div>
+                                    <div class="down-content">
+                                        <h4>[[${p.name}]]</h4>
+                                        <span>[[${#numbers.formatDecimal(p.listPrice, 0, 'COMMA', 0, 'POINT')}]] ₫</span>
+                                        <ul class="stars">
+                                            <th:block th:each="i: ${#numbers.sequence(1, p.rate)}">
+                                                <li><i class="fa fa-star"></i></li>
+                                            </th:block>
                                         </ul>
                                     </div>
-                                    <img src="/assets/images/women-01.jpg" alt=""/>
                                 </div>
-                                <div class="down-content">
-                                    <h4>New Green Jacket</h4>
-                                    <span>$75.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-star"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-shopping-cart"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <img th:src="@{/assets/images/women-02.jpg}" alt=""/>
-                                </div>
-                                <div class="down-content">
-                                    <h4>Classic Dress</h4>
-                                    <span>$45.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-star"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-shopping-cart"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <img th:src="@{/assets/images/women-03.jpg}" alt=""/>
-                                </div>
-                                <div class="down-content">
-                                    <h4>Spring Collection</h4>
-                                    <span>$130.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-star"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-shopping-cart"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <img th:src="@{/assets/images/women-01.jpg}" alt=""/>
-                                </div>
-                                <div class="down-content">
-                                    <h4>Classic Spring</h4>
-                                    <span>$120.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            </th:block>
                         </div>
                     </div>
                 </div>
@@ -424,122 +250,35 @@
                 <div class="col-lg-12">
                     <div class="kid-item-carousel">
                         <div class="owl-kid-item owl-carousel">
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-star"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-shopping-cart"></i></a>
-                                            </li>
+                            <th:block th:each="p : ${listProductKid}">
+                                <div class="item">
+                                    <div class="thumb">
+                                        <div class="hover-content">
+                                            <ul>
+                                                <li>
+                                                    <a th:href="@{'/product/single_product/' + ${p.id}}"><i class="fa fa-eye"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="single-product.html"><i class="fa fa-star"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="single-product.html"><i class="fa fa-shopping-cart"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <img th:src="@{'/api/products/resources/images/' + ${p.thumbnailPhoto}}" alt="Product photo"/>
+                                    </div>
+                                    <div class="down-content">
+                                        <h4>[[${p.name}]]</h4>
+                                        <span>[[${#numbers.formatDecimal(p.listPrice, 0, 'COMMA', 0, 'POINT')}]] ₫</span>
+                                        <ul class="stars">
+                                            <th:block th:each="i: ${#numbers.sequence(1, p.rate)}">
+                                                <li><i class="fa fa-star"></i></li>
+                                            </th:block>
                                         </ul>
                                     </div>
-                                    <img src="/assets/images/kid-01.jpg" alt=""/>
                                 </div>
-                                <div class="down-content">
-                                    <h4>School Collection</h4>
-                                    <span>$80.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-star"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-shopping-cart"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <img th:src="@{/assets/images/kid-02.jpg}" alt=""/>
-                                </div>
-                                <div class="down-content">
-                                    <h4>Summer Cap</h4>
-                                    <span>$12.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-star"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-shopping-cart"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <img th:src="@{/assets/images/kid-03.jpg}" alt=""/>
-                                </div>
-                                <div class="down-content">
-                                    <h4>Classic Kid</h4>
-                                    <span>$30.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-star"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="single-product.html"><i class="fa fa-shopping-cart"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <img th:src="@{/assets/images/kid-01.jpg}" alt=""/>
-                                </div>
-                                <div class="down-content">
-                                    <h4>Classic Spring</h4>
-                                    <span>$120.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            </th:block>
                         </div>
                     </div>
                 </div>

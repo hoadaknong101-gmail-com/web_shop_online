@@ -5,10 +5,12 @@ import com.hoadaknong.web_shop_online.repositories.CustomerRepository;
 import com.hoadaknong.web_shop_online.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 public class AuthenticationImplement implements AuthenticationService {
 
     @Autowired
@@ -17,6 +19,6 @@ public class AuthenticationImplement implements AuthenticationService {
     @Override
     public Boolean isRightInformation(String username, String password) {
         Optional<Customer> user = rp.findCustomerByEmailAndPassword(username,password);
-        return user == null? false : true;
+        return user.isPresent()? true : false;
     }
 }

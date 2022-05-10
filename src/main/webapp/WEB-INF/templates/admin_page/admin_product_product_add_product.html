@@ -12,90 +12,11 @@
 	<body>
 		<div class="page-wrapper">
 			<input type="checkbox" name="" id="menu-toggle" />
-			<div class="sidebar">
-				<div class="brand">
-					<h3>
-						<span class="lab la-staylinked"></span>
-						<span style="color: #ff9184">FAS</span>SHOP
-					</h3>
-				</div>
-				<div class="profile-card">
-					<div class="profile-img" style="background-image: url(/img/6.jpg)"></div>
-					<div class="profile-info">
-						<h2>Quốc Hòa</h2>
-						<small>Trang dành cho Admin</small>
-					</div>
-					<div class="profile-action">
-						<a href="" class="btn btn-white">
-							<span class="las la-coins"></span>
-							$2,300
-						</a>
-					</div>
-					<div class="profile-icons">
-						<span class="las la-users"></span>
-						<span class="las la-comment-alt"></span>
-						<span class="las la-file-invoice"></span>
-					</div>
-				</div>
-				<div class="sidebar-menu">
-					<div class="menu-item">
-						<a href="/web_shop/admin">
-							<span class="las la-home"></span>
-							<span>Home</span>
-						</a>
-					</div>
-					<div class="menu-item">
-						<a href="/web_shop/admin/products" class="active">
-							<span class="las la-project-diagram"></span>
-							<span>Sản phẩm</span>
-						</a>
-					</div>
-					<div class="menu-item">
-						<a href="/web_shop/admin/feedbacks">
-							<span class="lar la-comments"></span>
-							<span>Phản hồi</span>
-						</a>
-					</div>
-					<div class="menu-item">
-						<a href="/web_shop/admin/orders">
-							<span class="las la-columns"></span>
-							<span>Đơn hàng</span>
-						</a>
-					</div>
-					<div class="menu-item">
-						<a href="/web_shop/admin/customer">
-							<span class="las la-user"></span>
-							<span>Khách hàng</span>
-						</a>
-					</div>
-					<div class="menu-item">
-						<a href="/web_shop/admin/stats">
-							<span class="las la-chart-bar"></span>
-							<span>Thống kê</span>
-						</a>
-					</div>
-				</div>
-				<div class="sidebar-card">
-					<h3>Xin chào</h3>
-					<p>Hãy hoàn thành công việc của mình thật tốt nha các bạn, có gì khó khăn hãy liên hệ sếp, sếp yêu các bạn</p>
-					<a href="" class="btn btn-block btn-white">Gọi sếp</a>
-				</div>
-			</div>
+			<!--Side bar    -->
+			<div th:replace="~{component/sidebar :: sidebar}"></div>
+			<!-- Side bar end    -->
 			<div class="main-content">
-				<header>
-					<label for="menu-toggle">
-						<span class="las la-bars"></span>
-					</label>
-					<div class="head-icons">
-						<span class="las la-search"></span>
-						<span class="las la-comment-alt"></span>
-						<span class="las la-bell"></span>
-						<div class="head-avatar">
-							<div class="avatar" style="background-image: url(/img/1.jpg)"></div>
-							<span>Rosé</span>
-						</div>
-					</div>
-				</header>
+				<div th:replace="~{component/_header_admin :: _header_admin}"></div>
 				<main>
 					<div class="page-header">
 						<h1>Quản lí sản phẩm</h1>
@@ -134,19 +55,19 @@
 										</div>
 										<div class="form-group">
 											<label for="listPrice">
-												<h4>Giá nhập</h4>
+												<h4>Giá nhập <span style="color:red;">*</span></h4>
 											</label>
 											<input type="number" id="listPrice" name="listPrice" class="form-control input" th:field="*{listPrice}" required/>
 										</div>
 										<div class="form-group">
 											<label for="standCost">
-												<h4>Giá bán</h4>
+												<h4>Giá bán <span style="color:red;">*</span></h4>
 											</label>
 											<input type="number" id="standCost" name="standCost" class="form-control input" th:field="*{standCost}" required/>
 										</div>
 										<div class="form-group">
 											<label for="categoryId">
-												<h4>Loại sản phẩm</h4>
+												<h4>Loại sản phẩm <span style="color:red;">*</span></h4>
 											</label>
 											<select name="categoryId" id="categoryId" class="input" required>
 												<option value="" disabled selected>Chọn loại sản phẩm</option>
@@ -157,7 +78,7 @@
 										</div>
 										<div class="form-group">
 											<label for="productBrand">
-												<h4>Thương hiệu</h4>
+												<h4>Thương hiệu <span style="color:red;">*</span></h4>
 											</label>
 											<select name="productBrand" id="productBrand" class="input" required>
 												<option value="" disabled selected>Chọn thương hiệu</option>
@@ -166,7 +87,24 @@
 												</th:block>
 											</select>
 										</div>
-										<input type="hidden" th:field="*{rate}">
+										<div class="form-group">
+											<label for="rate">
+												<h4>Điểm đánh giá <span style="color:red;">*</span></h4>
+											</label>
+											<input type="number" th:field="*{rate}" class="form-control input">
+										</div>
+										<div class="form-group">
+											<label for="description">
+												<h4>Mô tả</h4>
+											</label>
+											<textarea
+													name="description"
+													id="description"
+													style="max-width: 1519px; height: 300px"
+													class="form-control input"
+													th:field="*{description}"
+											></textarea>
+										</div>
 										<div class="form-group">
 											<label for="image">
 												<h4>Hình ảnh</h4>

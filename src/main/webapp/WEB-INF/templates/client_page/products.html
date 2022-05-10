@@ -38,8 +38,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-heading">
-                    <h2>Our Latest Products</h2>
-                    <span>Check out all of our products.</span>
+                    <h2>Sản phẩm mới nhất</h2>
+                    <span>Hãy tìm ra cho mình một gu thời trang nào.</span>
                 </div>
             </div>
         </div>
@@ -53,13 +53,13 @@
                             <div class="hover-content">
                                 <ul>
                                     <li>
-                                        <a href="single-product.html"><i class="fa fa-eye"></i></a>
+                                        <a th:href="@{'/product/single_product/' + ${p.id}}"><i class="fa fa-eye"></i></a>
                                     </li>
                                     <li>
                                         <a href="single-product.html"><i class="fa fa-star"></i></a>
                                     </li>
-                                    <li>
-                                        <a href="single-product.html"><i class="fa fa-shopping-cart"></i></a>
+                                    <li th:onclick="'addProductToCart(\'' + ${p.id} + '\');'">
+                                        <a th:onclick="'addProductToCart(\'' + ${p.id} + '\');'"><i class="fa fa-shopping-cart"></i></a>
                                     </li>
                                 </ul>
                             </div>
@@ -67,13 +67,11 @@
                         </div>
                         <div class="down-content">
                             <h4>[[${p.name}]]</h4>
-                            <span>[[${p.listPrice}]] VNĐ</span>
+                            <span>[[${#numbers.formatDecimal(p.listPrice, 0, 'COMMA', 0, 'POINT')}]] ₫</span>
                             <ul class="stars">
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
+                                <th:block th:each="i: ${#numbers.sequence(1, p.rate)}">
+                                    <li><i class="fa fa-star"></i></li>
+                                </th:block>
                             </ul>
                         </div>
                     </div>
@@ -123,6 +121,7 @@
 <script th:src="@{/assets/js/slick.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/lightbox.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/isotope.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/cart.js}" type="text/javascript"></script>
 
 <!-- Global Init -->
 <script src="/assets/js/custom.js" type="text/javascript"></script>

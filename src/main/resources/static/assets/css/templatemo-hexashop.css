@@ -236,6 +236,7 @@ body {
 	display: inline-block;
 	font-weight: 500;
 	transition: all 0.3s;
+	text-align: center;
 }
 
 .main-border-button a:hover {
@@ -828,6 +829,7 @@ banner
 	width: 100%;
 }
 
+
 .main-banner .right-content .right-first-image .thumb .hover-content h4 {
 	color: #fff;
 	font-size: 24px;
@@ -841,6 +843,12 @@ banner
 	margin-bottom: 20px;
 }
 
+.hover-content{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
 /*
 ---------------------------------------------
 Men
@@ -1900,6 +1908,13 @@ Single Product Page
 	z-index: 11;
 }
 
+
+.total{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
 .total h4 {
 	float: left;
 	font-size: 20px;
@@ -2488,6 +2503,20 @@ responsive
 	}
 	footer h4 {
 		margin-top: 30px;
+	}
+
+	.form-container {
+		width: 100%;
+		margin: 0;
+	}
+	.container-form {
+		padding: 0;
+	}
+	.main-contain {
+		padding: 10px;
+	}
+	.form-container {
+		margin: 1rem 0 0 0;
 	}
 }
 

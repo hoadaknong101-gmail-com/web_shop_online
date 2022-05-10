@@ -29,13 +29,15 @@ public class HomeAdminController {
     @Autowired
     FeedbackService feedbackService;
 
+    Integer page = 0;
+
     @RequestMapping(value = {"/","/home","trangchu","management",""})
     public String homeAdminPage(Model model){
-        List<Product> listProduct = productService.findAllProduct();
+        List<Product> listProduct = productService.findTop6ProductByCategoryId(1);
         List<Customer> customerList = customerService.findAllCustomer();
-        model.addAttribute("listFourProduct",listProduct);
+        model.addAttribute("listProduct",listProduct);
         model.addAttribute("listUser",customerList);
-
+        model.addAttribute("page",page);
         return "admin_page/admin_home_page";
     }
 

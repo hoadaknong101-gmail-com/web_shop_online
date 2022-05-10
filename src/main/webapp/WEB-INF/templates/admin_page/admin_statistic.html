@@ -7,95 +7,19 @@
     <link rel="icon" th:href="@{/img/icon_page.png}" />
     <link rel="stylesheet" th:href="@{https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css}" />
     <link rel="stylesheet" th:href="@{/style/style.css}" />
+    <script th:src="@{https://cdn.jsdelivr.net/npm/apexcharts}"></script>
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js}"></script>
+    <script th:src="@{/js/script.js}" type="text/javascript"></script>
     <title>Admin Dashboard</title>
 </head>
 <body onload="statisFunction();">
 <div class="page-wrapper">
     <input type="checkbox" name="" id="menu-toggle" />
-    <div class="sidebar">
-        <div class="brand">
-            <h3>
-                <span class="lab la-staylinked"></span>
-                <span style="color: #ff9184">FAS</span>SHOP
-            </h3>
-        </div>
-        <div class="profile-card">
-            <div class="profile-img" style="background-image: url(/img/6.jpg)"></div>
-            <div class="profile-info">
-                <h2>Quốc Hòa</h2>
-                <small>Trang dành cho Admin</small>
-            </div>
-            <div class="profile-action">
-                <a href="" class="btn btn-white">
-                    <span class="las la-coins"></span>
-                    $2,300
-                </a>
-            </div>
-            <div class="profile-icons">
-                <span class="las la-users"></span>
-                <span class="las la-comment-alt"></span>
-                <span class="las la-file-invoice"></span>
-            </div>
-        </div>
-        <div class="sidebar-menu">
-            <div class="menu-item">
-                <a href="">
-                    <span class="las la-home"></span>
-                    <span>Home</span>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="/web_shop/admin/products">
-                    <span class="las la-project-diagram"></span>
-                    <span>Sản phẩm</span>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="/web_shop/admin/feedbacks">
-                    <span class="lar la-comments"></span>
-                    <span>Phản hồi</span>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="/web_shop/admin/orders">
-                    <span class="las la-columns"></span>
-                    <span>Đơn hàng</span>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="/web_shop/admin/customers">
-                    <span class="las la-user"></span>
-                    <span>Khách hàng</span>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="" class="active">
-                    <span class="las la-chart-bar"></span>
-                    <span>Thống kê</span>
-                </a>
-            </div>
-        </div>
-        <div class="sidebar-card">
-            <h3>Xin chào</h3>
-            <p>Hãy hoàn thành công việc của mình thật tốt nha các bạn, có gì khó khăn hãy liên hệ sếp, sếp yêu các bạn</p>
-            <a href="" class="btn btn-block btn-white">Gọi sếp</a>
-        </div>
-    </div>
+    <!--Side bar    -->
+    <div th:replace="~{component/sidebar :: sidebar}"></div>
+    <!-- Side bar end    -->
     <div class="main-content">
-        <header>
-            <label for="menu-toggle">
-                <span class="las la-bars"></span>
-            </label>
-            <div class="head-icons">
-                <span class="las la-search"></span>
-                <span class="las la-comment-alt"></span>
-                <span class="las la-bell"></span>
-                <div class="head-avatar">
-                    <div class="avatar" style="background-image: url(/img/1.jpg)"></div>
-                    <span>Rosé</span>
-                </div>
-            </div>
-        </header>
+        <div th:replace="~{component/_header_admin :: _header_admin}"></div>
         <main>
             <div class="page-header">
                 <h1>Thống kê</h1>
@@ -106,7 +30,7 @@
                     <div class="card-head">Doanh thu</div>
                     <div class="card-body">
                         <div class="chart-wrapper">
-                            <div id="chartLineProfit"></div>
+                            <div id="chart-line-profit"></div>
                         </div>
                     </div>
                 </div>
@@ -116,12 +40,7 @@
                         <div id="chartCircleOrder"></div>
                     </div>
                     <div class="card-footer">
-                        <div class="emails-info">
-                            <div class="email-stat"><span class="status bg-danger"> </span><span>Đang xử lý</span></div>
-                            <div class="email-stat"><span class="status bg-warning"> </span><span>Đã tiếp nhận</span></div>
-                            <div class="email-stat"><span class="status bg-success"> </span><span>Đang giao</span></div>
-                            <div class="email-stat"><span class="status bg-danger"> </span><span>Đã giao</span></div>
-                        </div>
+                        <div id="chart-column-order"></div>
                     </div>
                 </div>
             </div>
@@ -131,7 +50,7 @@
                         <div class="product-head">
                             <div>
                                 <h3>Sản phẩm</h3>
-                                <small>Tổng quát sản phẩm 100+</small>
+                                <small>Tổng quát sản phẩm 50+</small>
                             </div>
                             <select name="" id="">
                                 <option value="">Sản phẩm</option>
@@ -145,132 +64,44 @@
                             <thead>
                             <tr>
                                 <th>Sản phẩm</th>
-                                <th>Công ty</th>
+                                <th>Thương hiệu</th>
                                 <th width="22%">Đã bán</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>
-                                    <div class="product-info">
-                                        <div class="product-img">
-                                            <img src="../../../../resources/static/img/img_product/NT0001/3.jpg" alt="" />
+                            <th:block th:each="p : ${listProduct}">
+                                <tr>
+                                    <td>
+                                        <div class="product-info">
+                                            <div class="product-img">
+                                                <img th:src="@{'/api/products/resources/images/' + ${p.thumbnailPhoto}}" alt="" />
+                                            </div>
+                                            <div class="team-details">
+                                                <h4>[[${p.name}]]</h4>
+                                                <small>[[${p.categoryId.name}]]</small>
+                                            </div>
                                         </div>
-                                        <div class="team-details">
-                                            <h4>Áo thun</h4>
-                                            <small>Áo thun nam</small>
+                                    </td>
+                                    <td>
+                                        <div class="company-info">
+                                            <h4>[[${p.productBrand.name}]]</h4>
+                                            <small>[[${p.productBrand.description}]]</small>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="company-info">
-                                        <h4>Plastic</h4>
-                                        <small>Cty tơ tằm</small>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="table-products">
-                                        <h4>65%</h4>
-                                        <div class="progress-bar">
-                                            <div class="indicator success" style="width: 65%"></div>
+                                    </td>
+                                    <td>
+                                        <div class="table-products">
+                                            <h4>35%</h4>
+                                            <div class="progress-bar">
+                                                <div class="indicator info" style="width: 35%"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <a href="" class="btn btn-main">View</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="product-info">
-                                        <div class="product-img">
-                                            <img src="../../../../resources/static/img/img_product/NT1302/9.jpg" alt="" />
-                                        </div>
-                                        <div class="team-details">
-                                            <h4>Áo thun</h4>
-                                            <small>Áo thun nam, nữ</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="company-info">
-                                        <h4>Rosé</h4>
-                                        <small>Cty vải may</small>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="table-products">
-                                        <h4>15%</h4>
-                                        <div class="progress-bar">
-                                            <div class="indicator danger" style="width: 15%"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <a href="" class="btn btn-main">View</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="product-info">
-                                        <div class="product-img">
-                                            <img src="../../../../resources/static/img/img_product/NT3006/3.jpg" alt="" />
-                                        </div>
-                                        <div class="team-details">
-                                            <h4>Áo thun</h4>
-                                            <small>Áo thun nam nữ</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="company-info">
-                                        <h4>Interco</h4>
-                                        <small>Cty may mặc</small>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="table-products">
-                                        <h4>35%</h4>
-                                        <div class="progress-bar">
-                                            <div class="indicator info" style="width: 35%"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <a href="" class="btn btn-main">View</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="product-info">
-                                        <div class="product-img">
-                                            <img src="../../../../resources/static/img/img_product/NT1304/3.jpg" alt="" />
-                                        </div>
-                                        <div class="team-details">
-                                            <h4>Áo thun</h4>
-                                            <small>Áo thun nam, nữ</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="company-info">
-                                        <h4>Interco</h4>
-                                        <small>Cty may mặc</small>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="table-products">
-                                        <h4>45%</h4>
-                                        <div class="progress-bar">
-                                            <div class="indicator warning" style="width: 45%"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <a href="" class="btn btn-main">View</a>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{'/web_shop/admin/products/update/' + ${p.id}}" class="btn btn-main">View</a>
+                                    </td>
+                                </tr>
+                            </th:block>
                             </tbody>
                         </table>
                     </div>
@@ -285,62 +116,22 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="user-info">
-                            <div>
-                                <img src="../../../../resources/static/img/1.jpg" alt="" />
-                                <div class="user-details">
-                                    <h4>Rosé</h4>
-                                    <small>Hàn Quốc</small>
-                                    <p>Xem <a href="">Chi tiết</a></p>
+                        <th:block th:each="e : ${listCustomer}">
+                            <div class="user-info">
+                                <div>
+                                    <img src="/img/user_icon.png" alt="" />
+                                    <div class="user-details">
+                                        <h4>[[${e.lastName}]]</h4>
+                                        <small>[[${e.job}]]</small>
+                                        <p>Xem <a th:href="@{'/web_shop/admin/customers/details/' + ${e.id}}">Chi tiết</a></p>
+                                    </div>
+                                </div>
+                                <div class="ordered">
+                                    <h3>25</h3>
+                                    <span>Đơn</span>
                                 </div>
                             </div>
-                            <div class="ordered">
-                                <h3>25</h3>
-                                <span>Đơn</span>
-                            </div>
-                        </div>
-                        <div class="user-info">
-                            <div>
-                                <img src="../../../../resources/static/img/jisoo_1.jpg" alt="" />
-                                <div class="user-details">
-                                    <h4>Jisoo</h4>
-                                    <small>Hàn Quốc</small>
-                                    <p>Xem <a href="">chi tiết</a></p>
-                                </div>
-                            </div>
-                            <div class="ordered">
-                                <h3>15</h3>
-                                <span>Đơn</span>
-                            </div>
-                        </div>
-                        <div class="user-info">
-                            <div>
-                                <img src="../../../../resources/static/img/lisa_1.jpg" alt="" />
-                                <div class="user-details">
-                                    <h4>Lisa</h4>
-                                    <small>Thái Lan</small>
-                                    <p>Xem <a href="">chi tiết</a></p>
-                                </div>
-                            </div>
-                            <div class="ordered">
-                                <h3>40</h3>
-                                <span>Đơn</span>
-                            </div>
-                        </div>
-                        <div class="user-info">
-                            <div>
-                                <img src="../../../../resources/static/img/jennie_1.jpg" alt="" />
-                                <div class="user-details">
-                                    <h4>Jennie</h4>
-                                    <small>Australia</small>
-                                    <p>Xem <a href="">chi tiết</a></p>
-                                </div>
-                            </div>
-                            <div class="ordered">
-                                <h3>80</h3>
-                                <span>Đơn</span>
-                            </div>
-                        </div>
+                        </th:block>
                     </div>
                 </div>
             </div>
@@ -355,7 +146,5 @@
         </main>
     </div>
 </div>
-<script th:src="@{https://cdn.jsdelivr.net/npm/apexcharts}"></script>
-<script th:src="@{/js/script.js}"></script>
 </body>
 </html>

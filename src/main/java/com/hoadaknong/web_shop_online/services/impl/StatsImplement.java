@@ -1,6 +1,7 @@
 package com.hoadaknong.web_shop_online.services.impl;
 
 import com.hoadaknong.web_shop_online.beans.ResponseObject;
+import com.hoadaknong.web_shop_online.beans.StatisticOrder;
 import com.hoadaknong.web_shop_online.beans.StatsByMonth;
 import com.hoadaknong.web_shop_online.entities.Order;
 import com.hoadaknong.web_shop_online.repositories.OrderRepository;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class StatsImplement implements StatsService {
 
     @Autowired
@@ -76,13 +79,16 @@ public class StatsImplement implements StatsService {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
         Date nowA = dateFormat.parse(now.getYear() + "-" + now.getMonthValue() + "-" + now.getDayOfMonth());
+
         for(int i = 0; i < 7;i++){
             listDate.add(new Date(nowA.getTime() - oneDay*i));
         }
+
         ArrayList<String> date = new ArrayList<>();
         for(Date a : listDate){
             date.add(dateFormat.format(a).toString());
         }
+
         ArrayList<Double> sumL = new ArrayList<Double>();
 
         for(Date d : listDate){
@@ -98,5 +104,42 @@ public class StatsImplement implements StatsService {
         StatsByMonth stats = new StatsByMonth(date, sumL);
 
         return stats;
+    }
+
+    @Override
+    public Double getProfitUpToNow() {
+        List<Order> orderList = orderRepository.findAll();
+        double value = 0;
+        for(Order o : orderList){
+            value += o.getTotalPrice();
+        }
+        return value;
+    }
+
+    @Override
+    public StatisticOrder getNumberOrderStatus() {
+        StatisticOrder statisticOrder = new StatisticOrder();
+
+        ArrayList<String> statusOrder = new ArrayList<>();
+        statusOrder.add("Đang xử lý");
+        statusOrder.add("Đang giao");
+        statusOrder.add("Đã giao");
+        statusOrder.add("Đã hủy");
+
+        Integer proccessOrder = orderRepository.findAllByStatus(0).size();
+        Integer deliveringOrder = orderRepository.findAllByStatus(1).size();
+        Integer deliveredOrder = orderRepository.findAllByStatus(2).size();
+        Integer cancelledOrder = orderRepository.findAllByStatus(3).size();
+
+        ArrayList<Integer> valueArray = new ArrayList<>();
+        valueArray.add(proccessOrder);
+        valueArray.add(deliveringOrder);
+        valueArray.add(deliveringOrder);
+        valueArray.add(cancelledOrder);
+
+        statisticOrder.setStatusOrder(statusOrder);
+        statisticOrder.setNumberOfOrder(valueArray);
+
+        return statisticOrder;
     }
 }

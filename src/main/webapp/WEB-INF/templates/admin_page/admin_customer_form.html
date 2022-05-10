@@ -12,90 +12,11 @@
 <body>
 <div class="page-wrapper">
     <input type="checkbox" name="" id="menu-toggle" />
-    <div class="sidebar">
-        <div class="brand">
-            <h3>
-                <span class="lab la-staylinked"></span>
-                <span style="color: #ff9184">FAS</span>SHOP
-            </h3>
-        </div>
-        <div class="profile-card">
-            <div class="profile-img" style="background-image: url(/img/6.jpg)"></div>
-            <div class="profile-info">
-                <h2>Quốc Hòa</h2>
-                <small>Trang dành cho Admin</small>
-            </div>
-            <div class="profile-action">
-                <a href="" class="btn btn-white">
-                    <span class="las la-coins"></span>
-                    $2,300
-                </a>
-            </div>
-            <div class="profile-icons">
-                <span class="las la-users"></span>
-                <span class="las la-comment-alt"></span>
-                <span class="las la-file-invoice"></span>
-            </div>
-        </div>
-        <div class="sidebar-menu">
-            <div class="menu-item">
-                <a href="/web_shop/admin">
-                    <span class="las la-home"></span>
-                    <span>Home</span>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="/web_shop/admin/products" >
-                    <span class="las la-project-diagram"></span>
-                    <span>Sản phẩm</span>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="/web_shop/admin/feedbacks">
-                    <span class="lar la-comments"></span>
-                    <span>Phản hồi</span>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="/web_shop/admin/orders">
-                    <span class="las la-columns"></span>
-                    <span>Đơn hàng</span>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="/web_shop/admin/customers" class="active">
-                    <span class="las la-user"></span>
-                    <span>Khách hàng</span>
-                </a>
-            </div>
-            <div class="menu-item">
-                <a href="/web_shop/admin/stats">
-                    <span class="las la-chart-bar"></span>
-                    <span>Thống kê</span>
-                </a>
-            </div>
-        </div>
-        <div class="sidebar-card">
-            <h3>Xin chào</h3>
-            <p>Hãy hoàn thành công việc của mình thật tốt nha các bạn, có gì khó khăn hãy liên hệ sếp, sếp yêu các bạn</p>
-            <a href="" class="btn btn-block btn-white">Gọi sếp</a>
-        </div>
-    </div>
+    <!--Side bar    -->
+    <div th:replace="~{component/sidebar :: sidebar}"></div>
+    <!-- Side bar end    -->
     <div class="main-content">
-        <header>
-            <label for="menu-toggle">
-                <span class="las la-bars"></span>
-            </label>
-            <div class="head-icons">
-                <span class="las la-search"></span>
-                <span class="las la-comment-alt"></span>
-                <span class="las la-bell"></span>
-                <div class="head-avatar">
-                    <div class="avatar" style="background-image: url(/img/1.jpg)"></div>
-                    <span>Rosé</span>
-                </div>
-            </div>
-        </header>
+        <div th:replace="~{component/_header_admin :: _header_admin}"></div>
         <main>
             <div class="page-header">
                 <h1>Quản lí thông tin khách hàng</h1>
@@ -109,6 +30,10 @@
                                 <h3>Khách hàng</h3>
                                 <small>Chi tiết thông tin khách hàng</small>
                             </div>
+                            <h4 style="color: red">
+                                <span th:if="${message}" class="las la-exclamation-triangle"></span>
+                                [[${message}]]
+                            </h4>
                         </div>
                     </div>
                     <div class="card-body">
@@ -146,16 +71,99 @@
                                     <input type="text" id="phone" class="form-control input" th:field="*{phone}" readonly/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="role">Quyền</label>
+                                    <label for="role"><h4>Quyền</h4></label>
                                     <select name="role" id="role" class="form-control input" >
-                                        <option selected disabled style="color: #e5e5e5">Chọn quyền cho người dùng</option>
+                                        <option th:selected="${customer == null}" disabled style="color: #e5e5e5">Chọn quyền cho người dùng</option>
                                         <th:block th:each="r : ${listRole}">
-                                            <div th:if="${role}">
-                                                <option th:selected="${r.id} eq *{role.id}" th:value="${r.id}">[[${r.name}]]</option>
+                                            <div th:if="*{role}">
+                                                <option th:selected="${r.id} == *{role.id}" th:value="${r.id}">[[${r.name}]]</option>
                                             </div>
-                                            <option th:value="${r.id}">[[${r.name}]]</option>
                                         </th:block>
                                     </select>
+                                </div>
+                                <div class="address-title">
+                                    <h4>Địa chỉ</h4>
+                                </div>
+                                <div class="address-container" >
+                                    <th:block th:each="ac : ${listAddressCustomer}">
+                                        <div class="address-item">
+                                            <div class="form-group">
+                                                <label >Chi tiết</label>
+                                                <input type="text" class="form-control input"
+                                                       th:value="${ac.addressId.addressLine}" readonly/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Quận/Huyện</label>
+                                                <input type="text" class="form-control input"
+                                                       th:value="${ac.addressId.district}" readonly/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="province">Tỉnh</label>
+                                                <input type="text" class="form-control input"
+                                                       th:value="${ac.addressId.province}" readonly/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="postalCode">Mã bưu chính</label>
+                                                <input type="text" class="form-control input"
+                                                       th:value="${ac.addressId.postalCode}" readonly/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="typeAddress">Loại địa chỉ</label>
+                                                <input type="text"  class="form-control input"
+                                                       th:value="${ac.typeAddress}" readonly/>
+                                            </div>
+                                            <div class="form-group">
+                                                <a th:href="@{'/web_shop/admin/address/delete/' + ${ac.addressId.id} + '/customer/' + ${ac.customerId.id}}" class="btn btn-danger">Xóa</a>
+                                            </div>
+                                        </div>
+                                    </th:block>
+                                    <div>
+                                        <form id="address-form" style="display: none" >
+                                            <div id="address-form-container" class="address-item">
+                                                <input type="hidden" id="customerId"
+                                                       th:value="${customer.id}"
+                                                       form="address-form"/>
+                                                <div class="form-group">
+                                                    <label for="addressLine"
+                                                           form="address-form">Chi tiết</label>
+                                                    <input type="text" id="addressLine"
+                                                           name="addressLine" class="form-control input"
+                                                           form="address-form"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="district" form="address-form">Quận/Huyện</label>
+                                                    <input type="text" id="district"
+                                                           name="district" class="form-control input"
+                                                           form="address-form"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="province" form="address-form">Tỉnh</label>
+                                                    <input type="text" id="province"
+                                                           name="province" class="form-control input"
+                                                           form="address-form"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="postalCode" form="address-form">Mã bưu chính</label>
+                                                    <input type="text" id="postalCode"
+                                                           name="postalCode" class="form-control input"
+                                                           form="address-form"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="typeAddress" form="address-form">Loại địa chỉ</label>
+                                                    <input type="text" id="typeAddress"
+                                                           name="typeAddress" class="form-control input"
+                                                           form="address-form"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div onclick="saveAddress()" id="submit" class="btn btn-primary" >Lưu</div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="action-container">
+                                        <div id="btnShowForm" class="btn btn-primary btn-action" onclick="showAddressForm()">Thêm địa chỉ</div>
+                                        <div id="btnHideForm" class="btn btn-primary btn-action" onclick="hideAddressForm()">Hủy</div>
+                                    </div>
                                 </div>
                                 <div class="card-footer border-top">
                                     <div class="action-add-product">
@@ -171,5 +179,34 @@
         </main>
     </div>
 </div>
+<script>
+    function showAddressForm(){
+        document.getElementById("btnShowForm").style.display = "none";
+        document.getElementById("btnHideForm").style.display = "block"
+        document.getElementById("address-form-container").style.display = "block";
+    }
+
+    function hideAddressForm(){
+        document.getElementById("btnShowForm").style.display = "block";
+        document.getElementById("btnHideForm").style.display = "none"
+        document.getElementById("address-form-container").style.display = "none";
+    }
+
+    function saveAddress(){
+        const addressLine = document.getElementById("addressLine").value
+        const district = document.getElementById("district").value
+        const province = document.getElementById("province").value
+        const postalCode = document.getElementById("postalCode").value
+        const typeAddress = document.getElementById("typeAddress").value
+        const customerId = document.getElementById("customerId").value
+
+        location.href = "/web_shop/admin/address/insert/" + addressLine + "/" +
+            district + "/" +
+            province + "/" +
+            postalCode + "/" +
+            typeAddress + "/" +
+            customerId
+    }
+</script>
 </body>
 </html>

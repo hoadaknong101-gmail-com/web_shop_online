@@ -24,6 +24,7 @@ public class CustomerAddress {
     private Date modifiedDate;
 
     public CustomerAddress() {
+
     }
 
     public CustomerAddress(Customer customerId, Address addressId, String typeAddress, Date modifiedDate) {

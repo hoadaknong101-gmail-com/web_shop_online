@@ -23,10 +23,10 @@ public class UserFilter implements Filter {
         HttpSession session = req.getSession();
         Customer customer = (Customer) session.getAttribute("user");
         if(customer != null){
-            if(customer.getRole().getId() == ADMIN_ROLE_ID){
+            if(customer.getRole().getId() == ADMIN_ROLE_ID || customer.getRole().getId() == STAFF_ROLE_ID){
                 chain.doFilter(request,response);
             }else{
-                LOG.info("User is not admin");
+                LOG.info("User is not admin/staff");
                 res.sendRedirect(req.getContextPath()+"/index");
             }
         }else{

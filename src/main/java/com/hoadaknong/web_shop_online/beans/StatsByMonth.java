@@ -3,35 +3,35 @@ package com.hoadaknong.web_shop_online.beans;
 import java.util.ArrayList;
 
 public class StatsByMonth {
-    ArrayList<String> date;
-    ArrayList<Double> value;
+    ArrayList<String> dateArray;
+    ArrayList<Double> valueOfDate;
 
-    public StatsByMonth(ArrayList<String> date, ArrayList<Double> value) {
-        this.date = date;
-        this.value = value;
+    public StatsByMonth(ArrayList<String> dateArray, ArrayList<Double> valueOfDate) {
+        this.dateArray = dateArray;
+        this.valueOfDate = valueOfDate;
     }
 
     public ArrayList<String> getDate() {
-        return date;
+        return dateArray;
     }
 
-    public void setDate(ArrayList<String> date) {
-        this.date = date;
+    public void setDate(ArrayList<String> dateArray) {
+        this.dateArray = dateArray;
     }
 
     public ArrayList<Double> getValue() {
-        return value;
+        return valueOfDate;
     }
 
-    public void setValue(ArrayList<Double> value) {
-        this.value = value;
+    public void setValue(ArrayList<Double> valueOfDate) {
+        this.valueOfDate = valueOfDate;
     }
 
     @Override
     public String toString() {
         return "StatsByMonth{" +
-                "date=" + date +
-                ", value=" + value +
+                "date=" + dateArray +
+                ", value=" + valueOfDate +
                 '}';
     }
 }

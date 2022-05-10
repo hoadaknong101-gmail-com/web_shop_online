@@ -1,19 +1,24 @@
 package com.hoadaknong.web_shop_online.services.impl;
 
+import com.hoadaknong.web_shop_online.entities.Customer;
 import com.hoadaknong.web_shop_online.entities.Order;
 import com.hoadaknong.web_shop_online.entities.OrderDetails;
+import com.hoadaknong.web_shop_online.entities.Product;
 import com.hoadaknong.web_shop_online.entities.keys.OrderDetailsKey;
 import com.hoadaknong.web_shop_online.repositories.OrderDetailsRepository;
 import com.hoadaknong.web_shop_online.repositories.OrderRepository;
+import com.hoadaknong.web_shop_online.repositories.ProductRepository;
 import com.hoadaknong.web_shop_online.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class OrderImplement implements OrderService {
 
     @Autowired
@@ -21,6 +26,10 @@ public class OrderImplement implements OrderService {
 
     @Autowired
     private OrderDetailsRepository rpOrderDetails;
+
+    @Autowired
+    private ProductRepository productRepository;
+
 
     @Override
     public List<Order> findAllOrderProccessing() {
@@ -38,6 +47,11 @@ public class OrderImplement implements OrderService {
     }
 
     @Override
+    public List<Order> findAllOrderCancelled() {
+        return rpOrder.findAllByStatus(3);
+    }
+
+    @Override
     public List<Order> findAll() {
         return rpOrder.findAll();
     }
@@ -45,6 +59,19 @@ public class OrderImplement implements OrderService {
     @Override
     public Order getById(Integer id) {
         return rpOrder.getById(id);
+    }
+
+    @Override
+    public Optional<Order> findOrderByCustomerAndStatus(Customer customer, Integer status) {
+        return rpOrder.findOrderByCustomerIdAndStatus(customer, status);
+    }
+
+    @Override
+    public Optional<OrderDetails> findOrderDetailsByProductIdAndOrderId(Integer productId, Integer orderId) {
+        Product product = productRepository.getById(productId);
+        Order order = rpOrder.getById(orderId);
+        Optional<OrderDetails> found = rpOrderDetails.findOrderDetailsByProductIdAndOrderId(product,order);
+        return found;
     }
 
     @Override
@@ -77,7 +104,6 @@ public class OrderImplement implements OrderService {
         Order o = rpOrder.getById(id);
         return rpOrderDetails.findAllByOrderId(o);
     }
-
 
     @Override
     public List<Order> findAllOrderByOrderDateBetween(Date start, Date end) {

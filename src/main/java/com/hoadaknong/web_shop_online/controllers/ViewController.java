@@ -8,6 +8,7 @@ import com.hoadaknong.web_shop_online.repositories.ProductBrandRepository;
 import com.hoadaknong.web_shop_online.repositories.ProductCategoryRepository;
 import com.hoadaknong.web_shop_online.repositories.ProductRepository;
 import com.hoadaknong.web_shop_online.services.CustomerService;
+import com.hoadaknong.web_shop_online.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,55 +31,68 @@ public class ViewController {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    ProductService productService;
+
+    Integer page;
 
     // Sign in & Sign up form
 
     @RequestMapping(value = "/sign_in_sign_up")
-    public String signInSignUpPag(Model model){
+    public String signInSignUpPag(Model model) {
         Customer c = new Customer();
-        model.addAttribute("customer",c);
+        model.addAttribute("customer", c);
 
         return "client_page/sign_in_sign_up_form";
     }
 
-    @RequestMapping(value ="/check_mail")
-    public String checkMailPage(){
+    @RequestMapping(value = "/check_mail")
+    public String checkMailPage() {
         return "check_mail";
     }
 
-    @RequestMapping(value ="/input_forgot_password")
-    public String forgotPasswordPage(){
+    @RequestMapping(value = "/input_forgot_password")
+    public String forgotPasswordPage() {
         return "input_email_forgot_password";
     }
 
     // Home page
-    @RequestMapping(value = "/products",method = RequestMethod.GET)
-    public String productPageClient(Model model){
+    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    public String productPageClient(Model model) {
         List<Product> productList = productRepository.findAll();
-        model.addAttribute("listProduct",productList);
+        model.addAttribute("listProduct", productList);
 
         return "client_page/products";
     }
-    @RequestMapping(value = "/index",method = RequestMethod.GET)
-    public String homePage(Model model){
+
+    @RequestMapping(value = {"/index","","/","/home","trangchu"}, method = RequestMethod.GET)
+    public String homePage(Model model) {
+        List<Product> listProductMan = productService.findTop6ProductByCategoryId(14);
+        List<Product> listProductWomen = productService.findTop6ProductByCategoryId(15);
+        List<Product> listProductKid = productService.findTop6ProductByCategoryId(16);
+
+        model.addAttribute("listProductMan", listProductMan);
+        model.addAttribute("listProductWomen", listProductWomen);
+        model.addAttribute("listProductKid", listProductKid);
+
 
         return "client_page/index";
     }
 
-    @RequestMapping(value="/contact")
-    public String contactPage(Model model){
+    @RequestMapping(value = "/contact")
+    public String contactPage(Model model) {
 
         return "client_page/contact";
     }
 
-    @RequestMapping(value="/about")
-    public String aboutPage(Model model){
+    @RequestMapping(value = "/about")
+    public String aboutPage(Model model) {
 
         return "client_page/about";
     }
 
-    @RequestMapping(value="/cart")
-    public String cartPage(Model model){
+    @RequestMapping(value = "/cart")
+    public String cartPage(Model model) {
 
         return "client_page/cart";
     }
@@ -87,69 +101,77 @@ public class ViewController {
     // Product pages
 
     @RequestMapping(value = "/web_shop/admin/products")
-    public String productPage(Model model){
+    public String productPage(Model model) {
         List<Product> productList = productRepository.findAll();
         int amount = productList.size();
-        model.addAttribute("listProducts",productList);
-        model.addAttribute("amount",amount);
+        page = 1;
+        model.addAttribute("listProducts", productList);
+        model.addAttribute("amount", amount);
+        model.addAttribute("page", page);
         return "admin_page/admin_product_product";
     }
 
 
     @RequestMapping(value = "/web_shop/admin/products/new")
-    public String addProductPage(Model model){
+    public String addProductPage(Model model) {
         Product product = new Product();
         List<ProductCategory> listCategory = categoryRepository.findAll();
         List<ProductBrand> listBrand = brandRepository.findAll();
-
-        model.addAttribute("product",product);
-        model.addAttribute("listBrand",listBrand);
+        page = 1;
+        model.addAttribute("product", product);
+        model.addAttribute("listBrand", listBrand);
         model.addAttribute("listCategory", listCategory);
-
+        model.addAttribute("page", page);
         return "admin_page/admin_product_product_add_product";
     }
-    @RequestMapping(value ="/web_shop/admin/products/brands")
-    public String brandPage(Model model){
+
+    @RequestMapping(value = "/web_shop/admin/products/brands")
+    public String brandPage(Model model) {
         List<ProductBrand> listBrand = brandRepository.findAll();
         Integer amount = listBrand.size();
-
-        model.addAttribute("listBrand",listBrand);
-        model.addAttribute("amount",amount);
-
+        page = 1;
+        model.addAttribute("listBrand", listBrand);
+        model.addAttribute("amount", amount);
+        model.addAttribute("page", page);
         return "admin_page/admin_product_brand";
     }
-    @RequestMapping(value ="/web_shop/admin/products/brands/new")
-    public String newBrand(Model model){
+
+    @RequestMapping(value = "/web_shop/admin/products/brands/new")
+    public String newBrand(Model model) {
         ProductBrand b = new ProductBrand();
+        page = 1;
+        model.addAttribute("title", "Thêm thương hiệu");
+        model.addAttribute("_action", "Thêm");
+        model.addAttribute("brand", b);
 
-        model.addAttribute("title","Thêm thương hiệu");
-        model.addAttribute("_action","Thêm");
-        model.addAttribute("brand",b);
-
+        model.addAttribute("page", page);
         return "admin_page/admin_product_brand_form";
     }
 
     @RequestMapping(value = "/web_shop/admin/products/categories/new")
-    public String newCategory(Model model){
+    public String newCategory(Model model) {
         ProductCategory c = new ProductCategory();
-
-        model.addAttribute("category",c);
-        model.addAttribute("title","Thêm loại sản phẩm");
-        model.addAttribute("_action","Thêm");
-
+        page = 1;
+        model.addAttribute("category", c);
+        model.addAttribute("title", "Thêm loại sản phẩm");
+        model.addAttribute("_action", "Thêm");
+        model.addAttribute("page", page);
         return "admin_page/admin_product_category_form";
     }
 
     // Customer
 
-    @RequestMapping(value="/web_shop/admin/customers")
-    public String adminCustomerPage(Model model){
+    @RequestMapping(value = "/web_shop/admin/customers")
+    public String adminCustomerPage(Model model) {
         List<Customer> listCustomer = customerService.findAllCustomer();
-
+        page = 4;
         model.addAttribute("listCustomer", listCustomer);
+        model.addAttribute("page", page);
 
         return "admin_page/admin_customer";
     }
+
+
 
 
 }

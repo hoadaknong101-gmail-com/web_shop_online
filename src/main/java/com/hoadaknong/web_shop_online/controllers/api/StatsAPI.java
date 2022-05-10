@@ -1,6 +1,7 @@
 package com.hoadaknong.web_shop_online.controllers.api;
 
 import com.hoadaknong.web_shop_online.beans.ResponseObject;
+import com.hoadaknong.web_shop_online.beans.StatisticOrder;
 import com.hoadaknong.web_shop_online.beans.StatsByMonth;
 import com.hoadaknong.web_shop_online.entities.Order;
 import com.hoadaknong.web_shop_online.services.OrderService;
@@ -35,6 +36,12 @@ public class StatsAPI {
     public StatsByMonth revenueJSON() throws ParseException {
         StatsByMonth a = statsService.getStatsByDate();
         return a;
+    }
+
+    @RequestMapping(value ="/api/web_shop/admin/number_of_status_order", method = RequestMethod.GET)
+    public StatisticOrder analyticByOrderStatus(){
+        StatisticOrder statisticOrder = statsService.getNumberOrderStatus();
+        return statisticOrder;
     }
 
 }

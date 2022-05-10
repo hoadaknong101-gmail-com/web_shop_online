@@ -16,7 +16,6 @@ public class ProductAPI {
     @Autowired
     UploadFileService storageService;
 
-
     @GetMapping(value = "/resources/images/{image}")
     public ResponseEntity<byte[]> readDetailFile(@PathVariable String image){
         try {

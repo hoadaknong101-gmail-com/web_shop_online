@@ -5,10 +5,12 @@ import com.hoadaknong.web_shop_online.repositories.RoleRepository;
 import com.hoadaknong.web_shop_online.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class RoleImplement implements RoleService {
 
     @Autowired

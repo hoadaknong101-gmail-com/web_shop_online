@@ -1,88 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-<!-- ***** Preloader Start ***** -->
-<div id="preloader">
-    <div class="jumper">
-        <div></div>
-        <div></div>
-        <div></div>
+<div th:fragment="header">
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>
-</div>
-<!-- ***** Preloader End ***** -->
-<!-- ***** Header Area Start ***** -->
-<header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a th:href="@{/index}" class="logo">
-                        <img th:src="@{/assets/images/logo.png}" />
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                        <li class="scroll-to-section"><a href="#top" class="active">Trang chủ</a></li>
-                        <li class="scroll-to-section"><a href="#men">Nam giới</a></li>
-                        <li class="scroll-to-section"><a href="#women">Nữ giới</a></li>
-                        <li class="scroll-to-section"><a href="#kids">Trẻ em</a></li>
-                        <li class="scroll-to-section"><a href="#explore">Khám phá</a></li>
-                        <li class="submenu">
-                            <a href="javascript:;">Trang</a>
-                            <ul>
-                                <div th:if="${session.roleId != 1}">
-                                    <li><a th:href="@{/about}">Giới thiệu</a></li>
-                                    <li><a th:href="@{/products}">Sản phẩm</a></li>
-                                    <li><a th:href="@{/cart}">Giỏ hàng</a></li>
-                                    <li><a th:href="@{/contact}">Liên hệ</a></li>
-                                </div>
-                                <div th:if="${session.roleId == 1}">
-                                    <li><a th:href="@{/about}">Giới thiệu</a></li>
-                                    <li><a th:href="@{/web_shop/admin/}">Trang quản trị</a></li>
-                                    <li><a th:href="@{/products}">Sản phẩm</a></li>
-                                    <li><a th:href="@{/cart}">Giỏ hàng</a></li>
-                                    <li><a th:href="@{/contact}">Liên hệ</a></li>
-                                </div>
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:;">Tài khoản</a>
-                            <ul>
-                                <!-- Đã đăng nhập -->
-                                <div th:if="${session.userId != null}">
-                                    <li><a th:href="@{'/customer/' + ${session.userId}}">Tài khoản của tôi</a></li>
-                                    <li><a th:href="@{/order}">Đơn hàng</a></li>
-                                    <li><a th:href="@{/sign_out}">Đăng xuất</a></li>
-                                </div>
-                                <!-- Chưa đăng nhập -->
-                                <div th:if="${session.userId == null}">
-                                    <li><a th:href="@{/sign_in_sign_up}">Đăng nhập</a></li>
-                                    <li><a th:href="@{/sign_in_sign_up}">Đăng ký</a></li>
-                                </div>
-                            </ul>
-                        </li>
-                        <li class="cart">
-                            <a href="#"><img width="25" height="25" src="/assets/images/cart_icon.png" /></a>
-                        </li>
-                    </ul>
-                    <a class="menu-trigger">
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
+    <!-- ***** Preloader End ***** -->
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a th:href="@{/index}" class="logo">
+                            <img th:src="@{/assets/images/logo.png}" />
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            <li class="scroll-to-section"><a href="#top" class="active">Trang chủ</a></li>
+                            <li class="scroll-to-section"><a href="#men">Nam giới</a></li>
+                            <li class="scroll-to-section"><a href="#women">Nữ giới</a></li>
+                            <li class="scroll-to-section"><a href="#kids">Trẻ em</a></li>
+                            <li class="scroll-to-section"><a href="#explore">Khám phá</a></li>
+                            <li class="submenu">
+                                <a href="javascript:;">Trang</a>
+                                <ul>
+                                    <div th:if="${session.roleId == 3}">
+                                        <li><a th:href="@{/about}">Giới thiệu</a></li>
+                                        <li><a th:href="@{/products}">Sản phẩm</a></li>
+                                        <li><a th:href="@{/cart}">Giỏ hàng</a></li>
+                                        <li><a th:href="@{/contact}">Liên hệ</a></li>
+                                    </div>
+                                    <div th:if="${session.roleId == 1 or session.roleId == 2}">
+                                        <li><a th:href="@{/about}">Giới thiệu</a></li>
+                                        <li><a th:href="@{/web_shop/admin/}">Trang quản trị</a></li>
+                                        <li><a th:href="@{/products}">Sản phẩm</a></li>
+                                        <li><a th:href="@{'/order/' + ${session.userId}}">Giỏ hàng</a></li>
+                                        <li><a th:href="@{/contact}">Liên hệ</a></li>
+                                    </div>
+                                    <div th:unless="${session.roleId == 3 or session.roleId == 1 or session.roleId == 2}">
+                                        <li><a th:href="@{/about}">Giới thiệu</a></li>
+                                        <li><a th:href="@{/products}">Sản phẩm</a></li>
+                                        <li><a th:href="@{/sign_in_sign_up}">Giỏ hàng</a></li>
+                                        <li><a th:href="@{/contact}">Liên hệ</a></li>
+                                    </div>
+                                </ul>
+                            </li>
+                            <li class="submenu">
+                                <a href="javascript:;">Tài khoản</a>
+                                <ul>
+                                    <!-- Đã đăng nhập -->
+                                    <div th:if="${session.userId != null}">
+                                        <li><a th:href="@{'/customer/' + ${session.userId}}">Tài khoản của tôi</a></li>
+                                        <li><a th:href="@{'/order/' + ${session.userId}}">Giỏ hàng</a></li>
+                                        <li><a th:href="@{/sign_out}">Đăng xuất</a></li>
+                                    </div>
+                                    <!-- Chưa đăng nhập -->
+                                    <div th:if="${session.userId == null}">
+                                        <li><a th:href="@{/sign_in_sign_up}">Đăng nhập</a></li>
+                                        <li><a th:href="@{/sign_in_sign_up}">Đăng ký</a></li>
+                                    </div>
+                                </ul>
+                            </li>
+                            <li th:if="${session.userId != null}" class="cart">
+                                <a href="#"><img width="25" height="25" src="/assets/images/cart_icon.png" /></a>
+                            </li>
+                        </ul>
+                        <a class="menu-trigger">
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+            <div>
+                <form class="form-container-search" method="GET" action="">
+                    <div class="form">
+                        <input class="search" type="text" name="search" placeholder="Tìm kiếm..." />
+                        <input class="btn-search" type="submit" name="submit" value="Tìm" />
+                    </div>
+                </form>
             </div>
         </div>
-        <div>
-            <form class="form-container-search" method="GET" action="">
-                <div class="form">
-                    <input class="search" type="text" name="search" placeholder="Tìm kiếm..." />
-                    <input class="btn-search" type="submit" name="submit" value="Tìm" />
-                </div>
-            </form>
-        </div>
-    </div>
-</header>
+    </header>
+</div>
+
+
 <script>
     $(function () {
         var selectedClass = "";

@@ -3,18 +3,28 @@ package com.hoadaknong.web_shop_online.services.impl;
 import com.hoadaknong.web_shop_online.entities.Customer;
 import com.hoadaknong.web_shop_online.entities.Role;
 import com.hoadaknong.web_shop_online.repositories.CustomerRepository;
+import com.hoadaknong.web_shop_online.repositories.RoleRepository;
 import com.hoadaknong.web_shop_online.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class CustomerImplement implements CustomerService {
 
     @Autowired
     private CustomerRepository rp;
+
+    Integer CUSTOMER_ROLE = 3;
+    Integer STAFF_ROLE = 2;
+    Integer ADMIN_ROLE = 1;
+
+    @Autowired
+    private RoleRepository rpRole;
 
     @Override
     public void saveCustomer(Customer customer) {
@@ -54,5 +64,11 @@ public class CustomerImplement implements CustomerService {
     @Override
     public Customer getCustomerByEmail(String email) {
         return rp.getCustomerByEmail(email);
+    }
+
+    @Override
+    public List<Customer> findTop5Customer() {
+        Role customerRole = rpRole.getById(CUSTOMER_ROLE);
+        return rp.findTop5ByRole(customerRole);
     }
 }

@@ -1,6 +1,7 @@
 package com.hoadaknong.web_shop_online.services;
 
 import com.hoadaknong.web_shop_online.entities.Address;
+import com.hoadaknong.web_shop_online.entities.Customer;
 import com.hoadaknong.web_shop_online.entities.CustomerAddress;
 
 import java.util.List;
@@ -9,7 +10,9 @@ import java.util.Optional;
 public interface AddressService {
     void saveAddress(Address address);
     List<Address> findAllAddress();
+    List<CustomerAddress> findAllAddressByCustomerId(Customer id);
     void deleteAddressById(Integer id);
+    void deleteCustomerAddress(Address aId, Customer cId);
     Optional<Address> findAddressById(Integer id);
     List<Address> findAddressesByAddressLine(String addressLine);
     List<Address> findAddressesByDistrict(String district);

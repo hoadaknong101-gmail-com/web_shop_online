@@ -1,6 +1,7 @@
 package com.hoadaknong.web_shop_online.services.impl;
 
 import com.hoadaknong.web_shop_online.entities.Address;
+import com.hoadaknong.web_shop_online.entities.Customer;
 import com.hoadaknong.web_shop_online.entities.CustomerAddress;
 import com.hoadaknong.web_shop_online.entities.keys.CustomerAddressKey;
 import com.hoadaknong.web_shop_online.repositories.AddressRepository;
@@ -8,15 +9,20 @@ import com.hoadaknong.web_shop_online.repositories.CustomerAddressRepository;
 import com.hoadaknong.web_shop_online.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class AddressImplement implements AddressService {
 
     @Autowired
     private AddressRepository rpAddress;
+
+    @Autowired
+    private CustomerAddressRepository customerAddressRepository;
 
     @Autowired
     private CustomerAddressRepository rpAddresOfCustomer;
@@ -32,8 +38,18 @@ public class AddressImplement implements AddressService {
     }
 
     @Override
+    public List<CustomerAddress> findAllAddressByCustomerId(Customer id) {
+        return customerAddressRepository.findAllByCustomerId(id);
+    }
+
+    @Override
     public void deleteAddressById(Integer id) {
         rpAddress.deleteById(id);
+    }
+
+    @Override
+    public void deleteCustomerAddress(Address aId, Customer cId) {
+        long a =  customerAddressRepository.deleteCustomerAddressByAddressIdAndCustomerId(aId, cId);
     }
 
     @Override

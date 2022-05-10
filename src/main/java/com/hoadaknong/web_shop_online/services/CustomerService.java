@@ -16,4 +16,5 @@ public interface CustomerService {
     Customer getCustomerById(Integer id);
     Customer getCustomerByEmailAndPassword(String email, String password);
     Customer getCustomerByEmail(String email);
+    List<Customer> findTop5Customer();
 }
