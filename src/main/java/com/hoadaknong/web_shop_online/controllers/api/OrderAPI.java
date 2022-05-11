@@ -4,6 +4,7 @@ import com.hoadaknong.web_shop_online.entities.Customer;
 import com.hoadaknong.web_shop_online.entities.Order;
 import com.hoadaknong.web_shop_online.entities.OrderDetails;
 import com.hoadaknong.web_shop_online.entities.Product;
+import com.hoadaknong.web_shop_online.entities.keys.OrderDetailsKey;
 import com.hoadaknong.web_shop_online.services.CustomerService;
 import com.hoadaknong.web_shop_online.services.OrderService;
 import com.hoadaknong.web_shop_online.services.ProductService;
@@ -169,6 +170,37 @@ public class OrderAPI {
                 orderService.saveItem(orderDetails);
                 orderService.saveOrder(order);
                 return "Thêm thành công";
+            }
+        }
+    }
+
+    @RequestMapping(value="/cart/delete_product/{orderId}/{productId}")
+    public String deleteProductInCart(@PathVariable Integer orderId,
+                                      @PathVariable Integer productId,
+                                      HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Product product = productService.findProductById(productId);
+        Integer customerId = (Integer) session.getAttribute("userId");
+        Customer customer = customerService.getCustomerById(customerId);
+        Optional<Order> orderFound = orderService.findOrderByCustomerAndStatus(customer,-1);
+        Order order = null;
+        if(customerId == null){
+            return "Bạn hãy đăng nhập trước";
+        }else{
+            if(orderFound.isPresent()){
+                order = orderFound.get();
+                OrderDetailsKey orderDetailsKey = new OrderDetailsKey(productId,order.getId());
+                orderService.deleteItem(orderDetailsKey);
+                List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
+                double sum = 0;
+                for(OrderDetails o: listOrderDetails){
+                    sum += o.getTotal();
+                }
+                order.setTotalPrice(sum);
+                orderService.saveOrder(order);
+                return customer.getId()+"";
+            }else{
+                return "Không tìm thấy giỏ hàng";
             }
         }
     }

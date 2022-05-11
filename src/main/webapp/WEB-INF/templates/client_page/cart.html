@@ -14,7 +14,42 @@
   <link rel="stylesheet" th:href="@{/assets/css/owl-carousel.css}" />
   <link rel="stylesheet" th:href="@{/assets/css/lightbox.css}" />
   <style>
+    @media only screen and (max-width:  800px) {
+      #no-more-tables tbody,
+      #no-more-tables tr,
+      #no-more-tables td {
+        display: block;
+      }
 
+      #no-more-tables thead tr{
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+      #no-more-tables td{
+        position: relative;
+        padding-left: 50%;
+      }
+      #no-more-tables tr{
+        margin-bottom: 1rem;
+        border-radius: 20px;
+        border: 0.2px solid #c9c9c9;
+      }
+      #no-more-tables td:before{
+        content: attr(data-title);
+        position: absolute;
+        left: 6px;
+      }
+      tr.no-border .product-name{
+        border-top: none;
+      }
+      tr.no-border .action-cart{
+        border-bottom: none;
+      }
+      .table{
+        box-shadow: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -34,49 +69,50 @@
   </div>
 </div>
 <!-- ***** Main Banner Area End ***** -->
-<section class="main-contain">
-  <div class="container-fluid">
-    <table class="table table-cart">
-      <thead class="thead-dark table-content">
-      <tr>
-        <th scope="col">Sản phẩm</th>
-        <th scope="col">Đơn giá</th>
-        <th scope="col">Số lượng</th>
-        <th scope="col">Thành tiền</th>
-        <th scope="col">#</th>
-      </tr>
-      </thead>
-      <tbody>
-      <th:block th:each="d : ${listOrderDetail}">
+<section class="main-contain ">
+    <div class="table-responsive" id="no-more-tables">
+      <table class="table">
+        <thead class="thead-dark table-content">
         <tr>
-          <td data-title="Sản phẩm" style="display: flex; align-items: center">
-            <img style=" border-radius: 5px;margin-right: 10px;width: 100px; height: 100px" th:src="@{'/api/products/resources/images/' + ${d.productId.thumbnailPhoto}}"></img>
-            <a style="color: #1b1e21 " th:href="@{'/product/single_product/' + ${d.productId.id}}"><h5>[[${d.productId.name}]]</h5></a>
-          </td>
-          <td data-title="Đơn giá">[[${#numbers.formatDecimal(d.productId.listPrice, 0, 'COMMA', 0, 'POINT')}]] ₫</td>
-          <td data-title="Số lượng">
-            <div class="quantity buttons_added">
-              <input type="button" value="-" class="minus" /><input
-                    type="number"
-                    step="1"
-                    min="1"
-                    max=""
-                    name="quantity"
-                    th:value="${d.quantity}"
-                    title="Qty"
-                    class="input-text qty text"
-                    size="4"
-                    pattern=""
-                    inputmode=""
-            /><input type="button" value="+" class="plus" />
-            </div>
-          </td>
-          <td data-title="Tổng cộng">[[${#numbers.formatDecimal(d.total, 0, 'COMMA', 0, 'POINT')}]] ₫</td>
-          <td data-title="#"><a type="button" class="btn btn-danger">Xóa</a></td>
+          <th >Sản phẩm</th>
+          <th >Đơn giá</th>
+          <th >Số lượng</th>
+          <th >Thành tiền</th>
+          <th >#</th>
         </tr>
-      </th:block>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+        <th:block th:each="d : ${listOrderDetail}">
+          <tr class="no-border">
+            <td data-title="Sản phẩm" style="display: flex; align-items: center" class="product-name">
+              <img style=" border-radius: 5px;margin-right: 10px;width: 100px; height: 100px" th:src="@{'/api/products/resources/images/' + ${d.productId.thumbnailPhoto}}"></img>
+              <a style="color: #1b1e21 " th:href="@{'/product/single_product/' + ${d.productId.id}}"><h5>[[${d.productId.name}]]</h5></a>
+            </td>
+            <td data-title="Đơn giá">[[${#numbers.formatDecimal(d.productId.listPrice, 0, 'COMMA', 0, 'POINT')}]] ₫</td>
+            <td data-title="Số lượng">
+              <div class="quantity buttons_added">
+                <input type="button" value="-" class="minus" /><input
+                      type="number"
+                      step="1"
+                      min="1"
+                      max=""
+                      name="quantity"
+                      th:value="${d.quantity}"
+                      title="Qty"
+                      class="input-text qty text"
+                      size="4"
+                      pattern=""
+                      inputmode=""
+              /><input type="button" value="+" class="plus" />
+              </div>
+            </td>
+            <td data-title="Tổng cộng">[[${#numbers.formatDecimal(d.total, 0, 'COMMA', 0, 'POINT')}]] ₫</td>
+            <td data-title="" class="action-cart"><div th:onclick="'deleteCartItem(\'' + ${d.orderId.id} + '\',\'' +${d.productId.id} + '\');'" class="btn btn-danger">Xóa</div></td>
+          </tr>
+        </th:block>
+        </tbody>
+      </table>
+    </div>
     <div class="btn-container">
       <button class="btn btn-success btn-lg">Cập nhật</button>
     </div>
@@ -103,7 +139,6 @@
     <div class="btn-total-container">
       <a href="" class="btn-format btn btn-primary btn-lg">THANH TOÁN</a>
     </div>
-  </div>
 </section>
 <div th:replace="~{component/footer :: footer}">Footer</div>
 <!-- jQuery -->
@@ -150,6 +185,21 @@
   function cancelChange(){
     document.getElementById("modal-form").style.display = "none";
     document.getElementById("layer").style.display = "none";
+  }
+  function deleteCartItem(orderId, productId){
+    let message = "Bạn có muốn xóa sản phẩm này không?";
+    if(confirm(message) == true){
+      $.ajax({
+        url: "/cart/delete_product/" + orderId + "/" + productId,
+        type:"get",
+        success: function(response){
+          window.location = "/order/" + response
+        },
+        error: function (xhr){
+
+        },
+      });
+    }
   }
 </script>
 </body>

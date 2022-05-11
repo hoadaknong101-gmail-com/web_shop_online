@@ -1,6 +1,7 @@
 package com.hoadaknong.web_shop_online;
 
 import com.hoadaknong.web_shop_online.entities.*;
+import com.hoadaknong.web_shop_online.entities.keys.OrderDetailsKey;
 import com.hoadaknong.web_shop_online.repositories.*;
 import com.hoadaknong.web_shop_online.services.*;
 import org.json.JSONException;
@@ -63,12 +64,10 @@ class WebShopOnlineApplicationTests {
 
 	@Test
 	public void addProduct(){
-		Product product = repo.getById(708);
-		Order order = orderRepository.getById(15);
-		Optional<OrderDetails> found = orderDetailsRepository.findOrderDetailsByProductIdAndOrderId(product,order);
-		if(found.isPresent()){
-			System.out.println(found.get().toString());
-		}
+		OrderDetailsKey orderDetailsKey = new OrderDetailsKey();
+		orderDetailsKey.setOrderId(17);
+		orderDetailsKey.setProductId(709);
+		orderService.deleteItem(orderDetailsKey);
 	}
 
 	@Test
