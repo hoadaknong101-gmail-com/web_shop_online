@@ -13,6 +13,9 @@
   <link rel="stylesheet" th:href="@{/assets/css/templatemo-hexashop.css}" />
   <link rel="stylesheet" th:href="@{/assets/css/owl-carousel.css}" />
   <link rel="stylesheet" th:href="@{/assets/css/lightbox.css}" />
+  <style>
+
+  </style>
 </head>
 <body>
 <div id="layer"></div>
@@ -40,18 +43,18 @@
         <th scope="col">Đơn giá</th>
         <th scope="col">Số lượng</th>
         <th scope="col">Thành tiền</th>
-        <th scope="col">Action</th>
+        <th scope="col">#</th>
       </tr>
       </thead>
       <tbody>
       <th:block th:each="d : ${listOrderDetail}">
         <tr>
-          <td style="display: flex; align-items: center">
+          <td data-title="Sản phẩm" style="display: flex; align-items: center">
             <img style=" border-radius: 5px;margin-right: 10px;width: 100px; height: 100px" th:src="@{'/api/products/resources/images/' + ${d.productId.thumbnailPhoto}}"></img>
             <a style="color: #1b1e21 " th:href="@{'/product/single_product/' + ${d.productId.id}}"><h5>[[${d.productId.name}]]</h5></a>
           </td>
-          <td>[[${#numbers.formatDecimal(d.productId.listPrice, 0, 'COMMA', 0, 'POINT')}]] ₫</td>
-          <td>
+          <td data-title="Đơn giá">[[${#numbers.formatDecimal(d.productId.listPrice, 0, 'COMMA', 0, 'POINT')}]] ₫</td>
+          <td data-title="Số lượng">
             <div class="quantity buttons_added">
               <input type="button" value="-" class="minus" /><input
                     type="number"
@@ -68,8 +71,8 @@
             /><input type="button" value="+" class="plus" />
             </div>
           </td>
-          <td>[[${#numbers.formatDecimal(d.total, 0, 'COMMA', 0, 'POINT')}]] ₫</td>
-          <td><a type="button" class="btn btn-danger">Xóa</a></td>
+          <td data-title="Tổng cộng">[[${#numbers.formatDecimal(d.total, 0, 'COMMA', 0, 'POINT')}]] ₫</td>
+          <td data-title="#"><a type="button" class="btn btn-danger">Xóa</a></td>
         </tr>
       </th:block>
       </tbody>

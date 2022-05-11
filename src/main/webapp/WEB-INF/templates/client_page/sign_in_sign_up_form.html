@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Đăng nhập & Đăng ký</title>
-<!--    <link rel="stylesheet" th:href="@{/style/style_sign_in_sign_up.css}" />-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins" />
     <style>
         * {
@@ -20,6 +19,7 @@
         body {
             display: flex;
             justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
             background: #03a9f4;
@@ -139,12 +139,26 @@
             border: 1px solid #333;
         }
         .formBx .form form input[type="submit"] {
+            text-align: center;
             background: #03a9f4;
             border: none;
             color: #fff;
-            max-width: 100px;
+            max-width: 130px;
             cursor: pointer;
         }
+        .formBx .form form .btn-sign-up {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: #03a9f4;
+            border: none;
+            color: #fff;
+            max-width: 130px;
+            height: 50px;
+            cursor: pointer;
+        }
+
         .formBx .form form .forgot {
             color: #333;
         }
@@ -152,11 +166,19 @@
         .formBx.active .signupForm input[type="submit"] {
             background: #f43648;
         }
+        .formBx.active .signupForm .btn-sign-up {
+            text-align: center;
+            background: #f43648;
+        }
+
+        #message{
+            color: #c82333;
+        }
 
         @media (max-width: 991px) {
             .container {
                 max-width: 400px;
-                height: 650px;
+                height: 850px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -167,7 +189,8 @@
             }
             .formBx {
                 width: 100%;
-                height: 500px;
+                /*height: 500px;*/
+                height: 700px;
                 top: 0;
                 box-shadow: none;
             }
@@ -188,6 +211,12 @@
     </style>
 </head>
 <body>
+<div class="header">
+    <div class="header-logo">
+        <img th:src="@{/assets/images/logo-white-id.png}">
+    </div>
+    <div><h5 style="color: white" th:if="${messageSuccess}">[[${messageSuccess}]]</h5></div>
+</div>
 <div class="container">
     <div class="blueBg">
         <div class="box signin">
@@ -203,28 +232,29 @@
         <div class="form signinForm">
             <form method="get" action="/sign_in">
                 <h3>Đăng nhập</h3>
-                <input type="email" placeholder="Email" name="email"/>
-                <input type="password" placeholder="Password" name="password"/>
+                <input type="email" placeholder="Email" name="email" required/>
+                <input type="password" placeholder="Password" name="password" required/>
                 <div th:if="${message}">
                     <p style="color: red;">[[${message}]]</p>
                 </div>
-                <input style="width: 150px" type="submit" value="Đăng nhập" />
+                <input type="submit" value="Đăng nhập" />
                 <a href="/input_forgot_password" class="forgot">Quên mật khẩu?</a>
             </form>
         </div>
 
         <div class="form signupForm">
-            <form method="post" action="/sign_up" th:object="${customer}">
+            <form method="post" action="/sign_up" id="form-sign-up" th:object="${customer}">
                 <input type="hidden" name="id" th:field="*{id}">
                 <h3>Đăng ký</h3>
-                <input type="email" placeholder="Email" name="email" th:field="*{email}"/>
-                <input type="text" placeholder="Họ" name="firstName" th:field="*{firstName}"/>
-                <input type="text" placeholder="Tên" name="lastName" th:field="*{lastName}"/>
-                <input type="text" placeholder="Công việc" name="job" th:field="*{job}"/>
-                <input type="tel" placeholder="Số điện thoại" name="phone" th:field="*{phone}"/>
-                <input type="password" placeholder="Mật khẩu" name="password" th:field="*{password}"/>
-                <input type="password" placeholder="Nhập lại mật khẩu" />
-                <input type="submit" value="Đăng ký"/>
+                <input id="email-sign-up" type="email" placeholder="Email" name="email" th:field="*{email}" required/>
+                <input id="firstname-sign-up" type="text" placeholder="Họ" name="firstName" th:field="*{firstName}" required/>
+                <input id="lastname-sign-up" type="text" placeholder="Tên" name="lastName" th:field="*{lastName}" required/>
+                <input id="job-sign-up" type="text" placeholder="Công việc" name="job" th:field="*{job}" required/>
+                <input id="phone-sign-up" type="tel" placeholder="Số điện thoại" name="phone" th:field="*{phone}" required/>
+                <input id="password-sign-up" type="password" placeholder="Mật khẩu" name="password" th:field="*{password}" required/>
+                <input id="password-sign-up-confirm" type="password" placeholder="Nhập lại mật khẩu" />
+                <div><p id="message"></p></div>
+                <div class="btn-sign-up" onclick="submitSignUp();">Đăng ký</div>
             </form>
         </div>
     </div>
@@ -243,5 +273,6 @@
         body.classList.remove("active");
     };
 </script>
+<script type="text/javascript" th:src="@{/js/account.js}"></script>
 </body>
 </html>
