@@ -213,7 +213,9 @@
 <body>
 <div class="header">
     <div class="header-logo">
-        <img th:src="@{/assets/images/logo-white-id.png}">
+        <a th:href="@{/index}" class="logo">
+            <img th:src="@{/assets/images/logo-white-id.png}">
+        </a>
     </div>
     <div><h5 style="color: white" th:if="${messageSuccess}">[[${messageSuccess}]]</h5></div>
 </div>

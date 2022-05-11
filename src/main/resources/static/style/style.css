@@ -31,12 +31,13 @@ body {
 	display: none;
 }
 
-#menu-toggle:checked ~ .sidebar {
-	display: none;
-}
 
 #menu-toggle:checked ~ .sidebar-fragment {
 	display: none;
+}
+
+.sidebar-fragment{
+	transition: all 1s;
 }
 
 
@@ -71,7 +72,7 @@ body {
 .sidebar {
 	width: 220px;
 	margin-left: 40px;
-	transition: display 1s;
+	transition: all 1s;
 }
 
 .brand {
@@ -802,9 +803,6 @@ table tr th {
 
 /*Responsive screen size*/
 @media only screen and (max-width: 1280px) {
-	.sidebar {
-		display: none;
-	}
 
 	#menu-toggle:checked ~ .sidebar {
 		display: block;
@@ -820,10 +818,12 @@ table tr th {
 	.grid-2 {
 		grid-template-columns: 100%;
 	}
+
 }
 
 @media only screen and (max-width: 640px) {
 	.page-wrapper::before {
 		min-width: 640px;
 	}
+
 }
