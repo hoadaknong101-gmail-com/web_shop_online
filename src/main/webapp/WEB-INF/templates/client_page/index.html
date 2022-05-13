@@ -160,7 +160,7 @@
                                          th:src="@{'/api/products/resources/images/' +  ${p.thumbnailPhoto}}"/>
                                 </div>
                                 <div class="down-content">
-                                    <h4>[[${p.name}]]</h4>
+                                    <a th:href="@{'/product/single_product/' + ${p.id}}"><h4>[[${p.name}]]</h4></a>
                                     <span>[[${#numbers.formatDecimal(p.listPrice, 0, 'COMMA', 0, 'POINT')}]] ₫</span>
                                     <ul class="stars">
                                         <th:block th:each="i: ${#numbers.sequence(1, p.rate)}">
@@ -213,7 +213,7 @@
                                          th:src="@{'/api/products/resources/images/' +  ${p.thumbnailPhoto}}"/>
                                 </div>
                                 <div class="down-content">
-                                    <h4>[[${p.name}]]</h4>
+                                    <a th:href="@{'/product/single_product/' + ${p.id}}"><h4>[[${p.name}]]</h4></a>
                                     <span>[[${#numbers.formatDecimal(p.listPrice, 0, 'COMMA', 0, 'POINT')}]] ₫</span>
                                     <ul class="stars">
                                         <th:block th:each="i: ${#numbers.sequence(1, p.rate)}">
@@ -266,7 +266,7 @@
                                          th:src="@{'/api/products/resources/images/' + ${p.thumbnailPhoto}}"/>
                                 </div>
                                 <div class="down-content">
-                                    <h4>[[${p.name}]]</h4>
+                                    <a th:href="@{'/product/single_product/' + ${p.id}}"><h4>[[${p.name}]]</h4></a>
                                     <span>[[${#numbers.formatDecimal(p.listPrice, 0, 'COMMA', 0, 'POINT')}]] ₫</span>
                                     <ul class="stars">
                                         <th:block th:each="i: ${#numbers.sequence(1, p.rate)}">

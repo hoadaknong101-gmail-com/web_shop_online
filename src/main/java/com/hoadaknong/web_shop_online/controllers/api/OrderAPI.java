@@ -202,10 +202,19 @@ public class OrderAPI {
 	@RequestMapping(value = "/update_quantity/{productId}/{orderId}/{quantity}")
 	public String updateQuantity(@PathVariable Integer productId, @PathVariable Integer orderId,
 			@PathVariable Integer quantity) {
+		Order order = orderService.getById(orderId);
 		OrderDetails orderDetails = orderService.findOrderDetailsByProductIdAndOrderId(productId, orderId).get();
 		orderDetails.setQuantity(quantity);
 		orderDetails.setTotal(quantity * orderDetails.getProductId().getListPrice());
+
+		List<OrderDetails> listOrderDetails = orderService.findByOrderId(orderId);
+		double sum = 0;
+		for (OrderDetails o : listOrderDetails) {
+			sum += o.getTotal();
+		}
+		order.setTotalPrice(sum);
 		orderService.saveItem(orderDetails);
+		orderService.saveOrder(order);
 		return "Cập nhật số lượng thành công";
 	}
 }

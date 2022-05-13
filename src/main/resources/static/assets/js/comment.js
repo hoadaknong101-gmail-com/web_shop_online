@@ -1,6 +1,6 @@
 function comment(id) {
 	let content = document.getElementById("comment").value
-	if(content === ""){
+	if(content !== ""){
 		$.ajax({
 		url: "/comment/" + id + "/" + content,
 		type: "post",

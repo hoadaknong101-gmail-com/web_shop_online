@@ -38,16 +38,13 @@
                                 <div class="feedback-product-item-left">
                                     <div class="customer-info">
                                         <div class="customer-info-image">
-                                            <img src="/img/1.jpg" alt="" />
+                                            <img th:src="@{/img/person_icon.png}">
                                         </div>
                                     </div>
                                     <div class="feedback-content">
                                         <div class="name-customer">
                                             <div>
-                                                <h4 ><span style="color: #1b9ef8; font-style: normal;">[[${f.customerId.lastName}]] </span> <span style="font-style: normal">[[${#dates.format(f.modifiedDate, 'dd-MM-yyyy')}]]</span></h4>
-                                                <th:block th:each="i: ${#numbers.sequence(1, f.rate)}">
-                                                    <span class="las la-star"></span>
-                                                </th:block>
+                                                <h4 ><span style="color: #1b9ef8; font-style: normal; font-size: 1.1rem">[[${f.customerId.lastName}]] </span> <span>-</span> <span style="font-style: normal">[[${#dates.format(f.modifiedDate, 'dd-MM-yyyy')}]]</span></h4>
                                             </div>
                                         </div>
                                         <div class="feedback-content-body">
@@ -63,8 +60,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="product-item">
-                                    <div class="product-image">
+                                <div class="product-item" style="display: flex; flex-direction: column; justify-content: center; width: 200px;align-items: center">
+                                    <div class="product-image" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
                                         <img th:src="@{'/api/products/resources/images/' + ${f.productId.thumbnailPhoto}}" alt="Ao thun" />
                                     </div>
                                     <div class="product-info">

@@ -11,15 +11,15 @@ function addProductToCart(id){
     });
 }
 
-function addProductToCartAndQuantity(id){
+function addProductToCartAndQuantity(id) {
     const quantity = document.getElementById('quantity').value;
     $.ajax({
         url: "/cart/add_product/" + id + "/" + quantity,
-        type:"get",
-        success: function(response){
+        type: "get",
+        success: function (response) {
             alert(response)
         },
-        error: function (xhr){
+        error: function (xhr) {
 
         },
     });

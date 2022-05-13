@@ -2427,10 +2427,16 @@ contact Us Page
 	box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.61);
 }
 
-
+.comment-item:first-child{
+	margin:0;
+}
 .comment-item{
 	display: flex;
+	margin: 2rem 0 0 0;
+	border-bottom: 1px solid #c4c4c4;
+	padding: 0 0 1rem 0;
 }
+
 .comment-content{
 	margin: 0.7rem 0 0 0.5rem;
 }

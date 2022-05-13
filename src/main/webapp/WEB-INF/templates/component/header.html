@@ -67,7 +67,7 @@
                                 </ul>
                             </li>
                             <li th:if="${session.userId != null}" class="cart">
-                                <a href="#"><img width="25" height="25" src="/assets/images/cart_icon.png" /></a>
+                                <a th:href="@{'/order/' + ${session.userId}}"><img width="25" height="25" src="/assets/images/cart_icon.png" /></a>
                             </li>
                         </ul>
                         <a class="menu-trigger">
