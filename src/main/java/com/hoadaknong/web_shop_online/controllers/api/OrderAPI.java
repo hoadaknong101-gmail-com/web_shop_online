@@ -22,186 +22,190 @@ import java.util.Optional;
 @RestController
 public class OrderAPI {
 
-    @Autowired
-    private ProductService productService;
+	@Autowired
+	private ProductService productService;
 
-    @Autowired
-    private OrderService orderService;
+	@Autowired
+	private OrderService orderService;
 
-    @Autowired
-    private CustomerService customerService;
+	@Autowired
+	private CustomerService customerService;
 
+	@RequestMapping(value = "/cart/add_product/{productId}")
+	public String addProductToCart(@PathVariable Integer productId, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Product product = productService.findProductById(productId);
+		Integer customerId = (Integer) session.getAttribute("userId");
 
-    @RequestMapping(value = "/cart/add_product/{productId}")
-    public String addProductToCart(@PathVariable Integer productId,
-                                   HttpServletRequest request){
-        HttpSession session = request.getSession();
-        Product product = productService.findProductById(productId);
-        Integer customerId = (Integer) session.getAttribute("userId");
+		if (customerId == null) {
+			return "Bạn hãy đăng nhập trước";
+		} else {
+			Customer customer = customerService.getCustomerById(customerId);
+			Optional<Order> orderFound = orderService.findOrderByCustomerAndStatus(customer, -1);
+			if (orderFound.isPresent()) { // Đã có giỏ hàng
+				Order order = orderFound.get();
+				OrderDetails orderDetails = null;
+				Optional<OrderDetails> orderDetailsFound = orderService
+						.findOrderDetailsByProductIdAndOrderId(product.getId(), order.getId());
+				if (orderDetailsFound.isPresent()) {
+					orderDetails = orderDetailsFound.get();
+					orderDetails.setModifiedDate(new Date());
+					Integer quantity = orderDetails.getQuantity() + 1;
+					orderDetails.setQuantity(quantity);
+					orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
+				} else {
+					orderDetails = new OrderDetails();
+					orderDetails.setOrderId(order);
+					orderDetails.setModifiedDate(new Date());
+					orderDetails.setProductId(product);
+					orderDetails.setQuantity(1);
+					orderDetails.setUnitPrice(product.getListPrice());
+					orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
+				}
+				List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
+				double sum = 0;
+				for (OrderDetails o : listOrderDetails) {
+					sum += o.getTotal();
+				}
+				order.setTotalPrice(sum);
+				orderService.saveItem(orderDetails);
+				orderService.saveOrder(order);
+				return "Thêm thành công";
+			} else { // Nếu chưa có giỏ hàng mới
+				Order order = new Order();
+				order.setStatus(-1);
+				order.setModifiedDate(new Date());
+				order.setCustomerId(customer);
 
-        if(customerId == null){
-            return "Bạn hãy đăng nhập trước";
-        }else{
-            Customer customer = customerService.getCustomerById(customerId);
-            Optional<Order> orderFound = orderService.findOrderByCustomerAndStatus(customer,-1);
-            if(orderFound.isPresent()){ // Đã có giỏ hàng
-                Order order = orderFound.get();
-                OrderDetails orderDetails = null;
-                Optional<OrderDetails> orderDetailsFound = orderService.
-                        findOrderDetailsByProductIdAndOrderId(product.getId(),order.getId());
-                if(orderDetailsFound.isPresent()){
-                    orderDetails = orderDetailsFound.get();
-                    orderDetails.setModifiedDate(new Date());
-                    Integer quantity = orderDetails.getQuantity() + 1;
-                    orderDetails.setQuantity(quantity);
-                    orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
-                }else{
-                    orderDetails = new OrderDetails();
-                    orderDetails.setOrderId(order);
-                    orderDetails.setModifiedDate(new Date());
-                    orderDetails.setProductId(product);
-                    orderDetails.setQuantity(1);
-                    orderDetails.setUnitPrice(product.getListPrice());
-                    orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
-                }
-                List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
-                double sum = 0;
-                for(OrderDetails o: listOrderDetails){
-                    sum += o.getTotal();
-                }
-                order.setTotalPrice(sum);
-                orderService.saveItem(orderDetails);
-                orderService.saveOrder(order);
-                return "Thêm thành công";
-            } else { // Nếu chưa có giỏ hàng mới
-                Order order = new Order();
-                order.setStatus(-1);
-                order.setModifiedDate(new Date());
-                order.setCustomerId(customer);
+				orderService.saveOrder(order);
+				OrderDetails orderDetails = new OrderDetails();
 
-                orderService.saveOrder(order);
-                OrderDetails orderDetails = new OrderDetails();
+				orderDetails.setOrderId(order);
+				orderDetails.setModifiedDate(new Date());
+				orderDetails.setProductId(product);
+				orderDetails.setQuantity(1);
+				orderDetails.setUnitPrice(product.getListPrice());
+				orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
+				List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
+				double sum = 0;
+				for (OrderDetails o : listOrderDetails) {
+					sum += o.getTotal();
+				}
+				order.setTotalPrice(sum);
+				orderService.saveItem(orderDetails);
+				orderService.saveOrder(order);
+				return "Thêm thành công";
+			}
+		}
+	}
 
+	@RequestMapping("/cart/add_product/{productId}/{quantity}")
+	public String addProductToCartAndQuantity(@PathVariable Integer productId, @PathVariable Integer quantity,
+			HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Product product = productService.findProductById(productId);
+		Integer customerId = (Integer) session.getAttribute("userId");
+		if (customerId == null) {
+			return "Bạn hãy đăng nhập trước";
+		} else {
+			Customer customer = customerService.getCustomerById(customerId);
+			Optional<Order> orderFound = orderService.findOrderByCustomerAndStatus(customer, -1);
+			if (orderFound.isPresent()) { // Đã có giỏ hàng
+				Order order = orderFound.get();
+				OrderDetails orderDetails = null;
+				Optional<OrderDetails> orderDetailsFound = orderService
+						.findOrderDetailsByProductIdAndOrderId(product.getId(), order.getId());
+				if (orderDetailsFound.isPresent()) {
+					orderDetails = orderDetailsFound.get();
+					orderDetails.setModifiedDate(new Date());
+					orderDetails.setQuantity(orderDetails.getQuantity() + quantity);
+					orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
+				} else {
+					orderDetails = new OrderDetails();
+					orderDetails.setOrderId(order);
+					orderDetails.setModifiedDate(new Date());
+					orderDetails.setProductId(product);
+					orderDetails.setQuantity(quantity);
+					orderDetails.setUnitPrice(product.getListPrice());
+					orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
+				}
+				List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
+				double sum = 0;
+				for (OrderDetails o : listOrderDetails) {
+					sum += o.getTotal();
+				}
+				order.setTotalPrice(sum);
+				orderService.saveItem(orderDetails);
+				orderService.saveOrder(order);
+				return "Thêm thành công";
+			} else { // Nếu chưa có giỏ hàng mới
+				Order order = new Order();
+				order.setStatus(-1);
+				order.setModifiedDate(new Date());
+				order.setCustomerId(customer);
 
-                orderDetails.setOrderId(order);
-                orderDetails.setModifiedDate(new Date());
-                orderDetails.setProductId(product);
-                orderDetails.setQuantity(1);
-                orderDetails.setUnitPrice(product.getListPrice());
-                orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
-                List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
-                double sum = 0;
-                for(OrderDetails o: listOrderDetails){
-                    sum += o.getTotal();
-                }
-                order.setTotalPrice(sum);
-                orderService.saveItem(orderDetails);
-                orderService.saveOrder(order);
-                return "Thêm thành công";
-            }
-        }
-    }
+				OrderDetails orderDetails = new OrderDetails();
 
-    @RequestMapping("/cart/add_product/{productId}/{quantity}")
-    public String addProductToCartAndQuantity(@PathVariable Integer productId,
-                                              @PathVariable Integer quantity,
-                                              HttpServletRequest request){
-        HttpSession session = request.getSession();
-        Product product = productService.findProductById(productId);
-        Integer customerId = (Integer) session.getAttribute("userId");
-        if(customerId == null){
-            return "Bạn hãy đăng nhập trước";
-        }else{
-            Customer customer = customerService.getCustomerById(customerId);
-            Optional<Order> orderFound = orderService.findOrderByCustomerAndStatus(customer,-1);
-            if(orderFound.isPresent()){ // Đã có giỏ hàng
-                Order order = orderFound.get();
-                OrderDetails orderDetails = null;
-                Optional<OrderDetails> orderDetailsFound = orderService.
-                        findOrderDetailsByProductIdAndOrderId(product.getId(),order.getId());
-                if(orderDetailsFound.isPresent()){
-                    orderDetails = orderDetailsFound.get();
-                    orderDetails.setModifiedDate(new Date());
-                    orderDetails.setQuantity(orderDetails.getQuantity() + quantity);
-                    orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
-                }else{
-                    orderDetails = new OrderDetails();
-                    orderDetails.setOrderId(order);
-                    orderDetails.setModifiedDate(new Date());
-                    orderDetails.setProductId(product);
-                    orderDetails.setQuantity(quantity);
-                    orderDetails.setUnitPrice(product.getListPrice());
-                    orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
-                }
-                List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
-                double sum = 0;
-                for(OrderDetails o: listOrderDetails){
-                    sum += o.getTotal();
-                }
-                order.setTotalPrice(sum);
-                orderService.saveItem(orderDetails);
-                orderService.saveOrder(order);
-                return "Thêm thành công";
-            } else { // Nếu chưa có giỏ hàng mới
-                Order order = new Order();
-                order.setStatus(-1);
-                order.setModifiedDate(new Date());
-                order.setCustomerId(customer);
+				orderDetails.setOrderId(order);
+				orderDetails.setModifiedDate(new Date());
+				orderDetails.setProductId(product);
+				orderDetails.setQuantity(1);
+				orderDetails.setUnitPrice(product.getListPrice());
+				orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
 
+				List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
+				double sum = 0;
+				for (OrderDetails o : listOrderDetails) {
+					sum += o.getTotal();
+				}
+				order.setTotalPrice(sum);
+				orderService.saveItem(orderDetails);
+				orderService.saveOrder(order);
 
-                OrderDetails orderDetails = new OrderDetails();
+				orderService.saveItem(orderDetails);
+				orderService.saveOrder(order);
+				return "Thêm thành công";
+			}
+		}
+	}
 
-                orderDetails.setOrderId(order);
-                orderDetails.setModifiedDate(new Date());
-                orderDetails.setProductId(product);
-                orderDetails.setQuantity(1);
-                orderDetails.setUnitPrice(product.getListPrice());
-                orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
+	@RequestMapping(value = "/cart/delete_product/{orderId}/{productId}")
+	public String deleteProductInCart(@PathVariable Integer orderId, @PathVariable Integer productId,
+			HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Product product = productService.findProductById(productId);
+		Integer customerId = (Integer) session.getAttribute("userId");
+		Customer customer = customerService.getCustomerById(customerId);
+		Optional<Order> orderFound = orderService.findOrderByCustomerAndStatus(customer, -1);
+		Order order = null;
+		if (customerId == null) {
+			return "Bạn hãy đăng nhập trước";
+		} else {
+			if (orderFound.isPresent()) {
+				order = orderFound.get();
+				OrderDetailsKey orderDetailsKey = new OrderDetailsKey(productId, order.getId());
+				orderService.deleteItem(orderDetailsKey);
+				List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
+				double sum = 0;
+				for (OrderDetails o : listOrderDetails) {
+					sum += o.getTotal();
+				}
+				order.setTotalPrice(sum);
+				orderService.saveOrder(order);
+				return customer.getId() + "";
+			} else {
+				return "Không tìm thấy giỏ hàng";
+			}
+		}
+	}
 
-                List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
-                double sum = 0;
-                for(OrderDetails o: listOrderDetails){
-                    sum += o.getTotal();
-                }
-                order.setTotalPrice(sum);
-                orderService.saveItem(orderDetails);
-                orderService.saveOrder(order);
-
-                orderService.saveItem(orderDetails);
-                orderService.saveOrder(order);
-                return "Thêm thành công";
-            }
-        }
-    }
-
-    @RequestMapping(value="/cart/delete_product/{orderId}/{productId}")
-    public String deleteProductInCart(@PathVariable Integer orderId,
-                                      @PathVariable Integer productId,
-                                      HttpServletRequest request){
-        HttpSession session = request.getSession();
-        Product product = productService.findProductById(productId);
-        Integer customerId = (Integer) session.getAttribute("userId");
-        Customer customer = customerService.getCustomerById(customerId);
-        Optional<Order> orderFound = orderService.findOrderByCustomerAndStatus(customer,-1);
-        Order order = null;
-        if(customerId == null){
-            return "Bạn hãy đăng nhập trước";
-        }else{
-            if(orderFound.isPresent()){
-                order = orderFound.get();
-                OrderDetailsKey orderDetailsKey = new OrderDetailsKey(productId,order.getId());
-                orderService.deleteItem(orderDetailsKey);
-                List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
-                double sum = 0;
-                for(OrderDetails o: listOrderDetails){
-                    sum += o.getTotal();
-                }
-                order.setTotalPrice(sum);
-                orderService.saveOrder(order);
-                return customer.getId()+"";
-            }else{
-                return "Không tìm thấy giỏ hàng";
-            }
-        }
-    }
+	@RequestMapping(value = "/update_quantity/{productId}/{orderId}/{quantity}")
+	public String updateQuantity(@PathVariable Integer productId, @PathVariable Integer orderId,
+			@PathVariable Integer quantity) {
+		OrderDetails orderDetails = orderService.findOrderDetailsByProductIdAndOrderId(productId, orderId).get();
+		orderDetails.setQuantity(quantity);
+		orderDetails.setTotal(quantity * orderDetails.getProductId().getListPrice());
+		orderService.saveItem(orderDetails);
+		return "Cập nhật số lượng thành công";
+	}
 }

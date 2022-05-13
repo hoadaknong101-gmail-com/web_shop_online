@@ -48,12 +48,12 @@ public class ViewController {
 
     @RequestMapping(value = "/check_mail")
     public String checkMailPage() {
-        return "check_mail";
+        return "client_page/check_mail";
     }
 
     @RequestMapping(value = "/input_forgot_password")
     public String forgotPasswordPage() {
-        return "input_email_forgot_password";
+        return "client_page/input_email_forgot_password";
     }
 
     // Home page

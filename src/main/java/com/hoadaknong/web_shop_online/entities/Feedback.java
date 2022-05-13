@@ -2,27 +2,35 @@ package com.hoadaknong.web_shop_online.entities;
 
 
 import javax.persistence.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 @Entity
 @Table(name = "tbl_feedback")
 public class Feedback {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+   
+	
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "customer_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customerId;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "product_id")
     private Product productId;
 
     private String content;
     private Integer rate;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date modifiedDate;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    
     public Feedback(){
 
     }

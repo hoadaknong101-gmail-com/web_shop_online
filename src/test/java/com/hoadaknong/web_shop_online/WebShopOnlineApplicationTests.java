@@ -54,31 +54,22 @@ class WebShopOnlineApplicationTests {
 
 	@Autowired
 	OrderDetailsRepository orderDetailsRepository;
+	
+	@Autowired
+	FeedbackService feedbackService;
 
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	@Test
 	void contextLoads() {
-		System.out.println(authenticationService.isRightInformation("hoagigg@gmail.com","123"));
+		Feedback feedback = new Feedback();
+		feedback.setContent("đâsda");
+		feedback.setCustomerId(cusService.getCustomerById(1));
+		feedback.setProductId(repo.getById(709));
+		feedback.setRate(5);
+		feedback.setModifiedDate(new Date());
+		feedbackService.saveFeedback(feedback);
+		
 	}
 
-	@Test
-	public void addProduct(){
-		OrderDetailsKey orderDetailsKey = new OrderDetailsKey();
-		orderDetailsKey.setOrderId(17);
-		orderDetailsKey.setProductId(709);
-		orderService.deleteItem(orderDetailsKey);
-	}
-
-	@Test
-	public void deleteFile(){
-		uploadFileService.deleteFile("fac415beb41d4b588b0908c7f3ca9944.jpg");
-	}
-	@Test
-	public void testMail(){
-		mailService.sendMail("hoadaknong101@gmail.com",
-				"Test mail",
-				"Hoa dep trai",
-				"Reset password");
-	}
 }

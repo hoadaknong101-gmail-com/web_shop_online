@@ -9,4 +9,6 @@ public interface FeedbackService {
     void saveFeedback(Feedback feedback);
     void deleteFeedbackById(Integer id);
     List<Feedback> findAllFeedback();
+    
+    List<Feedback> findFeedbackByProductId(Integer id);
 }

@@ -3,6 +3,8 @@ package com.hoadaknong.web_shop_online.services.impl;
 import com.hoadaknong.web_shop_online.entities.Feedback;
 import com.hoadaknong.web_shop_online.repositories.FeedbackRepository;
 import com.hoadaknong.web_shop_online.services.FeedbackService;
+import com.hoadaknong.web_shop_online.services.ProductService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,9 @@ public class FeedbackImplement implements FeedbackService {
 
     @Autowired
     private FeedbackRepository rp;
+    
+    @Autowired
+    private ProductService productService;
 
     @Override
     public void saveFeedback(Feedback feedback) {
@@ -30,4 +35,9 @@ public class FeedbackImplement implements FeedbackService {
     public List<Feedback> findAllFeedback() {
         return rp.findAll();
     }
+
+	@Override
+	public List<Feedback> findFeedbackByProductId(Integer id) {
+		return rp.findFeedbacksByProductId(productService.findProductById(id));
+	}
 }

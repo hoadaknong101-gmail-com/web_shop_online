@@ -174,7 +174,7 @@ public class CustomerController {
         Customer c = customerService.getCustomerByEmail(gmail);
         model.addAttribute("customer",c);
 
-        return "reset_password";
+        return "client_page/reset_password";
     }
 
     @RequestMapping(value="/save_password")

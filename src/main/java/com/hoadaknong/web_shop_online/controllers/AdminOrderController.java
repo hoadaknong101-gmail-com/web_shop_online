@@ -104,7 +104,7 @@ public class AdminOrderController {
         order.setStatus(DELIIVERED_STATUS);
         orderService.saveOrder(order);
 
-        return "redirect:/web_shop/admin/orders_delivered";
+        return "redirect:/web_shop/admin/orders_deliveried";
     }
 
     @RequestMapping(value ="/web_shop/admin/orders/cancel/{orderId}")

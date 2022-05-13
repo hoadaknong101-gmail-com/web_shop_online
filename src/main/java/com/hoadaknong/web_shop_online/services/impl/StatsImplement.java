@@ -134,7 +134,7 @@ public class StatsImplement implements StatsService {
         ArrayList<Integer> valueArray = new ArrayList<>();
         valueArray.add(proccessOrder);
         valueArray.add(deliveringOrder);
-        valueArray.add(deliveringOrder);
+        valueArray.add(deliveredOrder);
         valueArray.add(cancelledOrder);
 
         statisticOrder.setStatusOrder(statusOrder);
