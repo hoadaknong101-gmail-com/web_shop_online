@@ -1,7 +1,7 @@
 # Business Website
 ## _Website bán quần áo online_
 
-[![Spring](https://gymcoder.files.wordpress.com/2018/07/kenhlaptrinh-java-spring-logo.png?w=863)](https://spring.io/projects/spring-framework)
+[![Spring](https://www.vectorlogo.zone/logos/springio/springio-ar21.png)](https://spring.io/projects/spring-framework)
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://spring.io/projects/spring-framework)
 
