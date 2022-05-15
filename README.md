@@ -21,7 +21,7 @@ Danh sách thành viên thực hiện.
 - Quản lý phản hồi về sản phẩm
 - Đặt hàng online
 - Thống kê doanh thu 7 ngày gần nhất
-- 
+
 ## Công nghệ sử dụng
 
 - [Spring Framework] - Spring boot
