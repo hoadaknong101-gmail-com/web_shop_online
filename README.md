@@ -37,9 +37,8 @@ Danh sách thành viên thực hiện.
 - Cài đặt hệ quản trị cơ sở dữ liệu MySQL
 - Sau đó tạo schema tên là "web_shop_online"
 - Sau đó tiến hành chỉnh sửa 2 thuộc tính file **application.properties** trong project:
- + _spring.datasource.username_ 
- + _spring.datasource.password_ 
- + 
+   + _spring.datasource.username_ 
+   + _spring.datasource.password_ 
 ```sh
 spring.datasource.url=jdbc:mysql://localhost:3306/web_shop_online?sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false
 spring.datasource.username=<username MySQL>
