@@ -39,8 +39,8 @@ Danh sách thành viên thực hiện.
 - Sau đó tiến hành chỉnh sửa file **application.properties** trong project.
 ```sh
 spring.datasource.url=jdbc:mysql://localhost:3306/web_shop_online?sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false
-spring.datasource.username=root
-spring.datasource.password=Nhien@02122019
+spring.datasource.username=<username MySQL>
+spring.datasource.password=<password MySQL>
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.properties.hibernate.show_sql=true
 spring.mail.host=smtp.gmail.com
