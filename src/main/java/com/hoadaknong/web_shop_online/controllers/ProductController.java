@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ProductController {
@@ -33,5 +34,15 @@ public class ProductController {
         model.addAttribute("product",product);
         
         return "client_page/single_product";
+    }
+
+    @RequestMapping(value="/search_product")
+    public String searchProduct(@RequestParam("keyWord") String keyWord,
+                                Model model){
+        List<Product> searchProduct = productService.searchByName(keyWord);
+
+        model.addAttribute("listProduct",searchProduct);
+
+        return "client_page/products";
     }
 }

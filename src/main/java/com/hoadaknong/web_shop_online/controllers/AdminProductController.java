@@ -6,6 +6,7 @@ import com.hoadaknong.web_shop_online.entities.ProductCategory;
 import com.hoadaknong.web_shop_online.repositories.ProductBrandRepository;
 import com.hoadaknong.web_shop_online.repositories.ProductCategoryRepository;
 import com.hoadaknong.web_shop_online.repositories.ProductRepository;
+import com.hoadaknong.web_shop_online.services.StatsService;
 import com.hoadaknong.web_shop_online.services.UploadFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,9 @@ public class AdminProductController {
     @Autowired
     UploadFileService storageFile;
 
+    @Autowired
+    StatsService statsService;
+
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     Integer page = 1;
@@ -44,8 +48,7 @@ public class AdminProductController {
                                    @RequestParam("categoryId") Integer categoryId,
                                    @RequestParam("productBrand") Integer productBrand,
                                    @RequestParam("image") MultipartFile file,
-                                   RedirectAttributes redirectAttributes,
-                                   Model model){
+                                   RedirectAttributes redirectAttributes){
         String filename = "";
         try{
             filename = storageFile.storeFile(file);
@@ -61,7 +64,7 @@ public class AdminProductController {
         productRepository.save(p);
         System.out.println(new Date() + " INFO --- Insert new product successfully!");
         redirectAttributes.addFlashAttribute("message","Thêm sản phẩm mới thành công");
-        model.addAttribute("page",page);
+
         return "redirect:/web_shop/admin/products";
     }
     @RequestMapping ("/update")
@@ -103,7 +106,9 @@ public class AdminProductController {
         Product getProduct = productRepository.getById(productID);
         List<ProductCategory> listCategory = categoryRepository.findAll();
         List<ProductBrand> listBrand = brandRepository.findAll();
+        double profitValue = statsService.getProfitUpToNow();
 
+        model.addAttribute("profitValue", String.format("%,.0f", profitValue));
         model.addAttribute("listBrand",listBrand);
         model.addAttribute("listCategory", listCategory);
         model.addAttribute("product",getProduct);
@@ -116,7 +121,9 @@ public class AdminProductController {
     public String updateProductBrand(@PathVariable Integer brandID,Model model){
 
         ProductBrand brand = brandRepository.getById(brandID);
+        double profitValue = statsService.getProfitUpToNow();
 
+        model.addAttribute("profitValue", String.format("%,.0f", profitValue));
         model.addAttribute("brand",brand);
         model.addAttribute("title","Cập nhật thương hiệu");
         model.addAttribute("_action","Cập nhật");
@@ -143,7 +150,9 @@ public class AdminProductController {
     public String categoriesPage(Model model){
         List<ProductCategory> listCat = categoryRepository.findAll();
         Integer amount = listCat.size();
+        double profitValue = statsService.getProfitUpToNow();
 
+        model.addAttribute("profitValue", String.format("%,.0f", profitValue));
         model.addAttribute("listCategory",listCat);
         model.addAttribute("amount",amount);
         model.addAttribute("page",page);
@@ -152,9 +161,10 @@ public class AdminProductController {
 
     @RequestMapping(value="/categories/update/{id}")
     public String updateProductCategory(@PathVariable Integer id,Model model){
-
         ProductCategory c = categoryRepository.getById(id);
+        double profitValue = statsService.getProfitUpToNow();
 
+        model.addAttribute("profitValue", String.format("%,.0f", profitValue));
         model.addAttribute("category",c);
         model.addAttribute("title","Cập nhật loại sản phẩm");
         model.addAttribute("_action","Cập nhật");

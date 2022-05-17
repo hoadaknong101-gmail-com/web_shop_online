@@ -91,7 +91,6 @@
                 <th>Đơn giá</th>
                 <th>Số lượng</th>
                 <th>Thành tiền</th>
-                <th>#</th>
             </tr>
             </thead>
             <tbody>
@@ -113,21 +112,13 @@
                     </td>
                     <td data-title="Số lượng">
                         <div class="quantity buttons_added">
-                            <input class="minus"
-                                   th:onclick="decreaseQuantity('quantity-[[${d.productId.id}]]',[[${d.productId.id}]],[[${d.orderId.id}]])"
-                                   type="button"
-                                   value="-"/><input
+                            <input
                                 class="input-text qty text" inputmode="" max="" min="1" name="quantity"
                                 pattern="" size="4"
-                                step="1" th:id="'quantity-' + ${d.productId.id}"
-                                th:onchange="changeQuantity('quantity-[[${d.productId.id}]]',[[${d.productId.id}]],[[${d.orderId.id}]])"
+                                step="1"
                                 th:value="${d.quantity}"
                                 title="Qty"
-                                type="number"/><input
-                                class="plus"
-                                th:onclick="increaseQuantity('quantity-[[${d.productId.id}]]',[[${d.productId.id}]],[[${d.orderId.id}]])"
-                                type="button"
-                                value="+"/>
+                                type="number" readonly/>
                         </div>
                     </td>
                     <td data-title="Tổng cộng">
@@ -137,25 +128,10 @@
                             <h5 style="margin: 0 0 0 5.5px" th:id="'currency-unit-' + ${d.productId.id}">₫</h5>
                         </div>
                     </td>
-
-                    <td class="action-cart" data-title="">
-                        <div style="display: flex; justify-content: center;">
-                            <div class="btn btn-danger"
-                                 style="width: 100px;"
-                                 th:onclick="'deleteCartItem(\'' + ${d.orderId.id} + '\',\'' +${d.productId.id} + '\');'">
-                                Xóa
-                            </div>
-                        </div>
-                    </td>
                 </tr>
             </th:block>
             </tbody>
         </table>
-    </div>
-    <div class="table-responsive" style="display: flex; justify-content: flex-end;">
-        <button class="btn btn-success" onclick="location.reload()"
-                style="width: 500px;height: 48px; font-size: 1.25rem">Cập nhật
-        </button>
     </div>
     <div class="total-container">
         <table class="table table-total">
@@ -178,9 +154,6 @@
             </tr>
             </tbody>
         </table>
-    </div>
-    <div class="btn-total-container">
-        <div class="btn-format btn btn-primary btn-lg" th:onclick="checkout([[${order.id}]])">Thanh toán</div>
     </div>
 </section>
 <div th:replace="~{component/footer :: footer}">Footer</div>
@@ -248,8 +221,7 @@
             });
         }
     }
-
-    function checkout(id) {
+    function checkout(id){
         window.location.href = "/checkout_page/" + id;
     }
 </script>

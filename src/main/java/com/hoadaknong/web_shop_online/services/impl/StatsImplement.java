@@ -28,6 +28,11 @@ public class StatsImplement implements StatsService {
     @Autowired
     OrderRepository orderRepository;
 
+    Integer CART_STATUS = -1;
+    Integer PROCESSING_STATUS = 0;
+    Integer DELIVERING_STATUS = 1;
+    Integer DELIIVERED_STATUS = 2;
+    Integer CANCELLED_STATUS = 3;
 
     @Override
     public JSONObject getTotalPriceSevenDayBefore() throws ParseException {
@@ -108,7 +113,7 @@ public class StatsImplement implements StatsService {
 
     @Override
     public Double getProfitUpToNow() {
-        List<Order> orderList = orderRepository.findAll();
+        List<Order> orderList = orderRepository.findAllByStatus(DELIIVERED_STATUS);
         double value = 0;
         for(Order o : orderList){
             value += o.getTotalPrice();

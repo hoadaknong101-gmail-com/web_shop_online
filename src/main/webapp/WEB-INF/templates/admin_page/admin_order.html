@@ -56,7 +56,6 @@
                                 <th>Trạng thái</th>
                                 <th>Tổng tiền</th>
                                 <th>Địa chỉ</th>
-                                <th>Lưu ý</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -85,13 +84,10 @@
                                             </div>
                                         </td>
                                         <td class="total-price">
-                                            <p>[[${o.totalPrice}]]</p>
+                                            <p>[[${#numbers.formatDecimal(o.totalPrice, 0, 'COMMA', 0, 'POINT')}]]₫</p>
                                         </td>
                                         <td class="address-delivery">
                                             <p th:if="${o.deliveryAddress}">[[${o.deliveryAddress.addressLine}]]</p>
-                                        </td>
-                                        <td class="comment-order">
-                                            <p>[[${o.comment}]]</p>
                                         </td>
                                         <td class="action-product">
                                             <a th:href="@{'/web_shop/admin/orders/details/' + ${o.id}}" class="btn btn-main bg-success">Chi tiết</a>

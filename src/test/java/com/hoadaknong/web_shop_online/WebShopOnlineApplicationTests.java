@@ -62,13 +62,10 @@ class WebShopOnlineApplicationTests {
 
 	@Test
 	void contextLoads() {
-		Feedback feedback = new Feedback();
-		feedback.setContent("đâsda");
-		feedback.setCustomerId(cusService.getCustomerById(1));
-		feedback.setProductId(repo.getById(709));
-		feedback.setRate(5);
-		feedback.setModifiedDate(new Date());
-		feedbackService.saveFeedback(feedback);
+		List<Product> search = repo.searchProductByName("a");
+		for(Product p : search){
+			System.out.println(p.toString());
+		}
 		
 	}
 

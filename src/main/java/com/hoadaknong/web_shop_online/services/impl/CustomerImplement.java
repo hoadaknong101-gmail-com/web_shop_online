@@ -69,6 +69,6 @@ public class CustomerImplement implements CustomerService {
     @Override
     public List<Customer> findTop5Customer() {
         Role customerRole = rpRole.getById(CUSTOMER_ROLE);
-        return rp.findTop5ByRole(customerRole);
+        return rp.findTop6ByRole(customerRole);
     }
 }

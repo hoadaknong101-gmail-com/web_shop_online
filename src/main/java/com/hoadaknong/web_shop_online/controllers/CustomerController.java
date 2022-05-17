@@ -1,9 +1,6 @@
 package com.hoadaknong.web_shop_online.controllers;
 
-import com.hoadaknong.web_shop_online.entities.Address;
-import com.hoadaknong.web_shop_online.entities.Customer;
-import com.hoadaknong.web_shop_online.entities.CustomerAddress;
-import com.hoadaknong.web_shop_online.entities.Role;
+import com.hoadaknong.web_shop_online.entities.*;
 import com.hoadaknong.web_shop_online.services.*;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,7 +97,7 @@ public class CustomerController {
         session.removeAttribute("userId");
         session.removeAttribute("roleId");
 
-        return "redirect:/index";
+        return "redirect:/sign_in_sign_up";
     }
 
     @RequestMapping(value="/web_shop/admin/customers/details/{id}")
@@ -110,6 +107,9 @@ public class CustomerController {
         List<Role> listRole = roleService.findAllRole();
         List<CustomerAddress> listAddressCustomer = addressService.findAllAddressByCustomerId(c);
         Address address = new Address();
+        double profitValue = statsService.getProfitUpToNow();
+
+        model.addAttribute("profitValue", String.format("%,.0f", profitValue));
         model.addAttribute("customer",c);
         model.addAttribute("listRole",listRole);
         model.addAttribute("page",page);
@@ -194,7 +194,7 @@ public class CustomerController {
         Integer currentUserId = (Integer) session.getAttribute("userId");
         Customer customer = customerService.getCustomerById(id);
         if(currentUserId != customer.getId()){
-            return "redirect:/index";
+            return "redirect:/sign_in_sign_up";
         }else{
             model.addAttribute("customer", customer);
             return "client_page/customer";
@@ -238,4 +238,127 @@ public class CustomerController {
 
         return "redirect:/web_shop/admin/customers/details/" + customerId;
     }
+
+    @RequestMapping(value = "/checkout_page/{orderId}")
+    public String checkoutPage(@PathVariable Integer orderId,
+                               Model model,
+                               HttpServletRequest request) {
+        HttpSession session  = request.getSession();
+        Integer customerId = (Integer) session.getAttribute("userId");
+        Order order = orderService.getById(orderId);
+        List<Order> listOrder = null;
+        if(customerId != null){
+            listOrder = orderService.findByCustomerId(customerService.getCustomerById(customerId));
+            //Thanh toán đúng giỏ hàng
+            for(Order o: listOrder){
+                if(o.getCustomerId().getId() != order.getCustomerId().getId()){
+                    return "client_page/error_checkout";
+                }
+            }
+            //End
+        }
+
+        //Thanh toán đúng giỏ hàng
+        if(order.getStatus() != -1){
+            return "client_page/error_checkout";
+        }
+        //End
+
+        //Kiểm tra giỏ hàng phải có vật phẩm
+        List<OrderDetails> listOrderDetails = orderService.findByOrderId(orderId);
+        if(listOrderDetails.size() <1){
+            return "client_page/error_checkout";
+        }
+        //End
+
+        model.addAttribute("orderId", orderId);
+        model.addAttribute("listOrderDetails", listOrderDetails);
+
+        return "client_page/check_out";
+    }
+
+    @RequestMapping(value = "/checkout")
+    public String checkout(@RequestParam("orderId") Integer orderId,
+                           @RequestParam("fullname") String fullname,
+                           @RequestParam("email") String email,
+                           @RequestParam("province") String province,
+                           @RequestParam("district") String district,
+                           @RequestParam("postalCode") String postalCode,
+                           @RequestParam("addressLine") String addressLine,
+                           @RequestParam("comment") String comment,
+                           HttpServletRequest request) {
+        List<OrderDetails> listItem = orderService.findByOrderId(orderId);
+        HttpSession session = request.getSession();
+        Customer customer = customerService.getCustomerById((Integer)session.getAttribute("userId"));
+        Address address = new Address();
+        CustomerAddress customerAddress = new CustomerAddress();
+
+
+
+        //Save address
+        address.setModifiedDate(new Date());
+        address.setAddressLine(addressLine);
+        address.setProvince(province);
+        address.setDistrict(district);
+        address.setPostalCode(postalCode);
+        addressService.saveAddress(address);
+
+        customerAddress.setCustomerId(customer);
+        customerAddress.setAddressId(address);
+        customerAddress.setModifiedDate(new Date());
+        customerAddress.setTypeAddress("Unknown");
+        addressService.saveAddressOfCustomer(customerAddress);
+        //End
+
+        //Save order status
+        Order order = orderService.getById(orderId);
+        order.setOrderDate(new Date());
+        order.setModifiedDate(new Date());
+        order.setComment(comment);
+        order.setStatus(0);
+        order.setDeliveryAddress(address);
+        orderService.saveOrder(order);
+        //End
+
+        //Send mail
+        String subject = "Đơn hàng #" + orderId;
+        String body = "Cám ơn quý khách đã tin tưởng và chọn mua các sản phẩm bên SPK01\n" +
+                "Các sản phẩm quý khách đã đặt như sau:\n";
+        int no = 1;
+        for(OrderDetails o: listItem){
+            body += no + ". " + o.getProductId().getName() + "\t Đơn giá: " + o.getProductId().getListPrice() +
+                    "\t Số lượng: " + o.getQuantity() + "\t Tổng cộng: " + o.getTotal() + "\n";
+            no++;
+        }
+        double total = 0;
+        for(OrderDetails o: listItem){
+            total += o.getTotal();
+        }
+        body += total + "\n";
+        body += "Thông tin của quý khách: \n";
+        body += "Họ tên: " + fullname + "\n";
+        body += "Địa chỉ E-mail: " + email + "\n";
+        body += "Địa chỉ: " + addressLine + ", " + district + ", " + province + "\n";
+        body += "SPK01 Xin chân thành cám ơn quý khách, đơn hàng sẽ được giao cho quý khách trong thời gian sớm nhất";
+        mailService.sendMail(email,subject,body,"Mail - Đã nhận đơn");
+        //End
+
+        return "redirect:/checked";
+    }
+
+    @RequestMapping(value="/update_customer")
+    public String updateCustomer(Customer customer){
+        customer.setModifiedDate(new Date());
+        customerService.saveCustomer(customer);
+        return "redirect:/customer/" + customer.getId();
+    }
+
+    @RequestMapping(value="/change_password")
+    public String changePassword(Customer customer, RedirectAttributes attributes){
+        customer.setModifiedDate(new Date());
+        customerService.saveCustomer(customer);
+        attributes.addFlashAttribute("messageSuccess","Đổi mật khẩu thành công mời bạn đăng nhập lại");
+        return "redirect:/sign_out";
+    }
+
 }

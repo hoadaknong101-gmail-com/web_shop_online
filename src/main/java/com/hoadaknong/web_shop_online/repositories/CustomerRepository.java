@@ -8,10 +8,16 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+
     List<Customer> findCustomersByFirstName(String name);
+
     List<Customer> findCustomersByRole(Role role);
+
     Optional<Customer> findCustomerByEmailAndPassword(String email, String password);
+
     Customer getCustomerByEmailAndAndPassword(String email, String password);
+
     Customer getCustomerByEmail(String email);
-    List<Customer> findTop5ByRole(Role role);
+
+    List<Customer> findTop6ByRole(Role role);
 }

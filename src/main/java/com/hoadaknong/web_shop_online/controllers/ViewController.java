@@ -9,6 +9,7 @@ import com.hoadaknong.web_shop_online.repositories.ProductCategoryRepository;
 import com.hoadaknong.web_shop_online.repositories.ProductRepository;
 import com.hoadaknong.web_shop_online.services.CustomerService;
 import com.hoadaknong.web_shop_online.services.ProductService;
+import com.hoadaknong.web_shop_online.services.StatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,8 @@ public class ViewController {
     @Autowired
     ProductService productService;
 
+    @Autowired
+    StatsService statsService;
     Integer page;
 
     // Sign in & Sign up form
@@ -105,6 +108,9 @@ public class ViewController {
         List<Product> productList = productRepository.findAll();
         int amount = productList.size();
         page = 1;
+        double profitValue = statsService.getProfitUpToNow();
+
+        model.addAttribute("profitValue", String.format("%,.0f", profitValue));
         model.addAttribute("listProducts", productList);
         model.addAttribute("amount", amount);
         model.addAttribute("page", page);
@@ -118,6 +124,9 @@ public class ViewController {
         List<ProductCategory> listCategory = categoryRepository.findAll();
         List<ProductBrand> listBrand = brandRepository.findAll();
         page = 1;
+        double profitValue = statsService.getProfitUpToNow();
+
+        model.addAttribute("profitValue", String.format("%,.0f", profitValue));
         model.addAttribute("product", product);
         model.addAttribute("listBrand", listBrand);
         model.addAttribute("listCategory", listCategory);
@@ -130,6 +139,9 @@ public class ViewController {
         List<ProductBrand> listBrand = brandRepository.findAll();
         Integer amount = listBrand.size();
         page = 1;
+        double profitValue = statsService.getProfitUpToNow();
+
+        model.addAttribute("profitValue", String.format("%,.0f", profitValue));
         model.addAttribute("listBrand", listBrand);
         model.addAttribute("amount", amount);
         model.addAttribute("page", page);
@@ -140,6 +152,9 @@ public class ViewController {
     public String newBrand(Model model) {
         ProductBrand b = new ProductBrand();
         page = 1;
+        double profitValue = statsService.getProfitUpToNow();
+
+        model.addAttribute("profitValue", String.format("%,.0f", profitValue));
         model.addAttribute("title", "Thêm thương hiệu");
         model.addAttribute("_action", "Thêm");
         model.addAttribute("brand", b);
@@ -152,6 +167,9 @@ public class ViewController {
     public String newCategory(Model model) {
         ProductCategory c = new ProductCategory();
         page = 1;
+        double profitValue = statsService.getProfitUpToNow();
+
+        model.addAttribute("profitValue", String.format("%,.0f", profitValue));
         model.addAttribute("category", c);
         model.addAttribute("title", "Thêm loại sản phẩm");
         model.addAttribute("_action", "Thêm");
@@ -165,13 +183,17 @@ public class ViewController {
     public String adminCustomerPage(Model model) {
         List<Customer> listCustomer = customerService.findAllCustomer();
         page = 4;
+        double profitValue = statsService.getProfitUpToNow();
+
+        model.addAttribute("profitValue", String.format("%,.0f", profitValue));
         model.addAttribute("listCustomer", listCustomer);
         model.addAttribute("page", page);
 
         return "admin_page/admin_customer";
     }
 
-
-
-
+    @RequestMapping(value = "/checked")
+    public String checkedPage() {
+        return "client_page/checked";
+    }
 }

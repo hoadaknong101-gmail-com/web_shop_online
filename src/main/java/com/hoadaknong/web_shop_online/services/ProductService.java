@@ -19,6 +19,8 @@ public interface ProductService{
 
     List<Product> findTop6ProductByCategoryId(Integer id);
 
+    List<Product> searchByName(String name);
+
     Optional<ProductCategory> findCategoryById(Integer id);
 
     Optional<ProductBrand> findBrandById(Integer id);

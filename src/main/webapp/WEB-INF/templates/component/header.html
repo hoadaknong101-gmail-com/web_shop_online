@@ -56,7 +56,7 @@
                                     <!-- Đã đăng nhập -->
                                     <div th:if="${session.userId != null}">
                                         <li><a th:href="@{'/customer/' + ${session.userId}}">Tài khoản của tôi</a></li>
-                                        <li><a th:href="@{'/order/' + ${session.userId}}">Giỏ hàng</a></li>
+                                        <li><a th:href="@{'/cart/order_list/' + ${session.userId}}">Đơn hàng</a></li>
                                         <li><a th:href="@{/sign_out}">Đăng xuất</a></li>
                                     </div>
                                     <!-- Chưa đăng nhập -->

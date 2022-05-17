@@ -3,6 +3,7 @@ package com.hoadaknong.web_shop_online.controllers;
 import com.hoadaknong.web_shop_online.entities.Order;
 import com.hoadaknong.web_shop_online.entities.OrderDetails;
 import com.hoadaknong.web_shop_online.services.OrderService;
+import com.hoadaknong.web_shop_online.services.StatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,9 @@ import java.util.List;
 public class AdminOrderController {
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    StatsService statsService;
 
     Integer CART_STATUS = -1;
     Integer PROCESSING_STATUS = 0;
@@ -29,7 +33,9 @@ public class AdminOrderController {
         Integer status = 0;
         List<Order> orderList = orderService.findAllOrderProccessing();
         Integer amount = orderList.size();
+        double profitValue = statsService.getProfitUpToNow();
 
+        model.addAttribute("profitValue", String.format("%,.0f", profitValue));
         model.addAttribute("page",page);
         model.addAttribute("listOrder",orderList);
         model.addAttribute("amount",amount);
@@ -43,6 +49,9 @@ public class AdminOrderController {
         Integer status = 1;
         List<Order> orderList = orderService.findAllOrderDelivering();
         Integer amount = orderList.size();
+        double profitValue = statsService.getProfitUpToNow();
+
+        model.addAttribute("profitValue", String.format("%,.0f", profitValue));
         model.addAttribute("page",page);
         model.addAttribute("listOrder",orderList);
         model.addAttribute("amount",amount);
@@ -57,6 +66,9 @@ public class AdminOrderController {
         Integer status = 2;
         List<Order> orderList = orderService.findAllOrderDeliveried();
         Integer amount = orderList.size();
+        double profitValue = statsService.getProfitUpToNow();
+
+        model.addAttribute("profitValue", String.format("%,.0f", profitValue));
         model.addAttribute("page",page);
         model.addAttribute("listOrder",orderList);
         model.addAttribute("amount",amount);
@@ -70,6 +82,9 @@ public class AdminOrderController {
         Integer status = CANCELLED_STATUS;
         List<Order> orderList = orderService.findAllOrderCancelled();
         Integer amount = orderList.size();
+        double profitValue = statsService.getProfitUpToNow();
+
+        model.addAttribute("profitValue", String.format("%,.0f", profitValue));
         model.addAttribute("page",page);
         model.addAttribute("listOrder",orderList);
         model.addAttribute("amount",amount);
@@ -82,6 +97,9 @@ public class AdminOrderController {
     public String orderForm(@PathVariable Integer id, Model model){
         Order order = orderService.getById(id);
         List<OrderDetails> listDetails = orderService.findByOrderId(id);
+        double profitValue = statsService.getProfitUpToNow();
+
+        model.addAttribute("profitValue", String.format("%,.0f", profitValue));
         model.addAttribute("page",page);
         model.addAttribute("order",order);
         model.addAttribute("listDetails",listDetails);

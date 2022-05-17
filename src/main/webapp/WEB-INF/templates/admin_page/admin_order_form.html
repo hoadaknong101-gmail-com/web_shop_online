@@ -148,7 +148,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="total-price" style="text-align: center">
-                                                    <p>[[${d.total}]]</p>
+                                                    <p>[[${#numbers.formatDecimal(d.total, 0, 'COMMA', 0, 'POINT')}]]₫</p>
                                                 </td>
                                                 <td class="action">
                                                     <a th:href="@{'/web_shop/admin/products/update/' + ${d.productId.id}}" class="btn bg-success">Chi tiết</a>

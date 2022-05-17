@@ -14,6 +14,35 @@
     <link rel="stylesheet" th:href="@{/assets/css/templatemo-hexashop.css}" />
     <link rel="stylesheet" th:href="@{/assets/css/owl-carousel.css}" />
     <link rel="stylesheet" th:href="@{/assets/css/lightbox.css}" />
+    <style>
+        .search-box{
+            height: 50px;
+            width: 100%;
+            padding: 0 0 0 1.6rem;
+            border: none;
+            border-radius: 25px;
+            box-shadow: 0px 2px 7px -1px rgba(0,0,0,0.39);
+        }
+        .container-search{
+            display: flex;
+            margin: 0 0 2rem 0;
+        }
+        .btn-search{
+            height: 50px;
+            width: 100px;
+            border-radius: 25px;
+            transition: all 0.2s;
+        }
+        .btn-search:hover{
+            box-shadow: 0px 2px 7px -1px rgba(0,0,0,0.39);
+        }
+    </style>
+    <!-- UIkit CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/css/uikit.min.css" rel="stylesheet"/>
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit-icons.min.js"></script>
 </head>
 <body>
 <div th:insert="~{component/_header :: header}">Header</div>
@@ -43,6 +72,12 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="container">
+        <form action="/search_product" method="get" class="container-search">
+            <input type="text" name="keyWord" id="keyWord" placeholder="Tìm sản phẩm..." class="search-box" required>
+            <input type="submit" class="btn-search">
+        </form>
     </div>
     <div class="container">
         <div class="row">

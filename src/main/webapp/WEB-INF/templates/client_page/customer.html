@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 >
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
           rel="stylesheet"/>
     <title>Trang chủ</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/bootstrap.min.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/font-awesome.css}" />
-    <link rel="stylesheet" th:href="@{/assets/css/templatemo-hexashop.css}" />
-    <link rel="stylesheet" th:href="@{/assets/css/owl-carousel.css}" />
-    <link rel="stylesheet" th:href="@{/assets/css/lightbox.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/assets/css/font-awesome.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/assets/css/templatemo-hexashop.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/owl-carousel.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/lightbox.css}"/>
+    <!-- UIkit CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/css/uikit.min.css" rel="stylesheet"/>
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit-icons.min.js"></script>
 </head>
 <body>
 <div id="layer"></div>
@@ -37,113 +42,96 @@
             <div class="title-container">
                 <h1>Thông tin cá nhân</h1>
             </div>
-            <form class="form-group" action="#" method="POST" th:object="${customer}">
+            <form action="/update_customer" class="form-group" th:object="${customer}">
+                <input th:field="*{id}" type="hidden">
                 <div class="row form-component">
-                    <div class="col-6">
-                        <label for="firstName" class="">Họ<span style="color: red"> *</span></label>
-                        <input th:field="*{firstName}" id="firstName" name="firstName" type="text" class="form-control" />
+                    <div class="col-10">
+                        <label class="" for="firstName">Họ<span style="color: red"> *</span></label>
+                        <input class="uk-input" id="firstName" name="firstName" required
+                               th:field="*{firstName}" type="text"/>
                     </div>
-                    <div class="col-4">
+                </div>
+                <div class="row form-component">
+                    <div class="col-10">
                         <label for="lastname">Tên<span style="color: red"> *</span></label>
-                        <input th:field="*{lastName}" id="lastName" name="lastName" type="text" class="form-control" />
-                    </div>
-                </div>
-                <div class="row form-component">
-                    <div class="col-6">
-                        <label for="email" class="">E-mail<span style="color: red"> *</span></label>
-                        <input th:field="*{email}" id="email" name="email" type="email" class="form-control" />
-                    </div>
-                    <div class="col-4">
-                        <label for="phone" class="">Số điện thoại<span style="color: red"> *</span></label>
-                        <input th:field="*{phone}" id="phone" name="phone" type="tel" class="form-control" />
+                        <input class="uk-input" id="lastName" name="lastName" required th:field="*{lastName}"
+                               type="text"/>
                     </div>
                 </div>
                 <div class="row form-component">
                     <div class="col-10">
-                        <label for="job" class="">Công việc</label>
-                        <input th:field="*{job}" id="job" name="job" type="text" class="form-control" />
-                    </div>
-                </div>
-                <div class="row form-component">
-                    <div class="col-5">
-                        <div onclick="changePassword()" class="btn btn-primary form-control">Đổi mật khẩu</div>
-                    </div>
-                    <div class="col-5">
-                        <input id="submit" name="submit" type="submit" value="Lưu" class="btn btn-success form-control" />
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <div class="form-container">
-            <div class="title-container">
-                <h1>Địa chỉ</h1>
-            </div>
-            <form method="post" action="#" >
-                <div class="row form-component">
-                    <div class="col-6">
-                        <label for="province" class="">Tỉnh<span style="color: red"> *</span></label>
-                        <input id="province" name="province" type="text" class="form-control" />
-                    </div>
-                    <div class="col-4">
-                        <label for="district">Quận/Huyện<span style="color: red"> *</span></label>
-                        <input id="district" name="district" type="text" class="form-control" />
-                    </div>
-                </div>
-                <div class="row form-component">
-                    <div class="col-6">
-                        <label for="addressLine" class="">Địa chỉ<span style="color: red"> *</span></label>
-                        <input id="addressLine" name="addressLine" type="text" class="form-control" />
-                    </div>
-                    <div class="col-4">
-                        <label for="postalCode" class="">Mã bưu chính</span></label>
-                        <input id="postalCode" name="postalCode" type="text" class="form-control" />
+                        <label class="" for="email">E-mail<span style="color: red"> *</span></label>
+                        <input class="uk-input" id="email" name="email" required th:field="*{email}" type="email"/>
                     </div>
                 </div>
                 <div class="row form-component">
                     <div class="col-10">
-                        <input type="submit" value="Lưu" class="btn btn-success form-control" />
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div id="modal-form" class="container-sm form-password">
-        <div class="">
-            <div class="title-container">
-                <h1>Đổi mật khẩu</h1>
-            </div>
-            <form method="post" action="#">
-                <div class="row form-component">
-                    <div class="col-4">
-                        <label for="passwordOld" class="">Mật khẩu cũ<span style="color: red"> *</span></label>
-                        <input id="passwordOld" name="passwordOld" type="password" class="form-control" />
+                        <label class="" for="phone">Số điện thoại<span style="color: red"> *</span></label>
+                        <input class="uk-input" id="phone" name="phone" required th:field="*{phone}" type="tel"/>
                     </div>
                 </div>
                 <div class="row form-component">
-                    <div class="col-4">
-                        <label for="password" class="">Mật khẩu mới<span style="color: red"> *</span></label>
-                        <input id="password" name="password" type="password" class="form-control" />
+                    <div class="col-10">
+                        <label class="" for="job">Công việc</label>
+                        <input class="uk-input" id="job" name="job" required th:field="*{job}" type="text"/>
                     </div>
                 </div>
+                <input th:field="*{role}" type="hidden">
+                <input id="password-main" th:field="*{password}" type="hidden">
                 <div class="row form-component">
-                    <div class="col-4">
-                        <label for="passwordConfirm" class="">Nhập lại mật khẩu mới<span style="color: red"> *</span></label>
-                        <input id="passwordConfirm" name="passwordConfirm" type="password" class="form-control" />
-                    </div>
-                </div>
-                <div class="row form-component">
-                    <div class="col-2">
-                        <div onclick="cancelChange()" class="btn btn-danger form-control">Hủy</div>
-                    </div>
-                    <div class="col-2">
-                        <input type="submit" value="Lưu" class="btn btn-success form-control" />
+                    <div class="col-10">
+                        <div class="uk-text-right">
+                            <div class="uk-button uk-button-default" type="button" uk-toggle="target: #modal-example">
+                                Đổi
+                                mật khẩu
+                            </div>
+                            <input class="uk-button uk-button-primary" id="submit" name="submit" type="submit"
+                                   value="Lưu"/>
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </section>
+<div id="modal-example" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Đổi mật khẩu</h2>
+        <form action="/change_password" id="form-password-change" method="post" th:object="${customer}">
+            <input th:field="*{id}" type="hidden">
+            <input th:field="*{firstName}" type="hidden">
+            <input th:field="*{lastName}" type="hidden">
+            <input th:field="*{email}" type="hidden">
+            <input th:field="*{role}" type="hidden">
+            <input th:field="*{job}" type="hidden">
+            <input th:field="*{phone}" type="hidden">
+            <input id="password" th:field="*{password}" type="hidden">
+            <div class="row form-component">
+                <div class="col-8">
+                    <label for="password-old">Mật khẩu cũ<span style="color: red"> *</span></label>
+                    <input class="uk-input" id="password-old" name="password-old" required type="password"/>
+                </div>
+            </div>
+            <div class="row form-component">
+                <div class="col-8">
+                    <label for="password-new">Mật khẩu mới<span style="color: red"> *</span></label>
+                    <input class="uk-input" id="password-new" name="password-new" required type="password"/>
+                </div>
+            </div>
+            <div class="row form-component">
+                <div class="col-8">
+                    <label for="password-onfirm">Nhập lại mật khẩu mới<span
+                            style="color: red"> *</span></label>
+                    <input class="uk-input" id="password-confirm" name="password-confirm" required type="password"/>
+                </div>
+            </div>
+        </form>
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Hủy</button>
+            <button class="uk-button uk-button-primary" onclick="changePassword();">Lưu</button>
+        </p>
+    </div>
+</div>
 <!-- ***** Products Area Ends ***** -->
 <div th:replace="~{component/footer :: footer}">Footer</div>
 <!-- jQuery -->
@@ -184,12 +172,34 @@
     });
 
     function changePassword() {
-        document.getElementById("modal-form").style.display = "block"
-        document.getElementById("layer").style.display = "block";
-    }
-    function cancelChange(){
-        document.getElementById("modal-form").style.display = "none";
-        document.getElementById("layer").style.display = "none";
+        const passwordMain = document.getElementById("password").value
+        const passwordOld = document.getElementById("password-old").value
+        const passwordNew = document.getElementById("password-new").value
+        const passwordConfirm = document.getElementById("password-confirm").value
+
+        console.log("Password: " + document.getElementById("password-new").value)
+        console.log("PasswordC: " + document.getElementById("password-confirm").value)
+
+        if (passwordOld != passwordMain) {
+            UIkit.notification({
+                message: 'Mật khẩu cũ không đúng!',
+                status: 'warning',
+                pos: 'top-center',
+                timeout: 1500
+            });
+        } else {
+            if (passwordNew == passwordConfirm) {
+                document.getElementById("password").value = passwordNew;
+                document.getElementById("form-password-change").submit();
+            } else {
+                UIkit.notification({
+                    message: 'Mật khẩu xác thực không đúng!',
+                    status: 'warning',
+                    pos: 'top-center',
+                    timeout: 1500
+                });
+            }
+        }
     }
 </script>
 </body>

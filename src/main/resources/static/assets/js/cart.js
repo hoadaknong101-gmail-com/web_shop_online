@@ -3,7 +3,12 @@ function addProductToCart(id){
         url: "/cart/add_product/" + id,
         type:"get",
         success: function(response){
-            alert(response)
+            UIkit.notification({
+                message: response,
+                status: 'success',
+                pos: 'top-center',
+                timeout: 1500
+            });
         },
         error: function (xhr){
 
@@ -17,7 +22,12 @@ function addProductToCartAndQuantity(id) {
         url: "/cart/add_product/" + id + "/" + quantity,
         type: "get",
         success: function (response) {
-            alert(response)
+            UIkit.notification({
+                message: response,
+                status: 'success',
+                pos: 'top-center',
+                timeout: 1500
+            });
         },
         error: function (xhr) {
 

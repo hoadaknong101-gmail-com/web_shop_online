@@ -62,6 +62,7 @@ public class OrderAPI {
 					orderDetails.setUnitPrice(product.getListPrice());
 					orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
 				}
+				orderService.saveItem(orderDetails);
 				List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
 				double sum = 0;
 				for (OrderDetails o : listOrderDetails) {
@@ -138,7 +139,7 @@ public class OrderAPI {
 				orderService.saveItem(orderDetails);
 				orderService.saveOrder(order);
 				return "Thêm thành công";
-			} else { // Nếu chưa có giỏ hàng mới
+			} else { //Nếu chưa có giỏ hàng mới
 				Order order = new Order();
 				order.setStatus(-1);
 				order.setModifiedDate(new Date());
@@ -152,7 +153,7 @@ public class OrderAPI {
 				orderDetails.setQuantity(1);
 				orderDetails.setUnitPrice(product.getListPrice());
 				orderDetails.setTotal(orderDetails.getQuantity() * orderDetails.getUnitPrice());
-
+				orderService.saveOrder(order);
 				List<OrderDetails> listOrderDetails = orderService.findByOrderId(order.getId());
 				double sum = 0;
 				for (OrderDetails o : listOrderDetails) {

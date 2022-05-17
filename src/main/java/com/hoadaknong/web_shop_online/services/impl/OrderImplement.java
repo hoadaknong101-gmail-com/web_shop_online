@@ -85,8 +85,8 @@ public class OrderImplement implements OrderService {
     }
 
     @Override
-    public List<Order> findByCustomerId(Integer id) {
-        return rpOrder.findAllByCustomerId(id);
+    public List<Order> findByCustomerId(Customer customer) {
+        return rpOrder.findAllByCustomerId(customer);
     }
 
     @Override

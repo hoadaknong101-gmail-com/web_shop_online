@@ -59,6 +59,11 @@ public class ProductImplement implements ProductService {
         return rpProduct.findTop6ByCategoryId(category);
     }
 
+    @Override
+    public List<Product> searchByName(String name) {
+        return rpProduct.searchProductByName(name);
+    }
+
     // Brand
     @Override
     public Optional<ProductBrand> findBrandById(Integer id) {

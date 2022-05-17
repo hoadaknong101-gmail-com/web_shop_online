@@ -18,17 +18,17 @@
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a th:href="@{/index}" class="logo">
-                            <img th:src="@{/assets/images/logo.png}" />
+                        <a class="logo" th:href="@{/index}">
+                            <img th:src="@{/assets/images/logo.png}"/>
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a th:href="@{/index}" class="">Trang chủ</a></li>
+                            <li class="scroll-to-section"><a class="" th:href="@{/index}">Trang chủ</a></li>
                             <li class="scroll-to-section"><a th:href="@{/index}">Nam giới</a></li>
                             <li class="scroll-to-section"><a th:href="@{/index}">Nữ giới</a></li>
                             <li class="scroll-to-section"><a th:href="@{/index}">Trẻ em</a></li>
-                            <li ><a th:href="@{/products}">Sản phẩm</a></li>
+                            <li><a th:href="@{/products}">Sản phẩm</a></li>
                             <li class="submenu">
                                 <a href="javascript:;">Trang</a>
                                 <ul>
@@ -49,6 +49,7 @@
                                         <li><a th:href="@{/contact}">Liên hệ</a></li>
                                     </div>
                                 </ul>
+
                             </li>
                             <li class="submenu">
                                 <a href="javascript:;">Tài khoản</a>
@@ -56,7 +57,7 @@
                                     <!-- Đã đăng nhập -->
                                     <div th:if="${session.userId != null}">
                                         <li><a th:href="@{'/customer/' + ${session.userId}}">Tài khoản của tôi</a></li>
-                                        <li><a th:href="@{'/order/' + ${session.userId}}">Giỏ hàng</a></li>
+                                        <li><a th:href="@{'/cart/order_list/' + ${session.userId}}">Đơn hàng</a></li>
                                         <li><a th:href="@{/sign_out}">Đăng xuất</a></li>
                                     </div>
                                     <!-- Chưa đăng nhập -->
@@ -66,8 +67,9 @@
                                     </div>
                                 </ul>
                             </li>
-                            <li th:if="${session.userId != null}" class="cart">
-                                <a th:href="@{'/order/' + ${session.userId}}"><img width="25" height="25" src="/assets/images/cart_icon.png" /></a>
+                            <li class="cart" th:if="${session.userId != null}">
+                                <a th:href="@{'/order/' + ${session.userId}}"><img height="25" src="/assets/images/cart_icon.png"
+                                                                                   width="25"/></a>
                             </li>
                         </ul>
                         <a class="menu-trigger">
@@ -100,7 +102,8 @@
         document.getElementById("modal-form").style.display = "block"
         document.getElementById("layer").style.display = "block";
     }
-    function cancelChange(){
+
+    function cancelChange() {
         document.getElementById("modal-form").style.display = "none";
         document.getElementById("layer").style.display = "none";
     }

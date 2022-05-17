@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -38,11 +39,17 @@ public class OrderController {
     Integer CANCELLED_STATUS = 3;
 
     @RequestMapping(value="/{customerId}")
-    public String viewCustomerCart(@PathVariable Integer customerId, Model model){
+    public String viewCustomerCart(@PathVariable Integer customerId,
+                                   Model model,
+                                   HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Integer userId = (Integer)session.getAttribute("userId");
         Customer customer = customerService.getCustomerById(customerId);
         Optional<Order> orderFound = orderService.findOrderByCustomerAndStatus(customer, CART_STATUS);
         Order order = null;
-
+        if(userId != customerId){
+            return "redirect:/sign_in_sign_up";
+        }
         if(orderFound.isPresent()){
             order = orderFound.get();
         } else {
@@ -59,7 +66,29 @@ public class OrderController {
         return "client_page/cart";
     }
 
-    
-    
-    
+    @RequestMapping(value="/order_list/{customerId}")
+    public String orderListPage(@PathVariable Integer customerId,
+                                HttpServletRequest request,
+                                Model model){
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("userId");
+        if(userId != customerId){
+            return "client_page/error_checkout";
+        }
+        Customer customer = customerService.getCustomerById(customerId);
+        List<Order> listOrder = orderService.findByCustomerId(customer);
+        model.addAttribute("listOrder", listOrder);
+
+        return "client_page/order";
+    }
+    @RequestMapping(value="/order_details/{orderId}")
+    public String orderDetailPage(@PathVariable Integer orderId,
+                                  Model model){
+        Order order = orderService.getById(orderId);
+        List<OrderDetails> listOrderDetail = orderService.findByOrderId(order.getId());
+        model.addAttribute("listOrderDetail", listOrderDetail);
+        model.addAttribute("order", order);
+
+        return "client_page/order_details";
+    }
 }

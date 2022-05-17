@@ -30,7 +30,7 @@ public interface OrderService {
 
     List<Order> findAllOrderByOrderDate(Date date);
 
-    List<Order> findByCustomerId(Integer id);
+    List<Order> findByCustomerId(Customer customer);
 
     Order getById(Integer id);
 
