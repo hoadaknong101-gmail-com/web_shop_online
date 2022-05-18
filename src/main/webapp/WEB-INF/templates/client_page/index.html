@@ -21,10 +21,57 @@
     <!-- UIkit JS -->
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit-icons.min.js"></script>
+    <style>
+        .label-title{
+            font-size: 2.5rem;
+            color: white
+        }
+        .label-content{
+            font-size: 1.1rem; color: white
+        }
+    </style>
 </head>
 <body>
 <div th:insert="~{component/header :: header}">Header</div>
-<div class="main-banner" id="top">
+<div class="container-fluid" style="margin-top: 7rem;">
+    <div>
+        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="animation: push; min-height: 300; max-height: 800;">
+            <ul class="uk-slideshow-items">
+                <li>
+                    <img th:src="@{https://bn1301files.storage.live.com/y4mRp2EUHDPoVQ4tEyTzj6RuVX499L4R88DPAep9uncz4Y0xKswHb-d8RUoGY5LWaWaUryUnD-oQOLNSaI_uDMqBkJDWYSjG2fuKw63qseeQnrSJlhX4jeBlyGj0AvqWVgS_adxoNQNmp-sIrlc6hAADiPshsfYyCOArdjyS0fQUHDQC7RO3o_cyshNx3fBr94WILStyb8PYKCl-p5UmoqMuXH5P51XjRVjWDdqnQx8FuU?encodeFailures=1&width=1807&height=868}" alt="" uk-cover>
+                    <div class="uk-position-center uk-position-small uk-text-center">
+                        <h2 uk-slideshow-parallax="x: 100,-100" class="label-title">Rosé</h2>
+                        <p uk-slideshow-parallax="x: 200,-200" class="label-content">Đại sứ toàn cầu của Saint Laurent.</p>
+                    </div>
+                </li>
+                <li>
+                    <img th:src="@{https://bn1301files.storage.live.com/y4mExC8Sx5iNM4dgWsR24lDRj0hPpe4HqDhh3NHJSUy0j92wB4hlbScqyrTnR31m7ZOdMhPs19JnhigljUY4TF_KNdR343I__A2WKXXwwrg6zUojglU_ZxLD9JWqG9j6IjXH2S6_my-AS4VrPGHuiCPGpwTCSmDov-vfWREsYCYy9ZW7kt7ioyOv_QlzMKXRUT81R16_FR4KdL0zwuDtHP5Yi4UyC802z-OImOrazuYc2U?encodeFailures=1&width=1807&height=868}" alt="" uk-cover>
+                    <div class="uk-position-center uk-position-small uk-text-center">
+                        <h2 uk-slideshow-parallax="x: 100,-100" class="label-title" >Jisoo </h2>
+                        <p uk-slideshow-parallax="x: 200,-200" class="label-content" >Đại sứ toàn cầu cho cả hai mảng thời trang và mỹ phẩm của Dior.</p>
+                    </div>
+                </li>
+                <li>
+                    <img th:src="@{https://bn1301files.storage.live.com/y4mCBfeSGdRbmKiZSg-QlsiwlUpm_9U0mbDZHOMGKFrF6_gdwGKelzC6fbupz8flpxm4QCU7IsmWbqdpzvhcR1lAnVRFlHd1BFkgwlCcti96q1P8yfaG5Driem5QIoK9yBpIAO8M5Iq-mQL-zjOjGDKMgnSZcpxRKD-8UxWjCDQ8Uzq7gTN2R8UX9dhbTmi8lYtJtiZDbX1I6AdKDqp2jaiQGg8Nc9qHbTMH7OLinrmX-8?encodeFailures=1&width=1807&height=868}" alt="" uk-cover>
+                    <div class="uk-position-center uk-position-small uk-text-center">
+                        <h2 uk-slideshow-parallax="x: 100,-100" class="label-title">Jennie </h2>
+                        <p uk-slideshow-parallax="x: 200,-200" class="label-content">Đại sứ toàn cầu của Chanel.</p>
+                    </div>
+                </li>
+                <li>
+                    <img th:src="@{https://bn1301files.storage.live.com/y4mN96B-nTiLwClszYjrGb8aNiAxmBERj14EckLW4qgWGvJtWiMgnYLw3kSPqlfYTXWLAfQMm0zrdpguZ9QwOZOZB7F5yGKFyppX2egA9rp5oNlK6AqhreeQnBmrP-AhbCcccSEJWCzkLZHB9u_0N3-rLo1gz3N90pTDQewDPwAlZiP0Uws-abq6e5iTSDjhYizvT6Zg4mY0l112GdSVjnDkBcU0aOdxKFNi4trhmxmmtk?encodeFailures=1&width=1807&height=868}" alt="" uk-cover>
+                    <div class="uk-position-center uk-position-small uk-text-center">
+                        <h2 uk-slideshow-parallax="x: 100,-100" class="label-title">Lisa </h2>
+                        <p uk-slideshow-parallax="x: 200,-200" class="label-content">Đại sứ toàn cầu của Celine.</p>
+                    </div>
+                </li>
+            </ul>
+            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+        </div>
+    </div>
+</div>
+<div class="main-banner" style="padding-top: 1rem;" id="top">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-6">
@@ -34,7 +81,7 @@
                             <h4>Welcome, SPK01Shop</h4>
                             <span>Kiến thức, kinh nghiệm &amp; trải nghiệm</span>
                             <div class="main-border-button">
-                                <a href="#">Khám phá</a>
+                                <a th:href="@{/products}">Khám phá</a>
                             </div>
                         </div>
                         <img alt="" th:src="@{/assets/images/left-banner-image.jpg}"/>
@@ -56,7 +103,7 @@
                                             <h4>Nữ giới</h4>
                                             <p>Các loại sản phẩm dành cho nữ.</p>
                                             <div class="main-border-button">
-                                                <a href="#">Khám phá</a>
+                                                <a th:href="@{/products}">Khám phá</a>
                                             </div>
                                         </div>
                                     </div>
@@ -76,7 +123,7 @@
                                             <h4>Nam giới</h4>
                                             <p>Các loại sản phẩm dành cho nam.</p>
                                             <div class="main-border-button">
-                                                <a href="#">Khám phá</a>
+                                                <a th:href="@{/products}">Khám phá</a>
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +143,7 @@
                                             <h4>Trẻ em</h4>
                                             <p>Các loại sản phẩm tốt nhất dành cho trẻ</p>
                                             <div class="main-border-button">
-                                                <a href="#">Khám phá</a>
+                                                <a th:href="@{/products}">Khám phá</a>
                                             </div>
                                         </div>
                                     </div>
@@ -116,7 +163,7 @@
                                             <h4>Phụ kiện</h4>
                                             <p>Các phụ kiện tốt nhất dành cho giới trẻ</p>
                                             <div class="main-border-button">
-                                                <a href="#">Khám phá</a>
+                                                <a th:href="@{/products}">Khám phá</a>
                                             </div>
                                         </div>
                                     </div>
@@ -133,7 +180,7 @@
 <!-- ***** Main Banner Area End ***** -->
 
 <!-- ***** Men Area Starts ***** -->
-<section class="section" id="men">
+<section class="section" id="men" style="padding-top: 1rem;">
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
@@ -186,7 +233,7 @@
 <!-- ***** Men Area Ends ***** -->
 
 <!-- ***** Women Area Starts ***** -->
-<section class="section" id="women">
+<section class="section" id="women" style="padding-top: 1rem;">
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
@@ -239,7 +286,7 @@
 <!-- ***** Women Area Ends ***** -->
 
 <!-- ***** Kids Area Starts ***** -->
-<section class="section" id="kids">
+<section class="section" id="kids" style="padding-top: 1rem;">
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
@@ -314,7 +361,7 @@
                     </p>
                     <p>Xin chân thành cảm ơn quý quý khách đã dành thời gian cho SPK01Shop.</p>
                     <div class="main-border-button">
-                        <a href="products.html">Khám phá</a>
+                        <a th:href="@{/products}">Khám phá</a>
                     </div>
                 </div>
             </div>
@@ -340,7 +387,7 @@
                         <div class="col-lg-6">
                             <div class="types">
                                 <h4>Đa dạng</h4>
-                                <span>300+ sản phẩm</span>
+                                <span>50+ sản phẩm</span>
                             </div>
                         </div>
                     </div>
@@ -368,7 +415,7 @@
             <div class="col-2">
                 <div class="thumb">
                     <div class="icon">
-                        <a href="http://instagram.com">
+                        <a href="https://www.instagram.com/explore/tags/fashion/" target="_blank">
                             <h6>Fashion</h6>
                             <i class="fa fa-instagram"></i>
                         </a>
@@ -379,7 +426,7 @@
             <div class="col-2">
                 <div class="thumb">
                     <div class="icon">
-                        <a href="http://instagram.com">
+                        <a href="https://www.instagram.com/explore/tags/bag/" target="_blank">
                             <h6>New</h6>
                             <i class="fa fa-instagram"></i>
                         </a>
@@ -390,7 +437,7 @@
             <div class="col-2">
                 <div class="thumb">
                     <div class="icon">
-                        <a href="http://instagram.com">
+                        <a href="https://www.instagram.com/explore/tags/brand/" target="_blank">
                             <h6>Brand</h6>
                             <i class="fa fa-instagram"></i>
                         </a>
@@ -401,7 +448,7 @@
             <div class="col-2">
                 <div class="thumb">
                     <div class="icon">
-                        <a href="http://instagram.com">
+                        <a href="https://www.instagram.com/explore/tags/makeup/" target="_blank">
                             <h6>Makeup</h6>
                             <i class="fa fa-instagram"></i>
                         </a>
@@ -412,7 +459,7 @@
             <div class="col-2">
                 <div class="thumb">
                     <div class="icon">
-                        <a href="http://instagram.com">
+                        <a href="https://www.instagram.com/explore/tags/leather/" target="_blank">
                             <h6>Leather</h6>
                             <i class="fa fa-instagram"></i>
                         </a>
@@ -423,7 +470,7 @@
             <div class="col-2">
                 <div class="thumb">
                     <div class="icon">
-                        <a href="http://instagram.com">
+                        <a href="https://www.instagram.com/explore/tags/bag/" target="_blank">
                             <h6>Bag</h6>
                             <i class="fa fa-instagram"></i>
                         </a>
@@ -482,9 +529,8 @@
                             <li>Email:<br/><span>hoadaknong101@gmail.com</span></li>
                             <li>
                                 Mạng xã hội:<br/><span
-                            ><a href="#">Facebook</a>, <a href="#">Instagram</a>, <a href="#">Behance</a>,
-											<a href="#">Linkedin</a></span
-                            >
+                            ><a href="https://www.facebook.com/hoaffffff/">Facebook</a>, <a href="https://www.instagram.com/_hoaffffff/">Instagram</a>, <a href="#">Behance</a>,
+											<a href="#">Linkedin</a></span>
                             </li>
                         </ul>
                     </div>
@@ -514,6 +560,6 @@
 <script th:src="@{/assets/js/isotope.js}" type="text/javascript"></script>
 
 <!-- Global Init -->
-<script src="/assets/js/custom.js" type="text/javascript"></script>
+<script th:src="@{/assets/js/custom.js}" type="text/javascript"></script>
 </body>
 </html>

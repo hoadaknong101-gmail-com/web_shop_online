@@ -76,8 +76,17 @@
     </div>
     <div class="container">
         <form action="/search_product" method="get" class="container-search">
-            <input type="text" name="keyWord" id="keyWord" placeholder="Tìm sản phẩm..." class="search-box" required>
-            <input type="submit" class="btn-search">
+            <a href="#offcanvas-usage" uk-toggle class="uk-button uk-button-default uk-button-large" >Loại</a>
+            <div id="offcanvas-usage" uk-offcanvas="overlay: true">
+                <ul class="uk-offcanvas-bar">
+                    <th:block th:each="c : ${productCategoryList}">
+                        <li class="uk-nav-divider"></li>
+                        <li class="uk-nav-header"><a th:href="@{'/products/category/' + ${c.id}}"> [[${c.name}]]</a></li>
+                    </th:block>
+                </ul>
+            </div>
+            <input type="text" name="keyWord" id="keyWord" placeholder="Tìm sản phẩm..." class="uk-input uk-form-large" required>
+            <input type="submit" class="uk-button uk-button-primary" value="Tìm">
         </form>
     </div>
     <div class="container">
@@ -110,27 +119,6 @@
                     </div>
                 </div>
             </th:block>
-            <div class="col-lg-12">
-                <div class="pagination">
-                    <ul>
-                        <li>
-                            <a href="#">1</a>
-                        </li>
-                        <li class="active">
-                            <a href="#">2</a>
-                        </li>
-                        <li>
-                            <a href="#">3</a>
-                        </li>
-                        <li>
-                            <a href="#">4</a>
-                        </li>
-                        <li>
-                            <a href="#">></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </div>
     </div>
     

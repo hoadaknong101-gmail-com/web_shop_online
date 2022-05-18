@@ -63,10 +63,15 @@ public class ViewController {
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public String productPageClient(Model model) {
         List<Product> productList = productRepository.findAll();
+        List<ProductCategory> productCategoryList = productService.findAllCategory();
+
         model.addAttribute("listProduct", productList);
+        model.addAttribute("productCategoryList", productCategoryList);
 
         return "client_page/products";
     }
+
+
 
     @RequestMapping(value = {"/index","","/","/home","trangchu"}, method = RequestMethod.GET)
     public String homePage(Model model) {

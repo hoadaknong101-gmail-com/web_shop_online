@@ -13,6 +13,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findByName (String name);
     List<Product> findFirstByCategoryId(ProductCategory id);
     List<Product> findTop6ByCategoryId(ProductCategory id);
+    List<Product> findAllByCategoryId(ProductCategory id);
 
     @Query(value = "SELECT * FROM tbl_product p WHERE p.name LIKE %:key%",
             nativeQuery = true)

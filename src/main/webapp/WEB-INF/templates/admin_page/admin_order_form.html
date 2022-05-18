@@ -131,7 +131,7 @@
                                     <th:block th:each="d : ${listDetails}">
                                             <tr class="order-item">
                                                 <td style="text-align: center">[[${d.productId.id}]]</td>
-                                                <td class="image-product-order-details">
+                                                <td class="image-product-order-details" style="padding: 0">
                                                     <img  th:src="@{'/api/products/resources/images/' + ${d.productId.thumbnailPhoto}}"/>
                                                 </td>
                                                 <td class="name-product">

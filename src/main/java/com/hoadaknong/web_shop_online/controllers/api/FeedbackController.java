@@ -49,7 +49,7 @@ public class FeedbackController {
 			feedbackService.saveFeedback(feedback);
 
 			return "<div class=\"comment-item\">\r\n" + "						<div class=\"comment-image\">\r\n"
-					+ "							<img src=\"/img/person_icon.png\">\r\n"
+					+ "							<img style=\"width: 100px; height: 110px; margin: 18px 10px 0 13px\" src=\"https://cdn-icons-png.flaticon.com/512/1789/1789313.png\">\r\n"
 					+ "						</div>\r\n" + "						<div class=\"comment-content\">\r\n"
 					+ "							<div class=\"name-customer\">\r\n"
 					+ "								<h4>" + customer.getFirstName() + " " + customer.getLastName()

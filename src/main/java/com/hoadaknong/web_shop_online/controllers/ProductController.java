@@ -3,6 +3,7 @@ package com.hoadaknong.web_shop_online.controllers;
 
 import com.hoadaknong.web_shop_online.entities.Feedback;
 import com.hoadaknong.web_shop_online.entities.Product;
+import com.hoadaknong.web_shop_online.entities.ProductCategory;
 import com.hoadaknong.web_shop_online.services.FeedbackService;
 import com.hoadaknong.web_shop_online.services.ProductService;
 
@@ -40,9 +41,23 @@ public class ProductController {
     public String searchProduct(@RequestParam("keyWord") String keyWord,
                                 Model model){
         List<Product> searchProduct = productService.searchByName(keyWord);
+        List<ProductCategory> productCategoryList = productService.findAllCategory();
 
+        model.addAttribute("productCategoryList", productCategoryList);
         model.addAttribute("listProduct",searchProduct);
 
         return "client_page/products";
     }
+    @RequestMapping(value="/products/category/{id}")
+    public String showProductByCategory(@PathVariable Integer id,
+                                Model model){
+        List<ProductCategory> productCategoryList = productService.findAllCategory();
+        List<Product> productList = productService.findAllByCategoryId(id);
+
+        model.addAttribute("productCategoryList", productCategoryList);
+        model.addAttribute("listProduct",productList);
+
+        return "client_page/products";
+    }
+
 }
