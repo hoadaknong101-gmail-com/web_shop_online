@@ -20,6 +20,12 @@ public class Role {
     public Role() {
     }
 
+    public Role(String name, String description, Date modifiedDate) {
+        this.name = name;
+        this.description = description;
+        this.modifiedDate = modifiedDate;
+    }
+
     public Role(Integer id, String name, String description, Date modifiedDate) {
         this.id = id;
         this.name = name;

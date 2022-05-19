@@ -17,6 +17,11 @@ public class ProductCategory {
     public ProductCategory() {
     }
 
+    public ProductCategory(String name, Date modifiedDate) {
+        this.name = name;
+        this.modifiedDate = modifiedDate;
+    }
+
     public ProductCategory(Integer id, String name, Date modifiedDate) {
         this.id = id;
         this.name = name;

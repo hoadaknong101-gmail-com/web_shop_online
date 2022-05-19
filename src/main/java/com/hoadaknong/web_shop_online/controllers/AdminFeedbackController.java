@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -33,6 +35,7 @@ public class AdminFeedbackController {
     @RequestMapping(value = "/feedbacks")
     public String feedbackAdminPage(Model model){
         List<Feedback> listFeedback = feedbackService.findAllFeedback();
+        Collections.reverse(listFeedback);
         Integer amount = listFeedback.size();
         page = 2;
         double profitValue = statsService.getProfitUpToNow();

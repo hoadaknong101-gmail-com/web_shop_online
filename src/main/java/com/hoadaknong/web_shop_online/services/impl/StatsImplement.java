@@ -55,7 +55,7 @@ public class StatsImplement implements StatsService {
 
 
         for(Date d : listDate){
-            List<Order> listOrder = orderRepository.findAllByOrderDate(d);
+            List<Order> listOrder = orderRepository.findAllByOrderDateAndStatus(d, DELIIVERED_STATUS);
             double sum =0;
             if(listOrder.size() > 0){
                 for (Order o : listOrder){
@@ -97,7 +97,7 @@ public class StatsImplement implements StatsService {
         ArrayList<Double> sumL = new ArrayList<Double>();
 
         for(Date d : listDate){
-            List<Order> listOrder = orderRepository.findAllByOrderDate(d);
+            List<Order> listOrder = orderRepository.findAllByOrderDateAndStatus(d, DELIIVERED_STATUS);
             double sum =0;
             if(listOrder.size() > 0){
                 for (Order o : listOrder){

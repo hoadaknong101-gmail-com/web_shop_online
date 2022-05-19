@@ -16,7 +16,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ViewController {
@@ -37,6 +40,10 @@ public class ViewController {
 
     @Autowired
     StatsService statsService;
+
+    @Autowired
+    ProductCategoryRepository productCategoryRepository;
+
     Integer page;
 
     // Sign in & Sign up form
@@ -63,8 +70,9 @@ public class ViewController {
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public String productPageClient(Model model) {
         List<Product> productList = productRepository.findAll();
+        Collections.reverse(productList);
         List<ProductCategory> productCategoryList = productService.findAllCategory();
-
+        Collections.reverse(productCategoryList);
         model.addAttribute("listProduct", productList);
         model.addAttribute("productCategoryList", productCategoryList);
 
@@ -75,13 +83,21 @@ public class ViewController {
 
     @RequestMapping(value = {"/index","","/","/home","trangchu"}, method = RequestMethod.GET)
     public String homePage(Model model) {
-        List<Product> listProductMan = productService.findTop6ProductByCategoryId(14);
-        List<Product> listProductWomen = productService.findTop6ProductByCategoryId(15);
-        List<Product> listProductKid = productService.findTop6ProductByCategoryId(16);
+
+        Optional<ProductCategory> manCategory = productCategoryRepository.findByName("Dành cho nam");
+        Optional<ProductCategory> womenCategory = productCategoryRepository.findByName("Dành cho nữ");
+        Optional<ProductCategory> kidCategory = productCategoryRepository.findByName("Dành cho trẻ");
+
+        List<Product> listProductMan = productService.findTop6ProductByCategoryId(manCategory.get().getId());
+        List<Product> listProductWomen = productService.findTop6ProductByCategoryId(womenCategory.get().getId());
+        List<Product> listProductKid = productService.findTop6ProductByCategoryId(kidCategory.get().getId());
 
         model.addAttribute("listProductMan", listProductMan);
         model.addAttribute("listProductWomen", listProductWomen);
         model.addAttribute("listProductKid", listProductKid);
+        model.addAttribute("man", manCategory.get());
+        model.addAttribute("women", womenCategory.get());
+        model.addAttribute("kid", kidCategory.get());
 
 
         return "client_page/index";

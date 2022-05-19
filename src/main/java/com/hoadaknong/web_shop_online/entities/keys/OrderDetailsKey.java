@@ -35,7 +35,8 @@ public class OrderDetailsKey implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderDetailsKey that = (OrderDetailsKey) o;
-        return Objects.equals(productId, that.productId) && Objects.equals(orderId, that.orderId);
+        return Objects.equals(productId, that.productId) &&
+                Objects.equals(orderId, that.orderId);
     }
 
     @Override

@@ -340,7 +340,11 @@ public class CustomerController {
         body += "Địa chỉ E-mail: " + email + "\n";
         body += "Địa chỉ: " + addressLine + ", " + district + ", " + province + "\n";
         body += "SPK01 Xin chân thành cám ơn quý khách, đơn hàng sẽ được giao cho quý khách trong thời gian sớm nhất";
-        mailService.sendMail(email,subject,body,"Mail - Đã nhận đơn");
+        try {
+            mailService.sendMail(email, subject, body, "Mail - Đã nhận đơn");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         //End
 
         return "redirect:/checked";

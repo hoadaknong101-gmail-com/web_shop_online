@@ -7,6 +7,7 @@ import com.hoadaknong.web_shop_online.entities.ProductCategory;
 import com.hoadaknong.web_shop_online.services.FeedbackService;
 import com.hoadaknong.web_shop_online.services.ProductService;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,12 @@ public class ProductController {
     @RequestMapping(value = "/product/single_product/{id}")
     public String singlePageProduct(@PathVariable Integer id, Model model){
         Product product = productService.findProductById(id);
-        List<Product> top6ProductRelate = productService.findTop6ProductByCategoryId(product.getCategoryId().getId());
+        List<Product> top6ProductRelate = productService.findTop6ProductByCategoryId(
+                product.getCategoryId().getId());
         List<Feedback> listFeedbacks = feedbackService.findFeedbackByProductId(id);
-        
+        Collections.reverse(top6ProductRelate);
+
+
         model.addAttribute("listFeedback", listFeedbacks);
         model.addAttribute("productRelate", top6ProductRelate);
         model.addAttribute("product",product);
@@ -42,6 +46,8 @@ public class ProductController {
                                 Model model){
         List<Product> searchProduct = productService.searchByName(keyWord);
         List<ProductCategory> productCategoryList = productService.findAllCategory();
+        Collections.reverse(searchProduct);
+        Collections.reverse(productCategoryList);
 
         model.addAttribute("productCategoryList", productCategoryList);
         model.addAttribute("listProduct",searchProduct);
@@ -52,7 +58,9 @@ public class ProductController {
     public String showProductByCategory(@PathVariable Integer id,
                                 Model model){
         List<ProductCategory> productCategoryList = productService.findAllCategory();
+        Collections.reverse(productCategoryList);
         List<Product> productList = productService.findAllByCategoryId(id);
+        Collections.reverse(productList);
 
         model.addAttribute("productCategoryList", productCategoryList);
         model.addAttribute("listProduct",productList);

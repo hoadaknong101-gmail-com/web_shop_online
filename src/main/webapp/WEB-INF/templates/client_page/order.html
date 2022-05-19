@@ -78,6 +78,21 @@
     <!-- UIkit JS -->
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.14.1/dist/js/uikit-icons.min.js"></script>
+    <style>
+        @media only screen and (max-width: 800px){
+            .order-item{
+                display: flex;
+                flex-direction: column;
+            }
+
+            .left-content{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    </style>
 </head>
 <body>
 <div id="layer"></div>
@@ -102,7 +117,7 @@
             <div class="order-item" th:if="${o.status != -1}" th:onclick="orderDetails([[${o.id}]])">
                 <div class="left-content">
                     <div class="item-image">
-                        <img style="width: 100px; height: 100px; margin: 17px 10px 0 10px;" src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/shopping_cart.png">
+                        <img style="width: 90px; height: 85px; margin: 35px 10px 0 10px;" src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/shopping_cart.png">
                     </div>
                     <div class="item-details">
                         <div class="item">
@@ -130,11 +145,13 @@
                             <h5 th:if="${o.status == 2}">Đã nhận hàng</h5>
                             <h5 th:if="${o.status == 3}">Đã hủy</h5>
                         </div>
+                        <div th:if="${o.status == 0}">
+                            <a class="uk-button uk-button-danger" th:href="@{'/order/cancel/' + ${o.id}}" style="margin: 0 0 15px 0">Hủy đơn</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </th:block>
-
     </div>
 </section>
 <div th:replace="~{component/footer :: footer}">Footer</div>

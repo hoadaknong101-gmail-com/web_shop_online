@@ -10,8 +10,6 @@ import java.util.Date;
 @Entity
 @Table(name = "tbl_feedback")
 public class Feedback {
-   
-	
 
     @ManyToOne
     @JoinColumn(name = "customer_id")

@@ -103,7 +103,7 @@
                                             <h4>Nữ giới</h4>
                                             <p>Các loại sản phẩm dành cho nữ.</p>
                                             <div class="main-border-button">
-                                                <a th:href="@{/products}">Khám phá</a>
+                                                <a th:href="@{'/products/category/' + ${women.id}}">Khám phá</a>
                                             </div>
                                         </div>
                                     </div>
@@ -123,7 +123,7 @@
                                             <h4>Nam giới</h4>
                                             <p>Các loại sản phẩm dành cho nam.</p>
                                             <div class="main-border-button">
-                                                <a th:href="@{/products}">Khám phá</a>
+                                                <a th:href="@{'/products/category/' + ${man.id}}">Khám phá</a>
                                             </div>
                                         </div>
                                     </div>
@@ -143,7 +143,7 @@
                                             <h4>Trẻ em</h4>
                                             <p>Các loại sản phẩm tốt nhất dành cho trẻ</p>
                                             <div class="main-border-button">
-                                                <a th:href="@{/products}">Khám phá</a>
+                                                <a th:href="@{'/products/category/' + ${kid.id}}">Khám phá</a>
                                             </div>
                                         </div>
                                     </div>

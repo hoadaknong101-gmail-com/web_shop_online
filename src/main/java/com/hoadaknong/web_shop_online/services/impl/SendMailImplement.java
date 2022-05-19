@@ -15,11 +15,16 @@ public class SendMailImplement implements SendMailService {
     @Override
     public void sendMail(String toEmail, String subject, String body,String typeMail) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("qhpser@gmail.com");
+        message.setFrom("phamdinhquochoa101@gmail.com");
         message.setTo(toEmail);
         message.setText(body);
         message.setSubject(subject);
-        sender.send(message);
+        try {
+            sender.send(message);
+        } catch (Exception e){
+            throw  e;
+        }
+
         System.out.println(typeMail + " was sent to " + toEmail + " successfully!");
     }
 }

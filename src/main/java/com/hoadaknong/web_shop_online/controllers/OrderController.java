@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping(value={"cart","order"})
@@ -77,6 +75,7 @@ public class OrderController {
         }
         Customer customer = customerService.getCustomerById(customerId);
         List<Order> listOrder = orderService.findByCustomerId(customer);
+        Collections.reverse(listOrder);
         model.addAttribute("listOrder", listOrder);
 
         return "client_page/order";
@@ -90,5 +89,24 @@ public class OrderController {
         model.addAttribute("order", order);
 
         return "client_page/order_details";
+    }
+
+    @RequestMapping(value="/cancel/{id}")
+    public String cancelOrder(@PathVariable Integer id,
+                              HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Integer customerId = (Integer) session.getAttribute("userId");
+        Customer customer = null;
+        if(customerId != null){
+            customer = customerService.getCustomerById(customerId);
+            if(customer != null){
+                Order order = orderService.getById(id);
+                order.setStatus(3);
+                orderService.saveOrder(order);
+
+                return "redirect:/cart/order_list/" + customerId;
+            }
+        }
+        return "error/error_404";
     }
 }

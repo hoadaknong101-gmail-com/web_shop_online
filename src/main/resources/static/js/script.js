@@ -20,7 +20,7 @@ const lineChartProfit = {
         height: "280px",
         fontFamily: "Nunito",
         toolbar: {
-            show: false,
+            show: true,
         },
     },
     stroke: {
@@ -56,8 +56,8 @@ let columnChartOrder = {
         height: 255,
         type: 'bar',
         toolbar: {
-            show: false,
-        }
+            show: true,
+        },
     },
     colors: colors,
     plotOptions: {
