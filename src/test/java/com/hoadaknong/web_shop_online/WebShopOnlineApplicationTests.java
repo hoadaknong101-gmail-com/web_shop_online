@@ -37,7 +37,6 @@ class WebShopOnlineApplicationTests {
 	@Autowired
 	OrderService orderService;
 
-
 	@Autowired
 	OrderRepository orderRepository;
 
